@@ -1,0 +1,382 @@
+# Copyright (C) 2022 Alice Labs
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: MyAlice 2.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/myaliceai\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-11-21T09:01:29+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.6.0\n"
+"X-Domain: myaliceai\n"
+
+#. Plugin Name of the plugin
+#: includes/myaliceai-dashboard.php:9
+msgid "MyAlice"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://app.getalice.ai/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Alice is a Multi-Channel customer service platform for your e-commerce store or online business that centralises all customer interactions and helps to manage and automate customer support."
+msgstr ""
+
+#. Author of the plugin
+msgid "Alice Labs"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://myalice.ai/"
+msgstr ""
+
+#: includes/myalice-dashboard-templates-and-scripts.php:11
+msgid "We're sorry to see you go. If you have a moment, please let us know why you’re deactivating the plugin."
+msgstr ""
+
+#: includes/myalice-dashboard-templates-and-scripts.php:25
+msgid "I'm unable to get the plugin to work"
+msgstr ""
+
+#: includes/myalice-dashboard-templates-and-scripts.php:31
+msgid "I no longer need the plugin"
+msgstr ""
+
+#: includes/myalice-dashboard-templates-and-scripts.php:37
+msgid "I found a better solution"
+msgstr ""
+
+#: includes/myalice-dashboard-templates-and-scripts.php:43
+msgid "The plugin is impacting website performance"
+msgstr ""
+
+#: includes/myalice-dashboard-templates-and-scripts.php:49
+msgid "This is a temporary deactivation. I'll be back!"
+msgstr ""
+
+#: includes/myalice-dashboard-templates-and-scripts.php:54
+msgid "Other"
+msgstr ""
+
+#: includes/myalice-dashboard-templates-and-scripts.php:64
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:24
+msgid "Settings successfully updated."
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:26
+msgid "Settings update failed."
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:175
+msgid "We hope you're enjoying MyAlice! Could you please do us a BIG favor and give it a 5-star rating on WordPress to help us spread the word and boost our motivation?"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:177
+msgid "Ok, you deserve it"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:179
+msgid "Nope, maybe later"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:181
+msgid "I already did"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:204
+#: includes/myalice-hooks-callback.php:269
+#: includes/myalice-hooks-callback.php:333
+msgid "Please fill up all required field"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:209
+#: includes/myalice-hooks-callback.php:274
+#: includes/myalice-hooks-callback.php:338
+msgid "MyAlice needs your permission to work. Please Grant Permission First."
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:253
+#: includes/myalice-hooks-callback.php:319
+msgid "You are logged in successfully"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:343
+msgid "Email Address Missing, Please login again."
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:381
+msgid "Something went wrong: ecommerce_data is empty"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:384
+msgid "You selected team is connected"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:391
+msgid "Something went wrong: nonce not match"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:437
+msgid "Switch to New Live Chat for a better way to communicate with your customers."
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:438
+msgid "Your Webchat will be automatically transitioned over to the New Live Chat. Switch your existing Webchat now and get early access to new features. We will automatically transition your account roughly after 30 days."
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:439
+msgid "Learn More"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:441
+msgid "Switch to New Live Chat"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:443
+msgid "Something went wrong,"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:444
+msgid "contact support"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:464
+msgid "Livechat has been migrated. Time to customize!"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:465
+msgid "Your livechat has been migrated to the latest one. Now you can customize the livechat the way you want! Set up how you want to greet your customers, set up livechat styles, add pre-chat survey and many more."
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:467
+msgid "Customize Livechat"
+msgstr ""
+
+#: includes/myalice-hooks-callback.php:493
+msgid "<div class=\"notice notice-error\"><p><strong>WooCommerce</strong> is not installed/activated in your site. Please install and activate <a href=\"plugin-install.php?s=woocommerce&tab=search&type=term\" target=\"_blank\">WooCommerce</a> to use MyAlice Plugin. If you want to use MyAlice without WooCommerce, <a href=\"https://docs.myalice.ai/connect-social-channels/connect-web-app/connect-live-chat\" target=\"_blank\">follow this</a>.</p></div>"
+msgstr ""
+
+#: includes/myalice-hooks.php:27
+msgid "MyAlice Settings"
+msgstr ""
+
+#: includes/myalice-hooks.php:27
+#: includes/myaliceai-dashboard.php:46
+msgid "Settings"
+msgstr ""
+
+#: includes/myalice-hooks.php:35
+msgid "MyAlice Documents"
+msgstr ""
+
+#: includes/myalice-hooks.php:35
+msgid "Docs"
+msgstr ""
+
+#: includes/myalice-hooks.php:36
+msgid "MyAlice Support"
+msgstr ""
+
+#: includes/myalice-hooks.php:36
+msgid "Support"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:8
+msgid "MyAlice Dashboard"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:40
+msgid "MyAlice Logo"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:45
+msgid "Dashboard"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:48
+msgid "Review MyAlice"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:50
+msgid "Help & Support"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:53
+msgid "Read Documentation"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:56
+msgid "Watch Tutorials"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:58
+msgid "Contact Support"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:70
+msgid "Connect with MyAlice"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:71
+msgid "Already have an account?"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:72
+msgid "login here"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:73
+msgid "Don’t have an account?"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:74
+msgid "signup here"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:82
+msgid "Full Name"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:86
+msgid "Email Address"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:90
+msgid "Password"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:96
+msgid "Signup & Connect"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:97
+msgid "Login & Connect"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:100
+msgid "By proceeding, you agree to the"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:101
+msgid "Terms & Conditions"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:102
+msgid "Forgot your credentials?"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:103
+msgid "Reset Password"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:111
+msgid "Select the team to connect your store with"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:112
+msgid "You can connect one store with one team only."
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:126
+msgid "team avatar"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:134
+msgid "Continue"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:135
+msgid "If you see any missing teams, it might be because it's already connected. If that isn't the case,"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:136
+msgid "contact support."
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:144
+msgid "MyAlice needs your permission to work"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:145
+msgid "Once you grant permission, your website visitors will be able to communicate with you."
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:161
+msgid "Grant Permission"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:166
+msgid "Your store doesn’t appear to be using a secure connection. We highly recommend serving your entire website over an HTTPS connection to help keep customer data secure."
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:174
+msgid "MyAlice Explore Map"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:178
+msgid "Explore MyAlice"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:179
+msgid "Check your inbox for pending conversations, customise the livechat to update brand or automate responses with chatbot."
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:183
+msgid "Open MyAlice"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:185
+msgid "Open Inbox"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:194
+msgid "Plugin Settings"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:199
+msgid "Allow chat for logged-in user only"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:200
+msgid "This will show the livechat in your WooCommerce Store for logged in users only."
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:205
+msgid "Send product view data"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:206
+msgid "If anyone views a product in your store, this will send the data to MyAlice for your team to view."
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:211
+msgid "Send cart data"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:212
+msgid "If anyone adds a product in their cart from your store, this will send the data to MyAlice for your team to view."
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:217
+msgid "Hide chat widget"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:218
+msgid "This will hide the live chat widget from your store. Your visitors will not see the live chat option."
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:223
+msgid "Save Changes"
+msgstr ""
+
+#: includes/myaliceai-dashboard.php:224
+msgid "Back"
+msgstr ""

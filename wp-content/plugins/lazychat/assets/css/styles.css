@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,400;0,600;0,700;0,900;1,300&display=swap");
+
+* {
+	font-family: "Nunito Sans", sans-serif;
+}
+
+.custom-color {
+	color: #006c67;
+}
+
+.custom-bg {
+	background-color: #006c67 !important;
+	border-color: #006c67 !important;
+}
