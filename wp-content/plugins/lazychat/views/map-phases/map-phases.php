@@ -53,7 +53,7 @@ $statuses = [
 	]
 ];
 
-// var_dump($_SESSION['lazychat_order_phases']);
+// var_dump(get_option('lswp_order_phases')['mapped']);
 // exit;
 
 ?>
@@ -106,6 +106,15 @@ $statuses = [
 
 					<input type="hidden" name="action" value="lswp_map_order_phase">
 					<?php wp_nonce_field('lswp_map_order_phase_verify') ?>
+
+					<!-- Check if order phases are already mapped -->
+					<?php
+					if (get_option('lswp_order_phases') && get_option('lswp_order_phases')['mapped']) {
+						echo '<input type="hidden" name="is_mapped" value="1">';
+					} else {
+						echo '<input type="hidden" name="is_mapped" value="0">';
+					}
+					?>
 
 					<div class="col-md-12 pt-3">
 						<button class="btn btn-primary submit">Save</button>

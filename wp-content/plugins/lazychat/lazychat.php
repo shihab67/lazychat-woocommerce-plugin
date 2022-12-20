@@ -38,7 +38,7 @@ session_start();
 // Constants
 define('LCWP_PATH', plugin_dir_path(__FILE__));
 define('LCWP_URI', plugin_dir_url(__FILE__));
-define('LAZYCHAT_URL', 'http://chatbot.test');
+define('LAZYCHAT_URL', 'http://f992-103-12-74-36.ngrok.io');
 
 // Check if WooCommerce is active
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -63,6 +63,7 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 				require(LCWP_PATH . 'classes/Lswp_settings_page.php');
 				require(LCWP_PATH . 'classes/Lswp_connect.php');
 				require(LCWP_PATH . 'views/index.php');
+				include_once(dirname(__DIR__) . '/woocommerce/woocommerce.php');
 
 				//Hooks
 				register_activation_hook(__FILE__, 'lswp_activation');
