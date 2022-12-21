@@ -38,7 +38,7 @@ session_start();
 // Constants
 define('LCWP_PATH', plugin_dir_path(__FILE__));
 define('LCWP_URI', plugin_dir_url(__FILE__));
-define('LAZYCHAT_URL', 'http://f992-103-12-74-36.ngrok.io');
+define('LAZYCHAT_URL', 'http://a595-103-12-74-40.ngrok.io');
 
 // Check if WooCommerce is active
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -64,6 +64,9 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 				require(LCWP_PATH . 'classes/Lswp_connect.php');
 				require(LCWP_PATH . 'views/index.php');
 				include_once(dirname(__DIR__) . '/woocommerce/woocommerce.php');
+				
+				//API for getting data
+				require(LCWP_PATH . 'api/api.php');
 
 				//Hooks
 				register_activation_hook(__FILE__, 'lswp_activation');
@@ -73,13 +76,13 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 					'wp_ajax_lswp_map_order_phase',
 					[new Lswp_connect(), 'lswp_map_order_phase']
 				);
-
-				//Shortcodes
+				add_action('rest_api_init', [new Lswp_api, 'register_routes']);
 
 				//Get LazyChat Order Phases
 				if (get_option('lswp_auth_token') && get_option('lswp_auth_token') !== null) {
 					lswp_get_lazychat_order_phases();
 				}
+
 			}
 		}
 		$LSWP_core = new LSWP_core();

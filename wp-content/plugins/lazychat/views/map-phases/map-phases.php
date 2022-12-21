@@ -1,10 +1,3 @@
-<div class="row">
-	<div class="col-md-12">
-		<h4 class="pt-2"><?php _e('Map LazyChat Order Phases', 'lswp') ?></h4>
-		<p><?php _e('You have connected your LazyChat account. Now Map LazyChat Order Phases with WooCommerce Order Phases', 'lswp') ?></p>
-	</div>
-</div>
-
 <?php
 $statuses = [
 	[
@@ -60,7 +53,7 @@ $statuses = [
 
 <div class="row">
 	<div class="col-md-12">
-		<div class="card" style="max-width: 100% !important;">
+		<div class="card mt-0" style="max-width: 100% !important;">
 			<div class="card-body">
 				<div class="row">
 					<div class="col-md-12 d-flex justify-content-between">

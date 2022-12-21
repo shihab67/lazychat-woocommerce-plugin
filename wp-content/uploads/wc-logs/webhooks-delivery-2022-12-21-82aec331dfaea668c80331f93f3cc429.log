@@ -1,0 +1,350 @@
+2022-12-21T10:21:02+00:00 INFO Array
+(
+    [Webhook Delivery] => Array
+        (
+            [Delivery ID] => 53c57acfad2b5169185d5a690f5616a2
+            [Date] => Dec 21, 2022 @ 10:21
+            [URL] => http://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+            [Duration] => 1.08004
+            [Request] => Array
+                (
+                    [Method] => POST
+                    [Headers] => Array
+                        (
+                            [User-Agent] => WooCommerce/7.2.0 Hookshot (WordPress/5.9.2)
+                            [Content-Type] => application/json
+                            [X-WC-Webhook-Source] => http://localhost/woocommerce-plugin/
+                            [X-WC-Webhook-Topic] => product.updated
+                            [X-WC-Webhook-Resource] => product
+                            [X-WC-Webhook-Event] => updated
+                            [X-WC-Webhook-Signature] => fK3S/pSKcDUKuokd5+ASaq2NTuSsrrzg4MSSko8kut4=
+                            [X-WC-Webhook-ID] => 161
+                            [X-WC-Webhook-Delivery-ID] => 53c57acfad2b5169185d5a690f5616a2
+                        )
+
+                )
+
+            [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+            [Response] => Array
+                (
+                    [Code] => 307
+                    [Message] => Temporary Redirect
+                    [Headers] => Requests_Utility_CaseInsensitiveDictionary Object
+                        (
+                            [data:protected] => Array
+                                (
+                                    [location] => https://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+                                    [ngrok-trace-id] => f320613b301b6529fb85dd6a76eff422
+                                    [date] => Wed, 21 Dec 2022 10:22:35 GMT
+                                    [content-length] => 0
+                                )
+
+                        )
+
+                    [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+                )
+
+        )
+
+)
+
+2022-12-21T10:23:57+00:00 INFO Array
+(
+    [Webhook Delivery] => Array
+        (
+            [Delivery ID] => 92c03881b29576ba96705dc70049b28e
+            [Date] => Dec 21, 2022 @ 10:23
+            [URL] => http://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+            [Duration] => 0.86438
+            [Request] => Array
+                (
+                    [Method] => POST
+                    [Headers] => Array
+                        (
+                            [User-Agent] => WooCommerce/7.2.0 Hookshot (WordPress/5.9.2)
+                            [Content-Type] => application/json
+                            [X-WC-Webhook-Source] => http://localhost/woocommerce-plugin/
+                            [X-WC-Webhook-Topic] => product.updated
+                            [X-WC-Webhook-Resource] => product
+                            [X-WC-Webhook-Event] => updated
+                            [X-WC-Webhook-Signature] => 3olLzSsLnn2p1dWIOlLNJZn016PaAYkIeIPCFHFaYrM=
+                            [X-WC-Webhook-ID] => 161
+                            [X-WC-Webhook-Delivery-ID] => 92c03881b29576ba96705dc70049b28e
+                        )
+
+                )
+
+            [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+            [Response] => Array
+                (
+                    [Code] => 307
+                    [Message] => Temporary Redirect
+                    [Headers] => Requests_Utility_CaseInsensitiveDictionary Object
+                        (
+                            [data:protected] => Array
+                                (
+                                    [location] => https://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+                                    [ngrok-trace-id] => 1888f4312833d72d0d6fffa1b52f8874
+                                    [date] => Wed, 21 Dec 2022 10:25:30 GMT
+                                    [content-length] => 0
+                                )
+
+                        )
+
+                    [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+                )
+
+        )
+
+)
+
+2022-12-21T10:25:04+00:00 INFO Array
+(
+    [Webhook Delivery] => Array
+        (
+            [Delivery ID] => 6d09d6a7e07724781d1fcc176b241442
+            [Date] => Dec 21, 2022 @ 10:25
+            [URL] => http://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+            [Duration] => 0.82573
+            [Request] => Array
+                (
+                    [Method] => POST
+                    [Headers] => Array
+                        (
+                            [User-Agent] => WooCommerce/7.2.0 Hookshot (WordPress/5.9.2)
+                            [Content-Type] => application/json
+                            [X-WC-Webhook-Source] => http://localhost/woocommerce-plugin/
+                            [X-WC-Webhook-Topic] => product.updated
+                            [X-WC-Webhook-Resource] => product
+                            [X-WC-Webhook-Event] => updated
+                            [X-WC-Webhook-Signature] => eCcexmYYIZJv04O1TxVpgUoUSJAsIJnvsy0Mqx7luCw=
+                            [X-WC-Webhook-ID] => 161
+                            [X-WC-Webhook-Delivery-ID] => 6d09d6a7e07724781d1fcc176b241442
+                        )
+
+                )
+
+            [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+            [Response] => Array
+                (
+                    [Code] => 307
+                    [Message] => Temporary Redirect
+                    [Headers] => Requests_Utility_CaseInsensitiveDictionary Object
+                        (
+                            [data:protected] => Array
+                                (
+                                    [location] => https://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+                                    [ngrok-trace-id] => cc6a03f3cc89f8eb1593b3f7fd3d6910
+                                    [date] => Wed, 21 Dec 2022 10:26:36 GMT
+                                    [content-length] => 0
+                                )
+
+                        )
+
+                    [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+                )
+
+        )
+
+)
+
+2022-12-21T10:25:11+00:00 INFO Array
+(
+    [Webhook Delivery] => Array
+        (
+            [Delivery ID] => 38ad6c8d006d7bdea9e62c48f7f5de27
+            [Date] => Dec 21, 2022 @ 10:25
+            [URL] => http://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+            [Duration] => 0.83414
+            [Request] => Array
+                (
+                    [Method] => POST
+                    [Headers] => Array
+                        (
+                            [User-Agent] => WooCommerce/7.2.0 Hookshot (WordPress/5.9.2)
+                            [Content-Type] => application/json
+                            [X-WC-Webhook-Source] => http://localhost/woocommerce-plugin/
+                            [X-WC-Webhook-Topic] => product.updated
+                            [X-WC-Webhook-Resource] => product
+                            [X-WC-Webhook-Event] => updated
+                            [X-WC-Webhook-Signature] => 1pM48wIyc722rb/UGSulteoHiqTTlQXComlHD+NgHcM=
+                            [X-WC-Webhook-ID] => 161
+                            [X-WC-Webhook-Delivery-ID] => 38ad6c8d006d7bdea9e62c48f7f5de27
+                        )
+
+                )
+
+            [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+            [Response] => Array
+                (
+                    [Code] => 307
+                    [Message] => Temporary Redirect
+                    [Headers] => Requests_Utility_CaseInsensitiveDictionary Object
+                        (
+                            [data:protected] => Array
+                                (
+                                    [location] => https://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+                                    [ngrok-trace-id] => 56d897fc98e5acaef3a8f656d94f10c8
+                                    [date] => Wed, 21 Dec 2022 10:26:43 GMT
+                                    [content-length] => 0
+                                )
+
+                        )
+
+                    [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+                )
+
+        )
+
+)
+
+2022-12-21T10:26:24+00:00 INFO Array
+(
+    [Webhook Delivery] => Array
+        (
+            [Delivery ID] => a40f5f98efcd56caab5c40f32c6ab714
+            [Date] => Dec 21, 2022 @ 10:26
+            [URL] => http://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+            [Duration] => 0.82707
+            [Request] => Array
+                (
+                    [Method] => POST
+                    [Headers] => Array
+                        (
+                            [User-Agent] => WooCommerce/7.2.0 Hookshot (WordPress/5.9.2)
+                            [Content-Type] => application/json
+                            [X-WC-Webhook-Source] => http://localhost/woocommerce-plugin/
+                            [X-WC-Webhook-Topic] => product.updated
+                            [X-WC-Webhook-Resource] => product
+                            [X-WC-Webhook-Event] => updated
+                            [X-WC-Webhook-Signature] => 0NKR2iH3RTCkjHlW94yBz9sOiWfneO50n3OSEMmhZIs=
+                            [X-WC-Webhook-ID] => 161
+                            [X-WC-Webhook-Delivery-ID] => a40f5f98efcd56caab5c40f32c6ab714
+                        )
+
+                )
+
+            [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+            [Response] => Array
+                (
+                    [Code] => 307
+                    [Message] => Temporary Redirect
+                    [Headers] => Requests_Utility_CaseInsensitiveDictionary Object
+                        (
+                            [data:protected] => Array
+                                (
+                                    [location] => https://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+                                    [ngrok-trace-id] => e9b0119723eb3566bb75773462817bc9
+                                    [date] => Wed, 21 Dec 2022 10:27:57 GMT
+                                    [content-length] => 0
+                                )
+
+                        )
+
+                    [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+                )
+
+        )
+
+)
+
+2022-12-21T10:32:04+00:00 INFO Array
+(
+    [Webhook Delivery] => Array
+        (
+            [Delivery ID] => 4728f56490d99dea441d7e04aeb8ae47
+            [Date] => Dec 21, 2022 @ 10:32
+            [URL] => http://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+            [Duration] => 0.88132
+            [Request] => Array
+                (
+                    [Method] => POST
+                    [Headers] => Array
+                        (
+                            [User-Agent] => WooCommerce/7.2.0 Hookshot (WordPress/5.9.2)
+                            [Content-Type] => application/json
+                            [X-WC-Webhook-Source] => http://localhost/woocommerce-plugin/
+                            [X-WC-Webhook-Topic] => product.updated
+                            [X-WC-Webhook-Resource] => product
+                            [X-WC-Webhook-Event] => updated
+                            [X-WC-Webhook-Signature] => rXwMh4k9Ugk0g+TD4I1pZ+Vz0w31Jq7Taz4rP3Eb4TE=
+                            [X-WC-Webhook-ID] => 161
+                            [X-WC-Webhook-Delivery-ID] => 4728f56490d99dea441d7e04aeb8ae47
+                        )
+
+                )
+
+            [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+            [Response] => Array
+                (
+                    [Code] => 307
+                    [Message] => Temporary Redirect
+                    [Headers] => Requests_Utility_CaseInsensitiveDictionary Object
+                        (
+                            [data:protected] => Array
+                                (
+                                    [location] => https://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+                                    [ngrok-trace-id] => 24ea8f2c430f5ece652f076c56d58901
+                                    [date] => Wed, 21 Dec 2022 10:33:37 GMT
+                                    [content-length] => 0
+                                )
+
+                        )
+
+                    [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+                )
+
+        )
+
+)
+
+2022-12-21T10:33:05+00:00 INFO Array
+(
+    [Webhook Delivery] => Array
+        (
+            [Delivery ID] => 49a91d9e5e9b7ec11456ab02a9ef24a7
+            [Date] => Dec 21, 2022 @ 10:33
+            [URL] => http://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+            [Duration] => 0.91176
+            [Request] => Array
+                (
+                    [Method] => POST
+                    [Headers] => Array
+                        (
+                            [User-Agent] => WooCommerce/7.2.0 Hookshot (WordPress/5.9.2)
+                            [Content-Type] => application/json
+                            [X-WC-Webhook-Source] => http://localhost/woocommerce-plugin/
+                            [X-WC-Webhook-Topic] => product.updated
+                            [X-WC-Webhook-Resource] => product
+                            [X-WC-Webhook-Event] => updated
+                            [X-WC-Webhook-Signature] => SLD+9ZvCPXFCoYlCdiDY+5ZGQPwRVmh7gSunXKLfrvk=
+                            [X-WC-Webhook-ID] => 161
+                            [X-WC-Webhook-Delivery-ID] => 49a91d9e5e9b7ec11456ab02a9ef24a7
+                        )
+
+                )
+
+            [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+            [Response] => Array
+                (
+                    [Code] => 307
+                    [Message] => Temporary Redirect
+                    [Headers] => Requests_Utility_CaseInsensitiveDictionary Object
+                        (
+                            [data:protected] => Array
+                                (
+                                    [location] => https://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+                                    [ngrok-trace-id] => 2315b0ea2de821e30987828f2d821407
+                                    [date] => Wed, 21 Dec 2022 10:34:38 GMT
+                                    [content-length] => 0
+                                )
+
+                        )
+
+                    [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+                )
+
+        )
+
+)
+

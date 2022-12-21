@@ -9,27 +9,48 @@ defined('ABSPATH') || exit;
 function lazychat_settings_page()
 {
 ?>
-	<!-- add css files -->
+	<!-- css files -->
 	<link rel="stylesheet" href="<?php echo plugins_url('lazychat/assets/css/lite-purple.min.css'); ?>">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link rel="stylesheet" href="<?php echo plugins_url('lazychat/assets/css/toastr.min.css'); ?>">
 	<link rel="stylesheet" href="<?php echo plugins_url('lazychat/assets/css/custom.css'); ?>">
+	<link rel="stylesheet" href="<?php echo plugins_url('lazychat/assets/css/loader.css'); ?>">
 
 	<div class="container-fluid">
-		<img class="mb-4" src="<?php echo plugins_url('lazychat/assets/images/Lazychat Logo-03.png'); ?>" alt="lazychat logo" height="30">
+		<img class="mb-2" src="<?php echo plugins_url('lazychat/assets/images/Lazychat Logo-03.png'); ?>" alt="lazychat logo" height="30">
 
 		<?php include(LCWP_PATH . 'views/alert/alert.php'); ?>
 
 		<?php
-		if (get_option('lswp_auth_token') && get_option('lswp_auth_token') !== null) {
+		if (
+			get_option('lswp_auth_token') &&
+			get_option('lswp_auth_token') === null
+		) {
+			include(LCWP_PATH . 'views/connect/connect.php');
+		} else if (
+			get_option('lswp_auth_token') &&
+			get_option('lswp_auth_token') !== null &&
+			get_option('lswp_order_phases') &&
+			get_option('lswp_order_phases')['mapped'] === false
+		) {
+		?>
+			<div class="row">
+				<div class="col-md-12">
+					<h4 class="pt-2"><?php _e('Map LazyChat Order Phases', 'lswp') ?></h4>
+					<p><?php _e('You have connected your LazyChat account. Now Map 
+						LazyChat Order Phases with WooCommerce Order Phases', 'lswp') ?></p>
+				</div>
+			</div>
+		<?php
 			include(LCWP_PATH . 'views/map-phases/map-phases.php');
 		} else {
-			include(LCWP_PATH . 'views/connect/connect.php');
+			include(LCWP_PATH . 'views/settings/settings.php');
 		}
 		?>
 	</div>
 
-	<!-- add js files -->
+	<!-- js files -->
 	<script src="<?php echo plugins_url('lazychat/assets/js/jquery-3.3.1.min.js'); ?>"></script>
 	<script src="<?php echo plugins_url('lazychat/assets/js/bootstrap.bundle.min.js'); ?>"></script>
 	<script src="<?php echo plugins_url('lazychat/assets/js/toastr.min.js'); ?>"></script>

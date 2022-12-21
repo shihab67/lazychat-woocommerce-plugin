@@ -57,59 +57,67 @@ if (!class_exists('Lswp_connect')) {
 
 		public function lswp_map_order_phase()
 		{
-			check_admin_referer('lswp_map_order_phase_verify');
+			try {
+				check_admin_referer('lswp_map_order_phase_verify');
 
-			if (!current_user_can('manage_options')) {
-				return [
-					'status' => 'error',
-					'msg' => 'You do not have sufficient permissions to perform this operation!'
-				];
-			}
-
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/map-order-phase');
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($_POST));
-			$headers = array();
-			$headers[] = 'Content-Type: application/json';
-			$headers[] = 'Authorization: Bearer ' . get_option('lswp_auth_token');
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-			$result = curl_exec($ch);
-			if (curl_errno($ch)) {
-				echo 'Error:' . curl_error($ch);
-			}
-			curl_close($ch);
-
-			if (isset($result)) $result = json_decode($result, true);
-
-			if ($result['status'] === 'error') {
-				echo json_encode([
-					'status' => 'error',
-					'msg' => $result['message']
-				]);
-				exit;
-			} else {
-				//Update lswp_order_phases data
-				update_option('lswp_order_phases', [
-					'mapped' => true,
-					'phases' => $result['phases']
-				]);
-
-				//Check if order phases are already mapped
-				if ($_POST['is_mapped'] === 0) {
-					//create woocommerce webhooks
-					$this->lswp_create_webhooks();
+				if (!current_user_can('manage_options')) {
+					return [
+						'status' => 'error',
+						'msg' => 'You do not have sufficient permissions to perform this operation!'
+					];
 				}
 
-				//Store order phases in session
-				if (isset($_SESSION['lazychat_order_phases'])) {
-					$_SESSION['lazychat_order_phases'] = $result['phases'];
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/map-order-phase');
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($_POST));
+				$headers = array();
+				$headers[] = 'Content-Type: application/json';
+				$headers[] = 'Authorization: Bearer ' . get_option('lswp_auth_token');
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				$result = curl_exec($ch);
+				if (curl_errno($ch)) {
+					echo 'Error:' . curl_error($ch);
 				}
+				curl_close($ch);
 
+				if (isset($result)) $result = json_decode($result, true);
+
+				if ($result['status'] === 'error') {
+					echo json_encode([
+						'status' => 'error',
+						'msg' => $result['message']
+					]);
+					exit;
+				} else {
+					//Update lswp_order_phases data
+					update_option('lswp_order_phases', [
+						'mapped' => true,
+						'phases' => $result['phases']
+					]);
+
+					//Check if order phases are already mapped
+					if ($_POST['is_mapped'] === 0) {
+						//create woocommerce webhooks
+						$this->lswp_create_webhooks();
+					}
+
+					//Store order phases in session
+					if (isset($_SESSION['lazychat_order_phases'])) {
+						$_SESSION['lazychat_order_phases'] = $result['phases'];
+					}
+
+					echo json_encode([
+						'status' => 'success',
+						'msg' => $result['message']
+					]);
+					exit;
+				}
+			} catch (\Throwable $th) {
 				echo json_encode([
-					'status' => 'success',
-					'msg' => $result['message']
+					'status' => 'error',
+					'msg' => $th->getMessage()
 				]);
 				exit;
 			}
@@ -237,24 +245,27 @@ if (!class_exists('Lswp_connect')) {
 
 				return true;
 			} catch (\Throwable $th) {
-				var_dump($th->getMessage());
-				exit;
+				throw new \RuntimeException($th->getMessage());
 			}
 		}
 
 		public function lswp_delete_previous_webhooks()
 		{
-			global $wpdb;
+			try {
+				global $wpdb;
 
-			//Get all webhooks
-			$results = $wpdb->get_results("SELECT webhook_id, delivery_url FROM {$wpdb->prefix}wc_webhooks");
+				//Get all webhooks
+				$results = $wpdb->get_results("SELECT webhook_id, delivery_url FROM {$wpdb->prefix}wc_webhooks");
 
-			foreach ($results as $result) {
-				if (strpos($result->delivery_url, LAZYCHAT_URL) !== false) {
-					$wh = new WC_Webhook();
-					$wh->set_id($result->webhook_id);
-					$wh->delete();
+				foreach ($results as $result) {
+					if (strpos($result->delivery_url, LAZYCHAT_URL) !== false) {
+						$wh = new WC_Webhook();
+						$wh->set_id($result->webhook_id);
+						$wh->delete();
+					}
 				}
+			} catch (\Throwable $th) {
+				throw new \RuntimeException($th->getMessage());
 			}
 		}
 	}
