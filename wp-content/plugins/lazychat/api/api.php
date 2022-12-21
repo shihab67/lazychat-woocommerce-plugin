@@ -16,15 +16,24 @@ class Lswp_api extends WP_REST_Controller
 	{
 		$version = '1';
 		$namespace = 'lazychat/v' . $version;
-		$base = 'get-products';
 
-		register_rest_route($namespace, '/' . $base, array(
+		register_rest_route($namespace, '/' . 'get-products', array(
 			'methods' => WP_REST_Server::READABLE,
 			'callback' => array($this, 'lswp_get_products'),
-			'permission_callback' => function () {
-				return true;
-			},
-			'args'                => array(),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'get-orders', array(
+			'methods' => WP_REST_Server::READABLE,
+			'callback' => array($this, 'lswp_get_orders'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'get-contacts', array(
+			'methods' => WP_REST_Server::READABLE,
+			'callback' => array($this, 'lswp_get_contacts'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
 		));
 		// register_rest_route($namespace, '/' . $base, array(
 		// 	array(
@@ -73,6 +82,25 @@ class Lswp_api extends WP_REST_Controller
 	 * @param WP_REST_Request $request Full data about the request.
 	 * @return WP_Error|WP_REST_Response
 	 */
+
+	//Validate the request
+	public function lswp_api_permission()
+	{
+		$bearer_token = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
+		$token = null;
+		if ($bearer_token) {
+			$parts = explode(' ', $bearer_token);
+			if (count($parts) == 2 && $parts[0] === 'Bearer') {
+				$token = $parts[1];
+			}
+		}
+
+		if ($token && get_option('lswp_auth_token') === $token) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	public function lswp_get_products()
 	{
@@ -133,7 +161,8 @@ class Lswp_api extends WP_REST_Controller
 		return new WP_REST_Response($all_products, 200);
 	}
 
-	public function getCategories($data) {
+	public function getCategories($data)
+	{
 		$categories = [];
 		if ($data !== null) {
 			foreach ($data as $item) {
@@ -148,7 +177,8 @@ class Lswp_api extends WP_REST_Controller
 		return $categories;
 	}
 
-	public function getImages($data) {
+	public function getImages($data)
+	{
 		$images = [];
 		if ($data !== null) {
 			foreach ($data as $item) {
@@ -162,7 +192,8 @@ class Lswp_api extends WP_REST_Controller
 		return $images;
 	}
 
-	public function getAttributes($data) {
+	public function getAttributes($data)
+	{
 		$attributes = [];
 		if ($data !== null) {
 			foreach ($data->get_attributes() as $item) {
