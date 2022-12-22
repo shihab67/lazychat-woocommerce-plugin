@@ -45,10 +45,6 @@ $statuses = [
 		'code' => 'refunded'
 	]
 ];
-
-// var_dump(get_option('lswp_order_phases')['mapped']);
-// exit;
-
 ?>
 
 <div class="row">
@@ -104,8 +100,10 @@ $statuses = [
 					<?php
 					if (get_option('lswp_order_phases') && get_option('lswp_order_phases')['mapped']) {
 						echo '<input type="hidden" name="is_mapped" value="1">';
+						echo '<input type="hidden" name="site_url" value="'. get_site_url() .'">';
 					} else {
 						echo '<input type="hidden" name="is_mapped" value="0">';
+						echo '<input type="hidden" name="site_url" value="">';
 					}
 					?>
 

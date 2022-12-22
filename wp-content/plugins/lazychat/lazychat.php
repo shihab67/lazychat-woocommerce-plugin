@@ -90,6 +90,7 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
 				require(LCWP_PATH . 'includes/error.php');
 				require(LCWP_PATH . 'classes/Lswp_settings_page.php');
 				require(LCWP_PATH . 'classes/Lswp_connect.php');
+				require(LCWP_PATH . 'classes/Lswp_settings.php');
 				require(LCWP_PATH . 'views/index.php');
 				include_once(dirname(__DIR__) . '/woocommerce/woocommerce.php');
 
@@ -100,6 +101,7 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
 				register_activation_hook(__FILE__, 'lswp_activation');
 				add_action('admin_menu', [new Lswp_settings_page(), 'admin_menu_add_external_link_top_level']);
 				add_action('admin_post_lswp_connect', [new Lswp_connect(), 'lswp_connect_with_lazychat']);
+				add_action('admin_post_lswp_upload_data', [new Lswp_settings(), 'lswp_handle_settings']);
 				add_action(
 					'wp_ajax_lswp_map_order_phase',
 					[new Lswp_connect(), 'lswp_map_order_phase']

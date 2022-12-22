@@ -65,9 +65,16 @@ class Lswp_api extends WP_REST_Controller
 	//Get all products
 	public function lswp_get_products()
 	{
+		if (isset($_GET['page'])) {
+			$page = $_GET['page'];
+		} else {
+			$page = 1;
+		}
+
 		$all_products = [];
 		$products = get_posts(array(
-			'limit' => -1,
+			'posts_per_page' => 100,
+			'paged' => $page,
 			'fields' => 'ids',
 			'post_type' => 'product',
 		));
@@ -177,10 +184,17 @@ class Lswp_api extends WP_REST_Controller
 	//Get all orders
 	public function lswp_get_orders()
 	{
+		if (isset($_GET['page'])) {
+			$page = $_GET['page'];
+		} else {
+			$page = 1;
+		}
+
 		//get woocommerce orders
 		$all_orders = [];
 		$orders = get_posts(array(
-			'limit' => -1,
+			'posts_per_page' => 100,
+			'paged' => $page,
 			'fields' => 'ids',
 			'post_type' => 'shop_order',
 			'post_status'    => 'any',
@@ -374,11 +388,19 @@ class Lswp_api extends WP_REST_Controller
 	//Get all contacts
 	public function lswp_get_contacts()
 	{
+		if (isset($_GET['page'])) {
+			$page = $_GET['page'];
+		} else {
+			$page = 1;
+		}
+
 		$all_customers = [];
 		$customers = new WP_User_Query(
 			array(
 				'fields' => 'ID',
 				'role' => 'customer',
+				'number' => 100,
+				'paged' => $page,
 			)
 		);
 

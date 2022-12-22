@@ -298,3 +298,145 @@
 
 )
 
+2022-12-22T09:45:01+00:00 INFO Array
+(
+    [Webhook Delivery] => Array
+        (
+            [Delivery ID] => b8caaf45f878794fb5960876d772f0a2
+            [Date] => Dec 22, 2022 @ 9:45
+            [URL] => http://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+            [Duration] => 0.94802
+            [Request] => Array
+                (
+                    [Method] => POST
+                    [Headers] => Array
+                        (
+                            [User-Agent] => WooCommerce/7.2.0 Hookshot (WordPress/5.9.2)
+                            [Content-Type] => application/json
+                            [X-WC-Webhook-Source] => http://localhost/woocommerce-plugin/
+                            [X-WC-Webhook-Topic] => product.created
+                            [X-WC-Webhook-Resource] => product
+                            [X-WC-Webhook-Event] => created
+                            [X-WC-Webhook-Signature] => gIIIvvaCJ7ieg1yyWfGB6WrKapXvwOocTrtH4UY+b6g=
+                            [X-WC-Webhook-ID] => 160
+                            [X-WC-Webhook-Delivery-ID] => b8caaf45f878794fb5960876d772f0a2
+                        )
+
+                )
+
+            [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+            [Response] => Array
+                (
+                    [Code] => 307
+                    [Message] => Temporary Redirect
+                    [Headers] => Requests_Utility_CaseInsensitiveDictionary Object
+                        (
+                            [data:protected] => Array
+                                (
+                                    [location] => https://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-products/0eeb35bf8101207d0535936db012819c
+                                    [ngrok-trace-id] => 8c94c309d6af75885acf67ed1a4ef0a4
+                                    [date] => Thu, 22 Dec 2022 09:46:37 GMT
+                                    [content-length] => 0
+                                )
+
+                        )
+
+                    [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+                )
+
+        )
+
+)
+
+2022-12-22T09:58:35+00:00 INFO Array
+(
+    [Webhook Delivery] => Array
+        (
+            [Delivery ID] => 995c571c2d9059015b57b65cae41be16
+            [Date] => Dec 22, 2022 @ 9:58
+            [URL] => http://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-customers/0eeb35bf8101207d0535936db012819c
+            [Duration] => 0.84649
+            [Request] => Array
+                (
+                    [Method] => POST
+                    [Headers] => Array
+                        (
+                            [User-Agent] => WooCommerce/7.2.0 Hookshot (WordPress/5.9.2)
+                            [Content-Type] => application/json
+                            [X-WC-Webhook-Source] => http://localhost/woocommerce-plugin/
+                            [X-WC-Webhook-Topic] => customer.created
+                            [X-WC-Webhook-Resource] => customer
+                            [X-WC-Webhook-Event] => created
+                            [X-WC-Webhook-Signature] => nL3nO14dlpZW+kPa5AdJq5+70EuBV+66eyFD1KAgtCo=
+                            [X-WC-Webhook-ID] => 163
+                            [X-WC-Webhook-Delivery-ID] => 995c571c2d9059015b57b65cae41be16
+                        )
+
+                )
+
+            [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+            [Response] => Array
+                (
+                    [Code] => 307
+                    [Message] => Temporary Redirect
+                    [Headers] => Requests_Utility_CaseInsensitiveDictionary Object
+                        (
+                            [data:protected] => Array
+                                (
+                                    [location] => https://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-customers/0eeb35bf8101207d0535936db012819c
+                                    [ngrok-trace-id] => 296b31454fc74dc4a0ff56317fe8b807
+                                    [date] => Thu, 22 Dec 2022 10:00:11 GMT
+                                    [content-length] => 0
+                                )
+
+                        )
+
+                    [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+                )
+
+        )
+
+)
+
+2022-12-22T09:58:37+00:00 INFO Array
+(
+    [Webhook Delivery] => Array
+        (
+            [Delivery ID] => c3c1de5baa28814a0f80328b6016c18c
+            [Date] => Dec 22, 2022 @ 9:58
+            [URL] => http://f992-103-12-74-36.ngrok.io/webhooks/woocommerce-customers/0eeb35bf8101207d0535936db012819c
+            [Duration] => 0.65138
+            [Request] => Array
+                (
+                    [Method] => POST
+                    [Headers] => Array
+                        (
+                            [User-Agent] => WooCommerce/7.2.0 Hookshot (WordPress/5.9.2)
+                            [Content-Type] => application/json
+                            [X-WC-Webhook-Source] => http://localhost/woocommerce-plugin/
+                            [X-WC-Webhook-Topic] => customer.updated
+                            [X-WC-Webhook-Resource] => customer
+                            [X-WC-Webhook-Event] => updated
+                            [X-WC-Webhook-Signature] => wjGhIsMGKValrF6CeJW6tKgheQqYqSudNKcLWTZUWy0=
+                            [X-WC-Webhook-ID] => 164
+                            [X-WC-Webhook-Delivery-ID] => c3c1de5baa28814a0f80328b6016c18c
+                        )
+
+                )
+
+            [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+            [Response] => Array
+                (
+                    [Code] => http_request_failed
+                    [Message] => cURL error 56: Recv failure: Connection was reset
+                    [Headers] => Array
+                        (
+                        )
+
+                    [Body] => Webhook body is not logged unless WP_DEBUG mode is turned on. This is to avoid the storing of personal data in the logs.
+                )
+
+        )
+
+)
+
