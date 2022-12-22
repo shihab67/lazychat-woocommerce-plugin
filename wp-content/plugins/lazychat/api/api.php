@@ -35,45 +35,6 @@ class Lswp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
-		// register_rest_route($namespace, '/' . $base, array(
-		// 	array(
-		// 		'methods'             => WP_REST_Server::READABLE,
-		// 		'callback'            => array($this, 'lswp_get_products'),
-		// 		// 'permission_callback' => array( $this, 'get_items_permissions_check' ),
-		// 	),
-		// ));
-		// register_rest_route( $namespace, '/' . $base . '/(?P<id>[\d]+)', array(
-		//   array(
-		//     'methods'             => WP_REST_Server::READABLE,
-		//     'callback'            => array( $this, 'get_item' ),
-		//     'permission_callback' => array( $this, 'get_item_permissions_check' ),
-		//     'args'                => array(
-		//       'context' => array(
-		//         'default' => 'view',
-		//       ),
-		//     ),
-		//   ),
-		//   array(
-		//     'methods'             => WP_REST_Server::EDITABLE,
-		//     'callback'            => array( $this, 'update_item' ),
-		//     'permission_callback' => array( $this, 'update_item_permissions_check' ),
-		//     'args'                => $this->get_endpoint_args_for_item_schema( false ),
-		//   ),
-		//   array(
-		//     'methods'             => WP_REST_Server::DELETABLE,
-		//     'callback'            => array( $this, 'delete_item' ),
-		//     'permission_callback' => array( $this, 'delete_item_permissions_check' ),
-		//     'args'                => array(
-		//       'force' => array(
-		//         'default' => false,
-		//       ),
-		//     ),
-		//   ),
-		// ) );
-		// register_rest_route( $namespace, '/' . $base . '/schema', array(
-		//   'methods'  => WP_REST_Server::READABLE,
-		//   'callback' => array( $this, 'get_public_item_schema' ),
-		// ) );
 	}
 
 	/**
@@ -210,214 +171,196 @@ class Lswp_api extends WP_REST_Controller
 		return $attributes;
 	}
 
-	public function get_items($request)
+	public function lswp_get_orders()
 	{
-		$items = array(); //do a query, call another class, etc
-		$data = array();
-		foreach ($items as $item) {
-			$itemdata = $this->prepare_item_for_response($item, $request);
-			$data[] = $this->prepare_response_for_collection($itemdata);
+		//get woocommerce orders
+		$all_orders = [];
+		$orders = get_posts(array(
+			'limit' => -1,
+			'fields' => 'ids',
+			'post_type' => 'shop_order',
+			'post_status'    => 'any',
+		));
+
+		foreach ($orders as $order) {
+			$order = wc_get_order($order);
+
+			$all_orders[] = [
+				'id' => $order->get_id(),
+				'parent_id' => $order->get_parent_id(),
+				'order_key' => $order->get_order_key(),
+				'created_via' => $order->get_created_via(),
+				'version' => $order->get_version(),
+				'status' => $order->get_status(),
+				'currency' => $order->get_currency(),
+				'date_created' => $order->get_date_created(),
+				'date_modified' => $order->get_date_modified(),
+				'discount_total' => $order->get_discount_total(),
+				'discount_tax' => $order->get_discount_tax(),
+				'shipping_total' => $order->get_shipping_total(),
+				'shipping_tax' => $order->get_shipping_tax(),
+				'cart_tax' => $order->get_cart_tax(),
+				'total' => $order->get_total(),
+				'total_tax' => $order->get_total_tax(),
+				'prices_include_tax' => $order->get_prices_include_tax(),
+				'customer_id' => $order->get_customer_id(),
+				'customer_ip_address' => $order->get_customer_ip_address(),
+				'customer_user_agent' => $order->get_customer_user_agent(),
+				'customer_note' => $order->get_customer_note(),
+				'billing' => [
+					'first_name' => $order->get_billing_first_name(),
+					'last_name' => $order->get_billing_last_name(),
+					'company' => $order->get_billing_company(),
+					'address_1' => $order->get_billing_address_1(),
+					'address_2' => $order->get_billing_address_2(),
+					'city' => $order->get_billing_city(),
+					'state' => $order->get_billing_state(),
+					'postcode' => $order->get_billing_postcode(),
+					'country' => $order->get_billing_country(),
+				],
+				'shipping' => [
+					'first_name' => $order->get_shipping_first_name(),
+					'last_name' => $order->get_shipping_last_name(),
+					'company' => $order->get_shipping_company(),
+					'address_1' => $order->get_shipping_address_1(),
+					'address_2' => $order->get_shipping_address_2(),
+					'city' => $order->get_shipping_city(),
+					'state' => $order->get_shipping_state(),
+					'postcode' => $order->get_shipping_postcode(),
+					'country' => $order->get_shipping_country(),
+				],
+				'payment_method' => $order->get_payment_method(),
+				'payment_method_title' => $order->get_payment_method_title(),
+				'transaction_id' => $order->get_transaction_id(),
+				'date_paid' => $order->get_date_paid(),
+				'date_completed' => $order->get_date_completed(),
+				'cart_hash' => $order->get_cart_hash(),
+				'meta_data' => $order->get_meta_data(),
+				'line_items' => $this->getLineItems($order->get_items()),
+				'tax_lines' => $this->getTaxLines($order->get_items('tax')),
+				'shipping_lines' => $this->getShippingLines($order->get_items('shipping')),
+				'fee_lines' => $this->getFeeLines($order->get_items('fee')),
+				'coupon_lines' => $this->getCouponLines($order->get_items('coupon')),
+				'refunds' => $this->getRefunds($order->get_refunds()),
+				'currency_symbol' => get_woocommerce_currency_symbol($order->get_currency()),
+				'_links' => [
+					'self' => [
+						'href' => rest_url('wc/v3/orders/' . $order->get_id()),
+					],
+					'collection' => [
+						'href' => rest_url('wc/v3/orders'),
+					],
+				],
+			];
 		}
-
-		return new WP_REST_Response($data, 200);
+		return new WP_REST_Response($all_orders, 200);
 	}
 
-	/**
-	 * Get one item from the collection
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
-	 */
-	public function get_item($request)
+	public function getLineItems($data)
 	{
-		//get parameters from request
-		$params = $request->get_params();
-		$item = array(); //do a query, call another class, etc
-		$data = $this->prepare_item_for_response($item, $request);
+		$line_items = [];
+		foreach ($data as $item) {
+			$product = wc_get_product($item->get_product_id());
 
-		//return a response or error based on some conditional
-		if (1 == 1) {
-			return new WP_REST_Response($data, 200);
-		} else {
-			return new WP_Error('code', __('message', 'text-domain'));
+			$line_items[] = [
+				'id' => $item->get_product_id(),
+				'name' => $item->get_name(),
+				'product_id' => $item->get_product_id(),
+				'variation_id' => $item->get_variation_id(),
+				'quantity' => $item->get_quantity(),
+				'subtotal' => $item->get_subtotal(),
+				'subtotal_tax' => $item->get_subtotal_tax(),
+				'total' => $item->get_total(),
+				'total_tax' => $item->get_total_tax(),
+				'taxes' => $item->get_taxes(),
+				'sku' => $product->get_sku(),
+				'meta_data' => $item->get_meta_data(),
+			];
 		}
+		return $line_items;
 	}
 
-	/**
-	 * Create one item from the collection
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
-	 */
-	public function create_item($request)
+	public function getTaxLines($data)
 	{
-		$item = $this->prepare_item_for_database($request);
-
-		if (function_exists('slug_some_function_to_create_item')) {
-			$data = slug_some_function_to_create_item($item);
-			if (is_array($data)) {
-				return new WP_REST_Response($data, 200);
-			}
+		$tax_lines = [];
+		foreach ($data as $item) {
+			$tax_lines[] = [
+				'id' => $item->get_rate_id(),
+				'rate_code' => $item->get_rate_code(),
+				'rate_id' => $item->get_rate_id(),
+				'label' => $item->get_label(),
+				'compound' => $item->get_compound(),
+				'tax_total' => $item->get_tax_total(),
+				'shipping_tax_total' => $item->get_shipping_tax_total(),
+			];
 		}
-
-		return new WP_Error('cant-create', __('message', 'text-domain'), array('status' => 500));
+		return $tax_lines;
 	}
 
-	/**
-	 * Update one item from the collection
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
-	 */
-	public function update_item($request)
+	public function getShippingLines($data)
 	{
-		$item = $this->prepare_item_for_database($request);
-
-		if (function_exists('slug_some_function_to_update_item')) {
-			$data = slug_some_function_to_update_item($item);
-			if (is_array($data)) {
-				return new WP_REST_Response($data, 200);
-			}
+		$shipping_lines = [];
+		foreach ($data as $item) {
+			$shipping_lines[] = [
+				'id' => $item->get_instance_id(),
+				'method_id' => $item->get_method_id(),
+				'method_title' => $item->get_method_title(),
+				'total' => $item->get_total(),
+				'taxes' => $item->get_taxes(),
+			];
 		}
-
-		return new WP_Error('cant-update', __('message', 'text-domain'), array('status' => 500));
+		return $shipping_lines;
 	}
 
-	/**
-	 * Delete one item from the collection
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
-	 */
-	public function delete_item($request)
+	public function getFeeLines($data)
 	{
-		$item = $this->prepare_item_for_database($request);
-
-		if (function_exists('slug_some_function_to_delete_item')) {
-			$deleted = slug_some_function_to_delete_item($item);
-			if ($deleted) {
-				return new WP_REST_Response(true, 200);
-			}
+		$fee_lines = [];
+		foreach ($data as $item) {
+			$fee_lines[] = [
+				'id' => $item->get_id(),
+				'name' => $item->get_name(),
+				'tax_class' => $item->get_tax_class(),
+				'tax_status' => $item->get_tax_status(),
+				'total' => $item->get_total(),
+				'total_tax' => $item->get_total_tax(),
+				'taxes' => $item->get_taxes(),
+			];
 		}
-
-		return new WP_Error('cant-delete', __('message', 'text-domain'), array('status' => 500));
+		return $fee_lines;
 	}
 
-	/**
-	 * Check if a given request has access to get items
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|bool
-	 */
-	public function get_items_permissions_check($request)
+	public function getCouponLines($data)
 	{
-		//return true; <--use to make readable by all
-		return current_user_can('edit_something');
+		$coupon_lines = [];
+		foreach ($data as $item) {
+			$coupon_lines[] = [
+				'id' => $item->get_id(),
+				'code' => $item->get_code(),
+				'discount' => $item->get_discount(),
+				'discount_tax' => $item->get_discount_tax(),
+			];
+		}
+		return $coupon_lines;
 	}
 
-	/**
-	 * Check if a given request has access to get a specific item
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|bool
-	 */
-	public function get_item_permissions_check($request)
+	public function getRefunds($data)
 	{
-		return $this->get_items_permissions_check($request);
-	}
-
-	/**
-	 * Check if a given request has access to create items
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|bool
-	 */
-	public function create_item_permissions_check($request)
-	{
-		return current_user_can('edit_something');
-	}
-
-	/**
-	 * Check if a given request has access to update a specific item
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|bool
-	 */
-	public function update_item_permissions_check($request)
-	{
-		return $this->create_item_permissions_check($request);
-	}
-
-	/**
-	 * Check if a given request has access to delete a specific item
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|bool
-	 */
-	public function delete_item_permissions_check($request)
-	{
-		return $this->create_item_permissions_check($request);
-	}
-
-	/**
-	 * Prepare the item for create or update operation
-	 *
-	 * @param WP_REST_Request $request Request object
-	 * @return WP_Error|object $prepared_item
-	 */
-	protected function prepare_item_for_database($request)
-	{
-		return array();
-	}
-
-	/**
-	 * Prepare the item for the REST response
-	 *
-	 * @param mixed $item WordPress representation of the item.
-	 * @param WP_REST_Request $request Request object.
-	 * @return mixed
-	 */
-	public function prepare_item_for_response($item, $request)
-	{
-		return array();
-	}
-
-	/**
-	 * Get the query params for collections
-	 *
-	 * @return array
-	 */
-	public function get_collection_params()
-	{
-		return array(
-			'page'     => array(
-				'description'       => 'Current page of the collection.',
-				'type'              => 'integer',
-				'default'           => 1,
-				'sanitize_callback' => 'absint',
-			),
-			'per_page' => array(
-				'description'       => 'Maximum number of items to be returned in result set.',
-				'type'              => 'integer',
-				'default'           => 10,
-				'sanitize_callback' => 'absint',
-			),
-			'search'   => array(
-				'description'       => 'Limit results to those matching a string.',
-				'type'              => 'string',
-				'sanitize_callback' => 'sanitize_text_field',
-			),
-		);
+		$refunds = [];
+		foreach ($data as $item) {
+			$refunds[] = [
+				'id' => $item->get_id(),
+				'reason' => $item->get_reason(),
+				'total' => $item->get_amount(),
+				'line_items' => $this->getLineItems($item->get_items()),
+				'tax_lines' => $this->getTaxLines($item->get_taxes()),
+				'shipping_lines' => $this->getShippingLines($item->get_shipping_methods()),
+				'fee_lines' => $this->getFeeLines($item->get_fees()),
+				'coupon_lines' => $this->getCouponLines($item->get_coupons()),
+			];
+		}
+		return $refunds;
 	}
 }
-// function lswp_get_products()
-// {
-// 	//get all products
-// 	return get_posts([
-// 		'post_type' => 'product',
-// 		'posts_per_page' => -1
-// 	]);
-// }
 
 function init_rest_api_endpoint()
 {

@@ -1,0 +1,60 @@
+2022-12-22T05:54:05+00:00 CRITICAL Uncaught Error: Call to undefined method Automattic\WooCommerce\Admin\Overrides\Order::get_rsion() in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:194
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lswp_get_orders(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/ge...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/ge...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 194
+
+2022-12-22T06:06:50+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Order_Item_Product::get_sku() in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:375
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(240): Lswp_api->getLineItems(Array)
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lswp_get_orders(Object(WP_REST_Request))
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/ge...', Array, NULL)
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/ge...')
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp- in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 375
+
+2022-12-22T06:07:25+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Order_Item_Product::get_ku() in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:375
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(240): Lswp_api->getLineItems(Array)
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lswp_get_orders(Object(WP_REST_Request))
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/ge...', Array, NULL)
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/ge...')
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-h in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 375
+
+2022-12-22T06:08:32+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Order_Item_Product::get_sku() in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:375
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(240): Lswp_api->getLineItems(Array)
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lswp_get_orders(Object(WP_REST_Request))
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/ge...', Array, NULL)
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/ge...')
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp- in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 375
+
+2022-12-22T06:09:02+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Order_Item_Product::get_price() in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:375
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(240): Lswp_api->getLineItems(Array)
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lswp_get_orders(Object(WP_REST_Request))
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/ge...', Array, NULL)
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/ge...')
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\class-w in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 375
+
+2022-12-22T06:16:31+00:00 CRITICAL Uncaught Error: Class name must be a valid object or a string in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:380
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(240): Lswp_api->getLineItems(Array)
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lswp_get_orders(Object(WP_REST_Request))
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/ge...', Array, NULL)
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/ge...')
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331 in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 380
+

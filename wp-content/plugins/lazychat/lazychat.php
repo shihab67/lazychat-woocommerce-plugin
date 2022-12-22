@@ -38,7 +38,7 @@ session_start();
 // Constants
 define('LCWP_PATH', plugin_dir_path(__FILE__));
 define('LCWP_URI', plugin_dir_url(__FILE__));
-define('LAZYCHAT_URL', 'http://a595-103-12-74-40.ngrok.io');
+define('LAZYCHAT_URL', 'http://f22c-103-12-74-36.ngrok.io');
 
 // Check if WooCommerce is active
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -50,6 +50,34 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 		echo wp_kses_post($html_message);
 	}
 	add_action('admin_notices', 'lazychat_fail_wc_not_active');
+	return;
+}
+// Check if Wordpress version is supported
+else if (version_compare(get_bloginfo('version'), '5.2', '<')) {
+	function lazychat_fail_php_version()
+	{
+		/* translators: %s+: WP version */
+		$message      = sprintf(esc_html__('LazyChat WooCommerce requires WordPress version %s+. 
+							Because you are using an earlier version, 
+							the plugin is currently NOT RUNNING.', 'lazychat'), '5.2');
+		$html_message = sprintf('<div class="error">%s</div>', wpautop($message));
+		echo wp_kses_post($html_message);
+	}
+	add_action('admin_notices', 'lazychat_fail_php_version');
+	return;
+}
+// Check if PHP version is supported
+else if (version_compare(PHP_VERSION, '7.3', '<')) {
+	function lazychat_fail_php_version()
+	{
+		/* translators: %s+: PHP version */
+		$message      = sprintf(esc_html__('LazyChat WooCommerce requires PHP version %s+. 
+							Because you are using an earlier version, 
+							the plugin is currently NOT RUNNING.', 'lazychat'), '7.3');
+		$html_message = sprintf('<div class="error">%s</div>', wpautop($message));
+		echo wp_kses_post($html_message);
+	}
+	add_action('admin_notices', 'lazychat_fail_php_version');
 	return;
 } else {
 	if (!class_exists('LSWP_core')) {
@@ -64,7 +92,7 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 				require(LCWP_PATH . 'classes/Lswp_connect.php');
 				require(LCWP_PATH . 'views/index.php');
 				include_once(dirname(__DIR__) . '/woocommerce/woocommerce.php');
-				
+
 				//API for getting data
 				require(LCWP_PATH . 'api/api.php');
 
@@ -82,41 +110,10 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 				if (get_option('lswp_auth_token') && get_option('lswp_auth_token') !== null) {
 					lswp_get_lazychat_order_phases();
 				}
-
 			}
 		}
 		$LSWP_core = new LSWP_core();
 	}
-}
-
-// Check Wordpress version is supported
-if (version_compare(get_bloginfo('version'), '5.2', '<')) {
-	function lazychat_fail_php_version()
-	{
-		/* translators: %s+: WP version */
-		$message      = sprintf(esc_html__('LazyChat WooCommerce requires WordPress version %s+. 
-							Because you are using an earlier version, 
-							the plugin is currently NOT RUNNING.', 'lazychat'), '5.2');
-		$html_message = sprintf('<div class="error">%s</div>', wpautop($message));
-		echo wp_kses_post($html_message);
-	}
-	add_action('admin_notices', 'lazychat_fail_php_version');
-	return;
-}
-
-// Check PHP version is supported
-if (version_compare(PHP_VERSION, '7.3', '<')) {
-	function lazychat_fail_php_version()
-	{
-		/* translators: %s+: PHP version */
-		$message      = sprintf(esc_html__('LazyChat WooCommerce requires PHP version %s+. 
-							Because you are using an earlier version, 
-							the plugin is currently NOT RUNNING.', 'lazychat'), '7.3');
-		$html_message = sprintf('<div class="error">%s</div>', wpautop($message));
-		echo wp_kses_post($html_message);
-	}
-	add_action('admin_notices', 'lazychat_fail_php_version');
-	return;
 }
 
 
