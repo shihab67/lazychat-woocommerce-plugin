@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: LazyChat WooCommerce Plugin
+ * Plugin Name: LazyChat
  * Plugin URI: https://lazychat.io
  * Description: Sync data in your LazyChat App
  * Version: 1.0

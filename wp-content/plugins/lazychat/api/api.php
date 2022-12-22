@@ -8,7 +8,6 @@ defined('ABSPATH') || exit;
 
 class Lswp_api extends WP_REST_Controller
 {
-
 	/**
 	 * Register the routes for the objects of the controller.
 	 */
@@ -63,6 +62,7 @@ class Lswp_api extends WP_REST_Controller
 		}
 	}
 
+	//Get all products
 	public function lswp_get_products()
 	{
 		$all_products = [];
@@ -122,6 +122,7 @@ class Lswp_api extends WP_REST_Controller
 		return new WP_REST_Response($all_products, 200);
 	}
 
+	//Get all categories
 	public function getCategories($data)
 	{
 		$categories = [];
@@ -138,6 +139,7 @@ class Lswp_api extends WP_REST_Controller
 		return $categories;
 	}
 
+	//Get all images
 	public function getImages($data)
 	{
 		$images = [];
@@ -153,6 +155,7 @@ class Lswp_api extends WP_REST_Controller
 		return $images;
 	}
 
+	//Get all attributes
 	public function getAttributes($data)
 	{
 		$attributes = [];
@@ -171,6 +174,7 @@ class Lswp_api extends WP_REST_Controller
 		return $attributes;
 	}
 
+	//Get all orders
 	public function lswp_get_orders()
 	{
 		//get woocommerce orders
@@ -256,6 +260,7 @@ class Lswp_api extends WP_REST_Controller
 		return new WP_REST_Response($all_orders, 200);
 	}
 
+	// Get line items
 	public function getLineItems($data)
 	{
 		$line_items = [];
@@ -280,6 +285,7 @@ class Lswp_api extends WP_REST_Controller
 		return $line_items;
 	}
 
+	// Get tax lines
 	public function getTaxLines($data)
 	{
 		$tax_lines = [];
@@ -297,6 +303,7 @@ class Lswp_api extends WP_REST_Controller
 		return $tax_lines;
 	}
 
+	// Get shipping lines
 	public function getShippingLines($data)
 	{
 		$shipping_lines = [];
@@ -312,6 +319,7 @@ class Lswp_api extends WP_REST_Controller
 		return $shipping_lines;
 	}
 
+	// Get fee lines
 	public function getFeeLines($data)
 	{
 		$fee_lines = [];
@@ -329,6 +337,7 @@ class Lswp_api extends WP_REST_Controller
 		return $fee_lines;
 	}
 
+	// Get coupon lines
 	public function getCouponLines($data)
 	{
 		$coupon_lines = [];
@@ -343,6 +352,7 @@ class Lswp_api extends WP_REST_Controller
 		return $coupon_lines;
 	}
 
+	// Get refunds
 	public function getRefunds($data)
 	{
 		$refunds = [];
@@ -359,6 +369,69 @@ class Lswp_api extends WP_REST_Controller
 			];
 		}
 		return $refunds;
+	}
+
+	//Get all contacts
+	public function lswp_get_contacts()
+	{
+		$all_customers = [];
+		$customers = new WP_User_Query(
+			array(
+				'fields' => 'ID',
+				'role' => 'customer',
+			)
+		);
+
+		foreach ($customers->get_results() as $customer) {
+			$customer = new WC_Customer($customer);
+
+			$all_customers[] = [
+				'id' => $customer->get_id(),
+				'date_created' => $customer->get_date_created(),
+				'date_modified' => $customer->get_date_modified(),
+				'email' => $customer->get_email(),
+				'first_name' => $customer->get_first_name(),
+				'last_name' => $customer->get_last_name(),
+				'role' => $customer->get_role(),
+				'username' => $customer->get_username(),
+				'billing' => [
+					'first_name' => $customer->get_billing_first_name(),
+					'last_name' => $customer->get_billing_last_name(),
+					'company' => $customer->get_billing_company(),
+					'address_1' => $customer->get_billing_address_1(),
+					'address_2' => $customer->get_billing_address_2(),
+					'city' => $customer->get_billing_city(),
+					'state' => $customer->get_billing_state(),
+					'postcode' => $customer->get_billing_postcode(),
+					'country' => $customer->get_billing_country(),
+					'email' => $customer->get_billing_email(),
+					'phone' => $customer->get_billing_phone(),
+				],
+				'shipping' => [
+					'first_name' => $customer->get_shipping_first_name(),
+					'last_name' => $customer->get_shipping_last_name(),
+					'company' => $customer->get_shipping_company(),
+					'address_1' => $customer->get_shipping_address_1(),
+					'address_2' => $customer->get_shipping_address_2(),
+					'city' => $customer->get_shipping_city(),
+					'state' => $customer->get_shipping_state(),
+					'postcode' => $customer->get_shipping_postcode(),
+					'country' => $customer->get_shipping_country(),
+				],
+				'is_paying_customer' => $customer->is_paying_customer(),
+				'avatar_url' => $customer->get_avatar_url(),
+				'meta_data' => $customer->get_meta_data(),
+				'_links' => [
+					'self' => [
+						'href' => rest_url('wc/v3/customers/' . $customer->get_id()),
+					],
+					'collection' => [
+						'href' => rest_url('wc/v3/customers'),
+					],
+				],
+			];
+		}
+		return new WP_REST_Response($all_customers, 200);
 	}
 }
 
