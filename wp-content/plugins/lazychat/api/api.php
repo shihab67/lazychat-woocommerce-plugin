@@ -34,6 +34,20 @@ class Lswp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
+		register_rest_route($namespace, '/' . 'get-categories', array(
+			'methods' => WP_REST_Server::READABLE,
+			'callback' => array($this, 'lswp_get_categories'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'get-category/(?P<id>[\d]+)', array(
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array($this, 'lcwp_get_category'),
+				'permission_callback' => array($this, 'lswp_api_permission'),
+				'args'                => array(),
+			),
+		));
 	}
 
 	/**
@@ -179,6 +193,71 @@ class Lswp_api extends WP_REST_Controller
 			}
 		}
 		return $attributes;
+	}
+
+	//Get all categories
+	public function lswp_get_categories()
+	{
+		if (isset($_GET['page'])) {
+			$page = $_GET['page'];
+		} else {
+			$page = 1;
+		}
+
+		$args = array(
+			'taxonomy'   => "product_cat",
+			'number'     => 100,
+			'hide_empty' => false,
+			'include'    => 'ids',
+			'offset'     => ($page - 1) * 100,
+		);
+		$categories = get_terms($args);
+
+		$all_categories = [];
+		foreach ($categories as $category) {
+			$all_categories[] = [
+				'id' => $category->term_id,
+				'name' => $category->name,
+				'slug' => $category->slug,
+				'parent' => $category->parent,
+				'description' => $category->description,
+				'display' => $category->display_type,
+				'image' => $this->getCategoryImages($category->term_id),
+				'menu_order' => $category->menu_order,
+				'count' => $category->count,
+				'_links' => $this->getCategoryLinks($category->term_id),
+				'permalink' => get_category_link($category->term_id),
+			];
+		}
+		return new WP_REST_Response($all_categories, 200);
+	}
+
+	//Get category images
+	public function getCategoryImages($id)
+	{
+		$thumbnail_id = get_term_meta($id, 'thumbnail_id', true);
+		$image = wp_get_attachment_url($thumbnail_id);
+		return $image;
+	}
+
+	//Get category links
+	public function getCategoryLinks($id)
+	{
+		$links = [
+			'self' => [
+				'href' => rest_url('lswp/v1/categories/' . $id),
+			],
+			'collection' => [
+				'href' => rest_url('lswp/v1/categories'),
+			],
+		];
+		return $links;
+	}
+
+	//Get single category
+	public function lcwp_get_category($id)
+	{
+		return get_term_by('id', $id, 'product_cat');
 	}
 
 	//Get all orders

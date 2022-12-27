@@ -19,8 +19,16 @@ if (!class_exists('Lswp_settings')) {
 
 			if (isset($_POST['upload_type'])) {
 				switch ($_POST['upload_type']) {
-					case 'product':
-						$this->lswp_upload_data('product');
+					case 'upload_product':
+						$this->lswp_upload_data('upload_product');
+						exit;
+						break;
+					case 'upload_contact':
+						$this->lswp_upload_data('upload_contact');
+						exit;
+						break;
+					case 'upload_order':
+						$this->lswp_upload_data('upload_order');
 						exit;
 						break;
 
@@ -34,7 +42,7 @@ if (!class_exists('Lswp_settings')) {
 		public function lswp_upload_data($type)
 		{
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/upload-data');
+			curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/fetch-upload-data');
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POST, 1);
 			$data = [
@@ -53,13 +61,13 @@ if (!class_exists('Lswp_settings')) {
 
 			if (isset($result)) $result = json_decode($result, true);
 
-			var_dump($result);
-			exit;
+			if ((isset($result['status']) && $result['status'] === 'error')) {
+				flash($result['message'], 'danger');
 
-			if (isset($result['error'])) {
-				wp_die($result['error']);
+				//redirect back to settings page
+				wp_redirect(get_admin_url() . 'admin.php?page=lazychat_settings');
 				exit;
-			} else if ($result['success']) {
+			} else if ((isset($result['status']) && $result['status'] === 'success')) {
 				flash($result['message'], 'success');
 
 				//redirect back to settings page

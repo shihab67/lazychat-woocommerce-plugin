@@ -67,7 +67,7 @@
 					<div class="col-md-6 col-lg-6 col-xs-12">
 						<form action="admin-post.php" method="POST">
 							<input type="hidden" name="action" value="lswp_upload_data">
-							<input type="hidden" name="upload_type" value="product">
+							<input type="hidden" name="upload_type" value="upload_product">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
 							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn"><?php _e('Upload Now') ?></button>
 						</form>
@@ -120,9 +120,12 @@
 				</div>
 				<div class="row pt-2 d-flex justify-content-center align-items-center">
 					<div class="col-md-6 col-lg-6 col-xs-12">
-						<a href="{{ route('sync', 'order_upload') }}" class="btn btn-primary fetch-btn order-upload-btn">
-							<?php _e('Upload Now') ?>
-						</a>
+						<form action="admin-post.php" method="POST">
+							<input type="hidden" name="action" value="lswp_upload_data">
+							<input type="hidden" name="upload_type" value="upload_order">
+							<?php wp_nonce_field('lswp_upload_data_verify') ?>
+							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn"><?php _e('Upload Now') ?></button>
+						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
 						<!-- @if (isset($last_synced_orders_upload))
@@ -172,9 +175,12 @@
 				</div>
 				<div class="row pt-2 d-flex justify-content-center align-items-center">
 					<div class="col-md-6 col-lg-6 col-xs-12">
-						<a href="{{ route('sync', 'customer_upload') }}" class="btn btn-primary fetch-btn contact-upload-btn">
-							<?php _e('Upload Now') ?>
-						</a>
+						<form action="admin-post.php" method="POST">
+							<input type="hidden" name="action" value="lswp_upload_data">
+							<input type="hidden" name="upload_type" value="upload_contact">
+							<?php wp_nonce_field('lswp_upload_data_verify') ?>
+							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn"><?php _e('Upload Now') ?></button>
+						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
 						<!-- @if (isset($last_synced_customers_upload))
