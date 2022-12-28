@@ -56,6 +56,14 @@ class Lswp_api extends WP_REST_Controller
 				'args'                => array(),
 			),
 		));
+		register_rest_route($namespace, '/' . 'get-variations/(?P<product_id>[\d]+)', array(
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array($this, 'lcwp_get_variations'),
+				'permission_callback' => array($this, 'lswp_api_permission'),
+				'args'                => array(),
+			),
+		));
 		register_rest_route($namespace, '/' . 'get-variation/(?P<id>[\d]+)', array(
 			array(
 				'methods'             => WP_REST_Server::READABLE,
@@ -74,6 +82,20 @@ class Lswp_api extends WP_REST_Controller
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array($this, 'lcwp_get_attribute'),
+				'permission_callback' => array($this, 'lswp_api_permission'),
+				'args'                => array(),
+			),
+		));
+		register_rest_route($namespace, '/' . 'get-tags', array(
+			'methods' => WP_REST_Server::READABLE,
+			'callback' => array($this, 'lcwp_get_tags'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'get-tag/(?P<id>[\d]+)', array(
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array($this, 'lcwp_get_tag'),
 				'permission_callback' => array($this, 'lswp_api_permission'),
 				'args'                => array(),
 			),
@@ -604,6 +626,21 @@ class Lswp_api extends WP_REST_Controller
 		return new WP_REST_Response($all_customers, 200);
 	}
 
+	//Get All variaons of a product
+	public function lcwp_get_variations($request)
+	{
+		$all_variations = [];
+		$product_id = $request->get_params()['product_id'];
+		$product = wc_get_product($product_id);
+		$variations = $product->get_children();
+
+		foreach ($variations as $variation) {
+			$data = new WC_Product_Variation($variation);
+			$all_variations[] = $this->getVariationData($data);
+		}
+		return new WP_REST_Response($all_variations, 200);
+	}
+
 	//Get Product variation
 	public function lcwp_get_variation($request)
 	{
@@ -611,52 +648,58 @@ class Lswp_api extends WP_REST_Controller
 		$data = new WC_Product_Variation($id['id']);
 
 		if (get_post_type($data->get_id()) == 'product_variation') {
-			$variation = [
-				'id' => $data->get_id(),
-				'name' => $data->get_name(),
-				'date_created' => $data->get_date_created(),
-				'date_modified' => $data->get_date_modified(),
-				'description' => $data->get_description(),
-				'pemalink' => $data->get_permalink(),
-				'sku' => $data->get_sku(),
-				'price' => $data->get_price(),
-				'regular_price' => $data->get_regular_price(),
-				'sale_Price' => $data->get_sale_price(),
-				'date_on_sale_from' => $data->get_date_on_sale_from(),
-				'date_on_sale_to' => $data->get_date_on_sale_to(),
-				'on_sale' => $data->is_on_sale(),
-				'status' => $data->get_status(),
-				'purchasable' => $data->is_purchasable(),
-				'virtual' => $data->is_virtual(),
-				'downloadable' => $data->is_downloadable(),
-				'downloads' => $data->get_downloads(),
-				'download_limit' => $data->get_download_limit(),
-				'download_expiry' => $data->get_download_expiry(),
-				'tax_status' => $data->get_tax_status(),
-				'tax_class' => $data->get_tax_class(),
-				'manage_stock' => $data->get_manage_stock(),
-				'stock_quantity' => $data->get_stock_quantity(),
-				'stock_status' => $data->get_stock_status(),
-				'backorders' => $data->get_backorders(),
-				'backorders_allowed' => $data->backorders_allowed(),
-				'backordered' => $data->is_on_backorder(),
-				'weight' => $data->get_weight(),
-				'dimentions' => $data->get_dimensions(),
-				'shipping_class' => $data->get_shipping_class(),
-				'shipping_class_id' => $data->get_shipping_class_id(),
-				'image' => $data->get_image() !== '' ? [
-					'id' => $data->get_image_id(),
-					'src' => wp_get_attachment_url($data->get_image_id()),
-					'thumbnail' => wp_get_attachment_thumb_url($data->get_image_id()),
-				] : '',
-				'attributes' => $this->getVariationAttribute($data->get_attributes()),
-				'menu_order' => $data->get_menu_order(),
-				'meta_data' => $data->get_meta_data(),
-			];
+			$variation = $this->getVariationData($data);
 			return new WP_REST_Response($variation, 200);
 		} else {
 			return new WP_Error('no_product_variation', 'Product variation not found', array('status' => 404));
 		}
+	}
+
+	//Get Product variation data
+	public function getVariationData($data)
+	{
+		return [
+			'id' => $data->get_id(),
+			'name' => $data->get_name(),
+			'date_created' => $data->get_date_created(),
+			'date_modified' => $data->get_date_modified(),
+			'description' => $data->get_description(),
+			'pemalink' => $data->get_permalink(),
+			'sku' => $data->get_sku(),
+			'price' => $data->get_price(),
+			'regular_price' => $data->get_regular_price(),
+			'sale_Price' => $data->get_sale_price(),
+			'date_on_sale_from' => $data->get_date_on_sale_from(),
+			'date_on_sale_to' => $data->get_date_on_sale_to(),
+			'on_sale' => $data->is_on_sale(),
+			'status' => $data->get_status(),
+			'purchasable' => $data->is_purchasable(),
+			'virtual' => $data->is_virtual(),
+			'downloadable' => $data->is_downloadable(),
+			'downloads' => $data->get_downloads(),
+			'download_limit' => $data->get_download_limit(),
+			'download_expiry' => $data->get_download_expiry(),
+			'tax_status' => $data->get_tax_status(),
+			'tax_class' => $data->get_tax_class(),
+			'manage_stock' => $data->get_manage_stock(),
+			'stock_quantity' => $data->get_stock_quantity(),
+			'stock_status' => $data->get_stock_status(),
+			'backorders' => $data->get_backorders(),
+			'backorders_allowed' => $data->backorders_allowed(),
+			'backordered' => $data->is_on_backorder(),
+			'weight' => $data->get_weight(),
+			'dimentions' => $data->get_dimensions(),
+			'shipping_class' => $data->get_shipping_class(),
+			'shipping_class_id' => $data->get_shipping_class_id(),
+			'image' => $data->get_image() !== '' ? [
+				'id' => $data->get_image_id(),
+				'src' => wp_get_attachment_url($data->get_image_id()),
+				'thumbnail' => wp_get_attachment_thumb_url($data->get_image_id()),
+			] : '',
+			'attributes' => $this->getVariationAttribute($data->get_attributes()),
+			'menu_order' => $data->get_menu_order(),
+			'meta_data' => $data->get_meta_data(),
+		];
 	}
 
 	public function getVariationAttribute($data)
@@ -690,7 +733,7 @@ class Lswp_api extends WP_REST_Controller
 	{
 		$id = $request->get_params();
 		$attribute = wc_get_attribute($id['id']);
-		
+
 		if ($attribute) {
 			return new WP_REST_Response($attribute, 200);
 		} else {
@@ -728,6 +771,36 @@ class Lswp_api extends WP_REST_Controller
 			];
 		}
 		return new WP_REST_Response($all_attributes, 200);
+	}
+
+	//Get all tags
+	public function lcwp_get_tags()
+	{
+		$terms = get_terms('product_tag');
+		$term_array = array();
+		if (!empty($terms) && !is_wp_error($terms)) {
+			foreach ($terms as $term) {
+				$term_array[] = [
+					'id' => $term->term_id,
+					'name' => $term->name,
+					'slug' => $term->slug,
+					'count' => $term->count,
+				];
+			}
+		}
+		return new WP_REST_Response($term_array, 200);
+	}
+
+	public function lcwp_get_tag($request)
+	{
+		$id = $request->get_params();
+		$term = get_term($id['id'], 'product_tag');
+
+		if ($term) {
+			return new WP_REST_Response($term, 200);
+		} else {
+			return new WP_Error('no_tag', 'Tag not found', array('status' => 404));
+		}
 	}
 }
 

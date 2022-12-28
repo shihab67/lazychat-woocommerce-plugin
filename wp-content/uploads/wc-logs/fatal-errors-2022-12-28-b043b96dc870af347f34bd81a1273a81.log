@@ -65,3 +65,124 @@ Stack trace:
 
 2022-12-28T10:00:44+00:00 CRITICAL Cannot redeclare Lswp_api::lcwp_get_attribute() in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 710
 
+2022-12-28T10:56:56+00:00 CRITICAL syntax error, unexpected '}' in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 742
+
+2022-12-28T10:58:55+00:00 CRITICAL syntax error, unexpected '}', expecting '(' in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 758
+
+2022-12-28T11:15:10+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('23')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('23')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('23')
+#5 C:\lara in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
+2022-12-28T11:15:19+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('23')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('23')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('23')
+#5 C:\lara in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
+2022-12-28T11:15:59+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('2')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('2')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('2')
+#5 C:\laragon in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
+2022-12-28T11:16:12+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('22')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('22')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('22')
+#5 C:\lara in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
+2022-12-28T11:17:31+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('22')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('22')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('22')
+#5 C:\lara in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
+2022-12-28T11:17:44+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('23')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('23')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('23')
+#5 C:\lara in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
+2022-12-28T11:17:52+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('22')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('22')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('22')
+#5 C:\lara in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
+2022-12-28T11:17:54+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('23')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('23')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('23')
+#5 C:\lara in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
+2022-12-28T11:17:56+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('22')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('22')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('22')
+#5 C:\lara in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
+2022-12-28T11:18:05+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('21')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('21')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('21')
+#5 C:\lara in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
+2022-12-28T11:18:36+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('2')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('2')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('2')
+#5 C:\laragon in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
+2022-12-28T11:18:40+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('2')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('2')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('2')
+#5 C:\laragon in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
+2022-12-28T11:18:48+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid product type: passed ID does not correspond to a product variation. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php:58
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-data-store.php(159): WC_Product_Variation_Data_Store_CPT->read(Object(WC_Product_Variation))
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(138): WC_Data_Store->read(Object(WC_Product_Variation))
+#2 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-simple.php(24): WC_Product->__construct('21')
+#3 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\class-wc-product-variation.php(54): WC_Product_Simple->__construct('21')
+#4 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(625): WC_Product_Variation->__construct('21')
+#5 C:\lara in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\data-stores\class-wc-product-variation-data-store-cpt.php on line 58
+
