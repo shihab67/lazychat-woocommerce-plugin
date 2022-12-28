@@ -64,6 +64,20 @@ class Lswp_api extends WP_REST_Controller
 				'args'                => array(),
 			),
 		));
+		register_rest_route($namespace, '/' . 'get-attributes', array(
+			'methods' => WP_REST_Server::READABLE,
+			'callback' => array($this, 'lcwp_get_attributes'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'get-attribute/(?P<id>[\d]+)', array(
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array($this, 'lcwp_get_attribute'),
+				'permission_callback' => array($this, 'lswp_api_permission'),
+				'args'                => array(),
+			),
+		));
 	}
 
 	/**
@@ -193,7 +207,7 @@ class Lswp_api extends WP_REST_Controller
 		if ($data->get_image_id()) {
 			$thumbnail = wp_get_attachment_image_src($data->get_image_id(), 'single-post-thumbnail');
 			$images[] = [
-				'id' => 0,
+				'id' => $data->get_image_id(),
 				'src' => $thumbnail[0],
 				'thumbnail' => $thumbnail[0],
 			];
@@ -669,6 +683,51 @@ class Lswp_api extends WP_REST_Controller
 		} else {
 			return new WP_Error('no_product', 'Product not found', array('status' => 404));
 		}
+	}
+
+	//Get a single attribute
+	public function lcwp_get_attribute($request)
+	{
+		$id = $request->get_params();
+		$attribute = wc_get_attribute($id['id']);
+		
+		if ($attribute) {
+			return new WP_REST_Response($attribute, 200);
+		} else {
+			return new WP_Error('no_attribute', 'Attribute not found', array('status' => 404));
+		}
+
+		$attributes = wc_get_attribute_taxonomies();
+		$all_attributes = [];
+		foreach ($attributes as $attribute) {
+			$all_attributes[] = [
+				'id' => $attribute->attribute_id,
+				'name' => $attribute->attribute_label,
+				'slug' => $attribute->attribute_name,
+				'type' => $attribute->attribute_type,
+				'order_by' => $attribute->attribute_orderby,
+				'has_archives' => $attribute->attribute_public,
+			];
+		}
+		return new WP_REST_Response($all_attributes, 200);
+	}
+
+	//Get all attributes
+	public function lcwp_get_attributes()
+	{
+		$attributes = wc_get_attribute_taxonomies();
+		$all_attributes = [];
+		foreach ($attributes as $attribute) {
+			$all_attributes[] = [
+				'id' => $attribute->attribute_id,
+				'name' => $attribute->attribute_label,
+				'slug' => $attribute->attribute_name,
+				'type' => $attribute->attribute_type,
+				'order_by' => $attribute->attribute_orderby,
+				'has_archives' => $attribute->attribute_public,
+			];
+		}
+		return new WP_REST_Response($all_attributes, 200);
 	}
 }
 

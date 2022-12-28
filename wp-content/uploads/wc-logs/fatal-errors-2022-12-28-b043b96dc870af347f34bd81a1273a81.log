@@ -63,3 +63,5 @@ Stack trace:
 
 2022-12-28T07:18:48+00:00 CRITICAL syntax error, unexpected 'return' (T_RETURN), expecting ';' in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 121
 
+2022-12-28T10:00:44+00:00 CRITICAL Cannot redeclare Lswp_api::lcwp_get_attribute() in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 710
+
