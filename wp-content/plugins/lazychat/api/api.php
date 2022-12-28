@@ -111,13 +111,13 @@ class Lswp_api extends WP_REST_Controller
 
 		foreach ($products as $product) {
 			$product = wc_get_product($product);
-
 			$all_products[] = $this->getProductData($product);
 		}
 		return new WP_REST_Response($all_products, 200);
 	}
 
-	public function getProductData($product) {
+	public function getProductData($product)
+	{
 		return [
 			'id' => $product->get_id(),
 			'name' => $product->get_name(),
@@ -162,7 +162,7 @@ class Lswp_api extends WP_REST_Controller
 			'purchase_note' => $product->get_purchase_note(),
 			'categories' => $this->getCategories($product->get_category_ids()),
 			'tags' => $product->get_tag_ids(),
-			'images' => $this->getImages($product->get_gallery_image_ids()),
+			'images' => $this->getImages($product),
 			'attributes' => $this->getAttributes($product),
 			'default_attributes' => $product->get_default_attributes(),
 			'variations' => $product->get_children(),
@@ -190,8 +190,17 @@ class Lswp_api extends WP_REST_Controller
 	public function getImages($data)
 	{
 		$images = [];
-		if ($data !== null) {
-			foreach ($data as $item) {
+		if ($data->get_image_id()) {
+			$thumbnail = wp_get_attachment_image_src($data->get_image_id(), 'single-post-thumbnail');
+			$images[] = [
+				'id' => 0,
+				'src' => $thumbnail[0],
+				'thumbnail' => $thumbnail[0],
+			];
+		}
+
+		if ($data->get_gallery_image_ids() !== null) {
+			foreach ($data->get_gallery_image_ids() as $item) {
 				$images[] = [
 					'id' => $item,
 					'src' => wp_get_attachment_url($item),

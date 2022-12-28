@@ -55,3 +55,11 @@ Stack trace:
 #5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
 #6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_Hook->d in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 658
 
+2022-12-28T07:16:22+00:00 CRITICAL syntax error, unexpected 'return' (T_RETURN), expecting ';' in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 122
+
+2022-12-28T07:17:28+00:00 CRITICAL syntax error, unexpected 'return' (T_RETURN), expecting ';' in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 122
+
+2022-12-28T07:17:44+00:00 CRITICAL syntax error, unexpected 'return' (T_RETURN), expecting ';' in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 122
+
+2022-12-28T07:18:48+00:00 CRITICAL syntax error, unexpected 'return' (T_RETURN), expecting ';' in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 121
+
