@@ -22,6 +22,14 @@ class Lswp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
+		register_rest_route($namespace, '/' . 'get-product/(?P<id>[\d]+)', array(
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array($this, 'lcwp_get_product'),
+				'permission_callback' => array($this, 'lswp_api_permission'),
+				'args'                => array(),
+			),
+		));
 		register_rest_route($namespace, '/' . 'get-orders', array(
 			'methods' => WP_REST_Server::READABLE,
 			'callback' => array($this, 'lswp_get_orders'),
@@ -104,57 +112,61 @@ class Lswp_api extends WP_REST_Controller
 		foreach ($products as $product) {
 			$product = wc_get_product($product);
 
-			$all_products[] = [
-				'id' => $product->get_id(),
-				'name' => $product->get_name(),
-				'slug' => $product->get_slug(),
-				'permalink' => get_permalink($product->get_id()),
-				'date_created' => $product->get_date_created(),
-				'date_modified' => $product->get_date_modified(),
-				'type' => $product->get_type(),
-				'status' => $product->get_status(),
-				'featured' => $product->get_featured(),
-				'descripion' => $product->get_description(),
-				'short_description' => $product->get_short_description(),
-				'sku' => $product->get_sku(),
-				'price' => $product->get_price(),
-				'regular_price' => $product->get_regular_price(),
-				'sale_price' => $product->get_sale_price(),
-				'date_on_sale_from' => $product->get_date_on_sale_from(),
-				'date_on_sale_to' => $product->get_date_on_sale_to(),
-				'on_sale' => $product->is_on_sale(),
-				'purchaseable' => $product->is_purchasable(),
-				'total_sales' => $product->get_total_sales(),
-				'virtual' => $product->is_virtual(),
-				'downloadable' => $product->is_downloadable(),
-				'downloads' => $product->get_downloads(),
-				'download_limit' => $product->get_download_limit(),
-				'download_expiry' => $product->get_download_expiry(),
-				'tax_status' => $product->get_tax_status(),
-				'tax_class' => $product->get_tax_class(),
-				'manage_stock' => $product->get_manage_stock(),
-				'stock_quantity' => $product->get_stock_quantity(),
-				'stock_status' => $product->get_stock_status(),
-				'back_orders' => $product->get_backorders(),
-				'backorders_allowed' => $product->backorders_allowed(),
-				'backordered' => $product->is_on_backorder(),
-				'sold_individually' => $product->get_sold_individually(),
-				'weight' => $product->get_weight(),
-				'dimensions' => $product->get_dimensions(),
-				'shipping_class_id' => $product->get_shipping_class_id(),
-				'upsell_ids' => $product->get_upsell_ids(),
-				'cross_sell_ids' => $product->get_cross_sell_ids(),
-				'parent_id' => $product->get_parent_id(),
-				'purchase_note' => $product->get_purchase_note(),
-				'categories' => $this->getCategories($product->get_category_ids()),
-				'tags' => $product->get_tag_ids(),
-				'images' => $this->getImages($product->get_gallery_image_ids()),
-				'attributes' => $this->getAttributes($product),
-				'default_attributes' => $product->get_default_attributes(),
-				'variations' => $product->get_children(),
-			];
+			$all_products[] = $this->getProductData($product);
 		}
 		return new WP_REST_Response($all_products, 200);
+	}
+
+	public function getProductData($product) {
+		return [
+			'id' => $product->get_id(),
+			'name' => $product->get_name(),
+			'slug' => $product->get_slug(),
+			'permalink' => get_permalink($product->get_id()),
+			'date_created' => $product->get_date_created(),
+			'date_modified' => $product->get_date_modified(),
+			'type' => $product->get_type(),
+			'status' => $product->get_status(),
+			'featured' => $product->get_featured(),
+			'descripion' => $product->get_description(),
+			'short_description' => $product->get_short_description(),
+			'sku' => $product->get_sku(),
+			'price' => $product->get_price(),
+			'regular_price' => $product->get_regular_price(),
+			'sale_price' => $product->get_sale_price(),
+			'date_on_sale_from' => $product->get_date_on_sale_from(),
+			'date_on_sale_to' => $product->get_date_on_sale_to(),
+			'on_sale' => $product->is_on_sale(),
+			'purchaseable' => $product->is_purchasable(),
+			'total_sales' => $product->get_total_sales(),
+			'virtual' => $product->is_virtual(),
+			'downloadable' => $product->is_downloadable(),
+			'downloads' => $product->get_downloads(),
+			'download_limit' => $product->get_download_limit(),
+			'download_expiry' => $product->get_download_expiry(),
+			'tax_status' => $product->get_tax_status(),
+			'tax_class' => $product->get_tax_class(),
+			'manage_stock' => $product->get_manage_stock(),
+			'stock_quantity' => $product->get_stock_quantity(),
+			'stock_status' => $product->get_stock_status(),
+			'back_orders' => $product->get_backorders(),
+			'backorders_allowed' => $product->backorders_allowed(),
+			'backordered' => $product->is_on_backorder(),
+			'sold_individually' => $product->get_sold_individually(),
+			'weight' => $product->get_weight(),
+			'dimensions' => $product->get_dimensions(),
+			'shipping_class_id' => $product->get_shipping_class_id(),
+			'upsell_ids' => $product->get_upsell_ids(),
+			'cross_sell_ids' => $product->get_cross_sell_ids(),
+			'parent_id' => $product->get_parent_id(),
+			'purchase_note' => $product->get_purchase_note(),
+			'categories' => $this->getCategories($product->get_category_ids()),
+			'tags' => $product->get_tag_ids(),
+			'images' => $this->getImages($product->get_gallery_image_ids()),
+			'attributes' => $this->getAttributes($product),
+			'default_attributes' => $product->get_default_attributes(),
+			'variations' => $product->get_children(),
+		];
 	}
 
 	//Get all categories of a product
@@ -635,6 +647,19 @@ class Lswp_api extends WP_REST_Controller
 			];
 		}
 		return $attributes;
+	}
+
+	//Get single category
+	public function lcwp_get_product($request)
+	{
+		$id = $request->get_params();
+		$product = wc_get_product($id['id']);
+
+		if ($product) {
+			return new WP_REST_Response($this->getProductData($product), 200);
+		} else {
+			return new WP_Error('no_product', 'Product not found', array('status' => 404));
+		}
 	}
 }
 
