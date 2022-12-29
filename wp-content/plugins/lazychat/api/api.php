@@ -42,6 +42,14 @@ class Lswp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
+		register_rest_route($namespace, '/' . 'get-contact/(?P<id>[\d]+)', array(
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array($this, 'lcwp_get_contact'),
+				'permission_callback' => array($this, 'lswp_api_permission'),
+				'args'                => array(),
+			),
+		));
 		register_rest_route($namespace, '/' . 'get-categories', array(
 			'methods' => WP_REST_Server::READABLE,
 			'callback' => array($this, 'lswp_get_categories'),
@@ -577,53 +585,73 @@ class Lswp_api extends WP_REST_Controller
 		foreach ($customers->get_results() as $customer) {
 			$customer = new WC_Customer($customer);
 
-			$all_customers[] = [
-				'id' => $customer->get_id(),
-				'date_created' => $customer->get_date_created(),
-				'date_modified' => $customer->get_date_modified(),
-				'email' => $customer->get_email(),
-				'first_name' => $customer->get_first_name(),
-				'last_name' => $customer->get_last_name(),
-				'role' => $customer->get_role(),
-				'username' => $customer->get_username(),
-				'billing' => [
-					'first_name' => $customer->get_billing_first_name(),
-					'last_name' => $customer->get_billing_last_name(),
-					'company' => $customer->get_billing_company(),
-					'address_1' => $customer->get_billing_address_1(),
-					'address_2' => $customer->get_billing_address_2(),
-					'city' => $customer->get_billing_city(),
-					'state' => $customer->get_billing_state(),
-					'postcode' => $customer->get_billing_postcode(),
-					'country' => $customer->get_billing_country(),
-					'email' => $customer->get_billing_email(),
-					'phone' => $customer->get_billing_phone(),
-				],
-				'shipping' => [
-					'first_name' => $customer->get_shipping_first_name(),
-					'last_name' => $customer->get_shipping_last_name(),
-					'company' => $customer->get_shipping_company(),
-					'address_1' => $customer->get_shipping_address_1(),
-					'address_2' => $customer->get_shipping_address_2(),
-					'city' => $customer->get_shipping_city(),
-					'state' => $customer->get_shipping_state(),
-					'postcode' => $customer->get_shipping_postcode(),
-					'country' => $customer->get_shipping_country(),
-				],
-				'is_paying_customer' => $customer->is_paying_customer(),
-				'avatar_url' => $customer->get_avatar_url(),
-				'meta_data' => $customer->get_meta_data(),
-				'_links' => [
-					'self' => [
-						'href' => rest_url('wc/v3/customers/' . $customer->get_id()),
-					],
-					'collection' => [
-						'href' => rest_url('wc/v3/customers'),
-					],
-				],
-			];
+			$all_customers[] = $this->getContactData($customer);
 		}
 		return new WP_REST_Response($all_customers, 200);
+	}
+
+	//Get Customer data
+	public function getContactData($customer)
+	{
+		return [
+			'id' => $customer->get_id(),
+			'date_created' => $customer->get_date_created(),
+			'date_modified' => $customer->get_date_modified(),
+			'email' => $customer->get_email(),
+			'first_name' => $customer->get_first_name(),
+			'last_name' => $customer->get_last_name(),
+			'role' => $customer->get_role(),
+			'username' => $customer->get_username(),
+			'billing' => [
+				'first_name' => $customer->get_billing_first_name(),
+				'last_name' => $customer->get_billing_last_name(),
+				'company' => $customer->get_billing_company(),
+				'address_1' => $customer->get_billing_address_1(),
+				'address_2' => $customer->get_billing_address_2(),
+				'city' => $customer->get_billing_city(),
+				'state' => $customer->get_billing_state(),
+				'postcode' => $customer->get_billing_postcode(),
+				'country' => $customer->get_billing_country(),
+				'email' => $customer->get_billing_email(),
+				'phone' => $customer->get_billing_phone(),
+			],
+			'shipping' => [
+				'first_name' => $customer->get_shipping_first_name(),
+				'last_name' => $customer->get_shipping_last_name(),
+				'company' => $customer->get_shipping_company(),
+				'address_1' => $customer->get_shipping_address_1(),
+				'address_2' => $customer->get_shipping_address_2(),
+				'city' => $customer->get_shipping_city(),
+				'state' => $customer->get_shipping_state(),
+				'postcode' => $customer->get_shipping_postcode(),
+				'country' => $customer->get_shipping_country(),
+			],
+			'is_paying_customer' => $customer->is_paying_customer(),
+			'avatar_url' => $customer->get_avatar_url(),
+			'meta_data' => $customer->get_meta_data(),
+			'_links' => [
+				'self' => [
+					'href' => rest_url('wc/v3/customers/' . $customer->get_id()),
+				],
+				'collection' => [
+					'href' => rest_url('wc/v3/customers'),
+				],
+			],
+		];
+	}
+
+	//Get single customer data
+	//Get all contacts
+	public function lcwp_get_contact($request)
+	{
+		$id = $request->get_params();
+		$customer = new WC_Customer($id['id']);
+
+		if ($customer->get_id()) {
+			return new WP_REST_Response($this->getContactData($customer), 200);
+		} else {
+			return new WP_Error('no_customer', 'Customer not found', array('status' => 404));
+		}
 	}
 
 	//Get All variaons of a product
