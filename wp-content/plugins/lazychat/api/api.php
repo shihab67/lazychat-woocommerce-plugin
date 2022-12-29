@@ -108,6 +108,20 @@ class Lswp_api extends WP_REST_Controller
 				'args'                => array(),
 			),
 		));
+
+		//Post routes
+		register_rest_route($namespace, '/' . 'upload-image', array(
+			'methods' => WP_REST_Server::CREATABLE,
+			'callback' => array($this, 'lswp_create_image'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'create-category', array(
+			'methods' => WP_REST_Server::CREATABLE,
+			'callback' => array($this, 'lswp_create_category'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
 	}
 
 	/**
@@ -829,6 +843,62 @@ class Lswp_api extends WP_REST_Controller
 		} else {
 			return new WP_Error('no_tag', 'Tag not found', array('status' => 404));
 		}
+	}
+
+	public function lswp_create_image($request)
+	{
+		try {
+			$image =  $request->get_params()['image'];
+			$upload_dir = wp_upload_dir();
+			$image_data = file_get_contents($image);
+
+			$filename = $this->generateRandomString() . '.' . pathinfo($image, PATHINFO_EXTENSION);
+
+			if (wp_mkdir_p($upload_dir['path'])) {
+				$file = $upload_dir['path'] . '/' . $filename;
+			} else {
+				$file = $upload_dir['basedir'] . '/' . $filename;
+			}
+
+			file_put_contents($file, $image_data);
+
+			$wp_filetype = wp_check_filetype($filename, null);
+			$attachment = array(
+				'post_mime_type' => $wp_filetype['type'],
+				'post_title' => sanitize_file_name($filename),
+				'post_content' => '',
+				'post_status' => 'inherit',
+			);
+			$attach_id = wp_insert_attachment($attachment, $file);
+			require_once ABSPATH . 'wp-admin/includes/image.php';
+			$attach_data = wp_generate_attachment_metadata($attach_id, $file);
+			wp_update_attachment_metadata($attach_id, $attach_data);
+
+			//get the image by id
+			$image = wp_get_attachment_image_src($attach_id, 'full');
+			return new WP_REST_Response([
+				'id' => $attach_id,
+				'source_url' => $image[0],
+			], 200);
+		} catch (Exception $e) {
+			return new WP_Error('no_image', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	public function generateRandomString($length = 10)
+	{
+		return substr(str_shuffle(str_repeat(
+			$x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+			ceil($length / strlen($x))
+		)), 1, $length);
+	} 
+
+	public function lswp_create_category($request) {
+		wp_insert_term('My New Category', 'product_cat', array(
+			'description' => 'Description for category', // optional
+			'parent' => 0, // optional
+			'slug' => 'my-new-category' // optional
+		));
 	}
 }
 

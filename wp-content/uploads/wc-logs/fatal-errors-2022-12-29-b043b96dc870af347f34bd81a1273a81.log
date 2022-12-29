@@ -1,0 +1,10 @@
+2022-12-29T09:46:45+00:00 CRITICAL Uncaught Error: Call to undefined method WP_REST_Request::getParam() in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:844
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lswp_create_image(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 844
+
