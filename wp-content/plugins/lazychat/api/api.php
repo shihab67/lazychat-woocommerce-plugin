@@ -116,9 +116,45 @@ class Lswp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
+		register_rest_route($namespace, '/' . 'delete-image', array(
+			'methods' => WP_REST_Server::DELETABLE,
+			'callback' => array($this, 'lcwp_delete_image'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
 		register_rest_route($namespace, '/' . 'create-category', array(
 			'methods' => WP_REST_Server::CREATABLE,
 			'callback' => array($this, 'lswp_create_category'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'create-product', array(
+			'methods' => WP_REST_Server::CREATABLE,
+			'callback' => array($this, 'lswp_create_product'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'update-product', array(
+			'methods' => WP_REST_Server::EDITABLE,
+			'callback' => array($this, 'lswp_update_product'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'create-tag', array(
+			'methods' => WP_REST_Server::CREATABLE,
+			'callback' => array($this, 'lcwp_create_tag'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'update-tag', array(
+			'methods' => WP_REST_Server::EDITABLE,
+			'callback' => array($this, 'lcwp_update_tag'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'create-attribute', array(
+			'methods' => WP_REST_Server::CREATABLE,
+			'callback' => array($this, 'lcwp_create_attribute'),
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
@@ -354,23 +390,28 @@ class Lswp_api extends WP_REST_Controller
 		$id = $request->get_params();
 
 		if ($category = get_term_by('id', $id['id'], 'product_cat')) {
-			$category = [
-				'id' => $category->term_id,
-				'name' => $category->name,
-				'slug' => $category->slug,
-				'parent' => $category->parent,
-				'description' => $category->description,
-				'display' => $category->display_type,
-				'image' => $this->getCategoryImage($category->term_id),
-				'menu_order' => $category->menu_order,
-				'count' => $category->count,
-				'_links' => $this->getCategoryLinks($category->term_id),
-				'permalink' => get_category_link($category->term_id),
-			];
+			$category = $this->getCategoryData($category);
 			return new WP_REST_Response($category, 200);
 		} else {
 			return new WP_Error('no_category', 'Category not found', array('status' => 404));
 		}
+	}
+
+	public function getCategoryData($category)
+	{
+		return [
+			'id' => $category->term_id,
+			'name' => $category->name,
+			'slug' => $category->slug,
+			'parent' => $category->parent,
+			'description' => $category->description,
+			'display' => $category->display_type,
+			'image' => $this->getCategoryImage($category->term_id),
+			'menu_order' => $category->menu_order,
+			'count' => $category->count,
+			'_links' => $this->getCategoryLinks($category->term_id),
+			'permalink' => get_category_link($category->term_id),
+		];
 	}
 
 	//Get all orders
@@ -845,6 +886,7 @@ class Lswp_api extends WP_REST_Controller
 		}
 	}
 
+	//Create an image
 	public function lswp_create_image($request)
 	{
 		try {
@@ -885,20 +927,222 @@ class Lswp_api extends WP_REST_Controller
 		}
 	}
 
+	//Delete an image
+	public function lswp_delete_image($request)
+	{
+		$id = $request->get_params();
+		$attachment = get_post($id['id']);
+		if ($attachment) {
+			wp_delete_attachment($id['id'], true);
+			return new WP_REST_Response([
+				'deleted' => true,
+				'message' => 'Image deleted successfully',
+			], 200);
+		} else {
+			return new WP_Error('no_image', 'Image not found', array('status' => 404));
+		}
+	}
+
 	public function generateRandomString($length = 10)
 	{
 		return substr(str_shuffle(str_repeat(
 			$x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
 			ceil($length / strlen($x))
 		)), 1, $length);
-	} 
+	}
 
-	public function lswp_create_category($request) {
-		wp_insert_term('My New Category', 'product_cat', array(
-			'description' => 'Description for category', // optional
-			'parent' => 0, // optional
-			'slug' => 'my-new-category' // optional
+	//Create category
+	public function lswp_create_category($request)
+	{
+		$data = $request->get_params();
+		try {
+			$data = wp_insert_term($data['name'], 'product_cat', array(
+				'description' => $data['description'],
+			));
+
+			$data = json_decode(json_encode($data), FALSE);
+
+			if (isset($data) && isset($data->term_id)) {
+				if (isset($data) && isset($data->image) && $data->image !== null) {
+					add_term_meta($data->term_id, 'thumbnail_id', (int)$data->image);
+				}
+				$category = get_term_by('id', $data->term_id, 'product_cat');
+				return new WP_REST_Response($this->getCategoryData($category), 200);
+			} else if (
+				isset($data) &&
+				isset($data->errors) && isset($data->errors->term_exists) &&
+				isset($data->errors->term_exists[0])
+			) {
+				return new WP_Error('term_exists', $data->errors->term_exists[0], array('status' => 404));
+			} else {
+				return new WP_Error('no_category', 'Category not created', array('status' => 404));
+			}
+		} catch (Exception $e) {
+			return new WP_Error('no_category', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	//Update product
+	public function lswp_update_product($request)
+	{
+		//update product
+		$data = $request->get_params();
+		$product = wc_get_product($data['id']);
+		if ($product) {
+			$product->set_name($data['name']);
+			$product->set_description($data['description']);
+			$product->set_short_description($data['short_description']);
+			$product->set_regular_price($data['regular_price']);
+			$product->set_sale_price($data['sale_price']);
+			$product->set_stock_quantity($data['stock_quantity']);
+			$product->set_stock_status($data['stock_status']);
+			$product->set_manage_stock($data['manage_stock']);
+			$product->set_backorders($data['backorders']);
+			$product->set_sold_individually($data['sold_individually']);
+			$product->set_status($data['status']);
+			$product->set_catalog_visibility($data['catalog_visibility']);
+			$product->set_featured($data['featured']);
+			$product->set_reviews_allowed($data['reviews_allowed']);
+			$product->set_weight($data['weight']);
+			$product->set_length($data['length']);
+			$product->set_width($data['width']);
+			$product->set_height($data['height']);
+			$product->set_sku($data['sku']);
+			$product->set_tax_status($data['tax_status']);
+			$product->set_tax_class($data['tax_class']);
+			$product->set_purchase_note($data['purchase_note']);
+			$product->set_menu_order($data['menu_order']);
+			$product->set_virtual($data['virtual']);
+			$product->set_downloadable($data['downloadable']);
+			$product->set_price($data['price']);
+			$product->set_attributes($data['attributes']);
+			$product->set_category_ids($data['category_ids']);
+			$product->set_tag_ids($data['tag_ids']);
+			$product->set_gallery_image_ids($data['gallery_image_ids']);
+			$product->set_image_id($data['image_id']);
+			$product->set_download_limit($data['download_limit']);
+			$product->set_download_expiry($data['download_expiry']);
+			$product->set_downloads($data['downloads']);
+			$product->set_parent_id($data['parent_id']);
+			$product->set_reviews_allowed($data['reviews_allowed']);
+			$product->set_upsell_ids($data['upsell_ids']);
+			$product->set_cross_sell_ids($data['cross_sell_ids']);
+		}
+	}
+
+	//Create tag
+	public function lcwp_create_tag($request)
+	{
+		$data = $request->get_params();
+		try {
+			$data = wp_insert_term($data['name'], 'product_tag');
+
+			$data = json_decode(json_encode($data), FALSE);
+
+			if (isset($data) && isset($data->term_id)) {
+				$tag = get_term_by('id', $data->term_id, 'product_tag');
+				return new WP_REST_Response($tag, 200);
+			} else if (
+				isset($data) &&
+				isset($data->errors) && isset($data->errors->term_exists) &&
+				isset($data->errors->term_exists[0])
+			) {
+				return new WP_Error('term_exists', $data->errors->term_exists[0], array('status' => 404));
+			} else {
+				return new WP_Error('no_tag', 'Tag not created', array('status' => 404));
+			}
+		} catch (Exception $e) {
+			return new WP_Error('no_tag', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	//Update tag
+	public function lcwp_update_tag($request)
+	{
+		$data = $request->get_params();
+		$tag = wp_update_term($data['id'], 'product_tag', array(
+			'name' => $data['name'],
 		));
+		$tag = get_term_by('id', $data['id'], 'product_tag');
+		return new WP_REST_Response($tag, 200);
+	}
+
+	//Create Attribute
+	public function lcwp_create_attribute($request)
+	{
+		$data = $request->get_params();
+		try {
+			$data = wc_create_attribute(array(
+				'name' => $data['name'],
+				'slug' => $data['slug'],
+				'type' => $data['type'],
+				'order_by' => $data['order_by'],
+				'has_archives' => $data['has_archives']
+			));
+
+			$data = json_decode(json_encode($data), FALSE);
+
+			if (isset($data) && gettype($data) === 'integer') {
+				$attribute = wc_get_attribute($data);
+				return new WP_REST_Response($attribute, 200);
+			} else if (
+				isset($data) &&
+				isset($data->errors) && isset($data->errors->invalid_product_attribute_slug_already_exists) &&
+				isset($data->errors->invalid_product_attribute_slug_already_exists[0])
+			) {
+				return new WP_Error(
+					'duplicagt_attribute',
+					$data->errors->invalid_product_attribute_slug_already_exists[0],
+					array('status' => 404)
+				);
+			} else {
+				return new WP_Error('no_attribute', 'Attribute not created', array('status' => 404));
+			}
+		} catch (Exception $e) {
+			return new WP_Error('no_attribute', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	//Create product
+	public function lswp_create_product($request)
+	{
+		$data = $request->get_params();
+		try {
+			$product = new WC_Product();
+			$product->set_name($data['name']);
+			$product->set_slug($data['slug']);
+			$product->set_status($data['status']);
+			$product->set_featured($data['featured']);
+			$product->set_price($data['price']);
+			$product->set_regular_price($data['regular_price']);
+			$product->set_sale_price($data['sale_price']);
+			$product->set_date_on_sale_from($data['date_on_sale_from']);
+			$product->set_date_on_sale_to($data['date_on_sale_to']);
+			$product->set_purchase_note($data['purchase_note']);
+			$product->set_description($data['description']);
+			$product->set_short_description($data['short_description']);
+			$product->set_category_ids($data['category_ids']);
+
+			if (isset($data['thumbnail_image']) && isset($data['thumbnail_image']['id'])) {
+				$product->set_image_id($data['thumbnail_image']['id']);
+			}
+
+			$product->set_gallery_image_ids($data['gallery_images']);
+			$product->set_tag_ids($data['tags']);
+			$product->set_upsell_ids($data['upsell_ids']);
+			$product->set_cross_sell_ids($data['cross_sell_ids']);
+			$product->set_attributes(['attributes']);
+			$product->set_stock_status($data['stock_status']);
+			$product->set_stock_quantity($data['stock_quantity']);
+			$product->set_manage_stock($data['manage_stock']);
+			$product->save();
+
+			$product = wc_get_product($product->get_id());
+
+			return new WP_REST_Response($product, 200);
+		} catch (Exception $e) {
+			return new WP_Error('no_product', $e->getMessage(), array('status' => 404));
+		}
 	}
 }
 

@@ -31,7 +31,10 @@ if (!class_exists('Lswp_settings')) {
 						$this->lswp_upload_data('upload_order');
 						exit;
 						break;
-
+					case 'fetch_product':
+						$this->lswp_upload_data('fetch_product');
+						exit;
+						break;
 					default:
 						# code...
 						break;

@@ -1,0 +1,54 @@
+2022-12-31T04:12:41+00:00 CRITICAL syntax error, unexpected ')', expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$' in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 909
+
+2022-12-31T04:13:40+00:00 CRITICAL syntax error, unexpected 'add_action' (T_STRING), expecting function (T_FUNCTION) or const (T_CONST) in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 924
+
+2022-12-31T04:19:00+00:00 CRITICAL Uncaught Error: Cannot use object of type WP_Error as array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:909
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lswp_create_category(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/cr...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/cr...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_Ho in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 909
+
+2022-12-31T10:01:02+00:00 CRITICAL Uncaught Error: Object of class stdClass could not be converted to string in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\wc-attribute-functions.php:431
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(1086): wc_get_attribute(Object(stdClass))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_create_attribute(Object(WP_REST_Request))
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/cr...', Array, NULL)
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/cr...')
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#6 C:\laragon\www\w in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\wc-attribute-functions.php on line 431
+
+2022-12-31T10:01:15+00:00 CRITICAL Uncaught Error: Object of class stdClass could not be converted to string in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\wc-attribute-functions.php:431
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(1086): wc_get_attribute(Object(stdClass))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_create_attribute(Object(WP_REST_Request))
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/cr...', Array, NULL)
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/cr...')
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#6 C:\laragon\www\w in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\wc-attribute-functions.php on line 431
+
+2022-12-31T10:02:18+00:00 CRITICAL Uncaught Error: Object of class stdClass could not be converted to string in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\wc-attribute-functions.php:431
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(1086): wc_get_attribute(Object(stdClass))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_create_attribute(Object(WP_REST_Request))
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/cr...', Array, NULL)
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/cr...')
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#6 C:\laragon\www\w in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\wc-attribute-functions.php on line 431
+
+2022-12-31T10:03:59+00:00 CRITICAL Uncaught Error: Object of class stdClass could not be converted to string in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\wc-attribute-functions.php:431
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(1085): wc_get_attribute(Object(stdClass))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_create_attribute(Object(WP_REST_Request))
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/cr...', Array, NULL)
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/cr...')
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#6 C:\laragon\www\w in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\wc-attribute-functions.php on line 431
+
