@@ -130,13 +130,13 @@ class Lswp_api extends WP_REST_Controller
 		));
 		register_rest_route($namespace, '/' . 'create-product', array(
 			'methods' => WP_REST_Server::CREATABLE,
-			'callback' => array($this, 'lswp_create_product'),
+			'callback' => array($this, 'lcwp_create_product'),
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'update-product', array(
 			'methods' => WP_REST_Server::EDITABLE,
-			'callback' => array($this, 'lswp_update_product'),
+			'callback' => array($this, 'lcwp_update_product'),
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
@@ -155,6 +155,18 @@ class Lswp_api extends WP_REST_Controller
 		register_rest_route($namespace, '/' . 'create-attribute', array(
 			'methods' => WP_REST_Server::CREATABLE,
 			'callback' => array($this, 'lcwp_create_attribute'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'create-variation', array(
+			'methods' => WP_REST_Server::CREATABLE,
+			'callback' => array($this, 'lcwp_create_variation'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'update-variation', array(
+			'methods' => WP_REST_Server::EDITABLE,
+			'callback' => array($this, 'lcwp_update_variation'),
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
@@ -1104,45 +1116,162 @@ class Lswp_api extends WP_REST_Controller
 	}
 
 	//Create product
-	public function lswp_create_product($request)
+	public function lcwp_create_product($request)
 	{
 		$data = $request->get_params();
 		try {
-			$product = new WC_Product();
-			$product->set_name($data['name']);
-			$product->set_slug($data['slug']);
-			$product->set_status($data['status']);
-			$product->set_featured($data['featured']);
-			$product->set_price($data['price']);
-			$product->set_regular_price($data['regular_price']);
-			$product->set_sale_price($data['sale_price']);
-			$product->set_date_on_sale_from($data['date_on_sale_from']);
-			$product->set_date_on_sale_to($data['date_on_sale_to']);
-			$product->set_purchase_note($data['purchase_note']);
-			$product->set_description($data['description']);
-			$product->set_short_description($data['short_description']);
-			$product->set_category_ids($data['category_ids']);
-
-			if (isset($data['thumbnail_image']) && isset($data['thumbnail_image']['id'])) {
-				$product->set_image_id($data['thumbnail_image']['id']);
+			if ($data['type'] === 'simple') {
+				$product = new WC_Product_Simple();
+			} else {
+				$product = new WC_Product_Variable();
 			}
-
-			$product->set_gallery_image_ids($data['gallery_images']);
-			$product->set_tag_ids($data['tags']);
-			$product->set_upsell_ids($data['upsell_ids']);
-			$product->set_cross_sell_ids($data['cross_sell_ids']);
-			$product->set_attributes(['attributes']);
-			$product->set_stock_status($data['stock_status']);
-			$product->set_stock_quantity($data['stock_quantity']);
-			$product->set_manage_stock($data['manage_stock']);
-			$product->save();
+			$product = $this->setProductData($product, $data);
+			return 1;
 
 			$product = wc_get_product($product->get_id());
 
-			return new WP_REST_Response($product, 200);
+			return new WP_REST_Response($this->getProductData($product), 200);
 		} catch (Exception $e) {
 			return new WP_Error('no_product', $e->getMessage(), array('status' => 404));
 		}
+	}
+
+	//Update product 
+	public function lcwp_update_product($request)
+	{
+		try {
+			$data = $request->get_params();
+			$product = wc_get_product($data['id']);
+
+			if ($product === false) {
+				return new WP_Error('no_product', 'Product not found', array('status' => 404));
+			} else {
+				$product = $this->setProductData($product, $data);
+				return $product;
+				$product = wc_get_product($product->get_id());
+				return new WP_REST_Response($this->getProductData($product), 200);
+			}
+		} catch (Exception $e) {
+			return new WP_Error('no_product', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	//Set product data
+	public function setProductData($product, $data)
+	{
+		$product->set_name($data['name']);
+		$product->set_slug($data['slug']);
+		$product->set_status($data['status']);
+		$product->set_featured($data['featured']);
+		$product->set_price($data['price']);
+		$product->set_regular_price($data['regular_price']);
+		$product->set_sale_price($data['sale_price']);
+		$product->set_date_on_sale_from($data['date_on_sale_from']);
+		$product->set_date_on_sale_to($data['date_on_sale_to']);
+		$product->set_purchase_note($data['purchase_note']);
+		$product->set_description($data['description']);
+		$product->set_short_description($data['short_description']);
+		$product->set_category_ids($data['category_ids']);
+
+		if (isset($data['thumbnail_image']) && isset($data['thumbnail_image']['id'])) {
+			$product->set_image_id($data['thumbnail_image']['id']);
+		}
+
+		$product->set_gallery_image_ids($data['gallery_images']);
+		$product->set_tag_ids($data['tags']);
+		$product->set_upsell_ids($data['upsell_ids']);
+		$product->set_cross_sell_ids($data['cross_sell_ids']);
+		$product->set_attributes(['attributes']);
+		$product->set_stock_status($data['stock_status']);
+		$product->set_stock_quantity($data['stock_quantity']);
+		$product->set_manage_stock($data['manage_stock']);
+
+		//Create attributes
+		$attributes = [];
+
+		if (isset($data['attributes']) && is_array($data['attributes']) && count($data['attributes']) > 0) {
+			foreach ($data['attributes'] as $attribute) {
+				$attribute = new WC_Product_Attribute();
+				$attribute->set_name($attribute['name']);
+				$attribute->set_position($attribute['position']);
+				$attribute->set_visible($attribute['visible']);
+				$attribute->set_variation($attribute['variation']);
+				$attribute->set_options($attribute['options']);
+				$attributes[] = $attribute;
+			}
+		}
+
+		return $attributes;
+
+		if (count($attributes) > 0) {
+			$product->set_attributes($attributes);
+		}
+
+		$product->save();
+
+		return $product;
+	}
+
+	//Create variation
+	public function lcwp_create_variation($request)
+	{
+		$data = $request->get_params();
+		try {
+			$variation = new WC_Product_Variation();
+			$variation = $this->setVariationData($variation, $data);
+
+			$variation = new WC_Product_Variation($variation->get_id());
+
+			$variation = $this->getVariationData($variation);
+			return new WP_REST_Response($variation, 200);
+		} catch (Exception $e) {
+			return new WP_Error('no_variation', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	//Update variation
+	public function lcwp_update_variation($request)
+	{
+		try {
+			$data = $request->get_params();
+			$variation = new WC_Product_Variation($data['id']);
+
+			$variation = $this->setVariationData($variation, $data);
+			$variation = new WC_Product_Variation($variation->get_id());
+
+			$variation = $this->getVariationData($variation);
+			return new WP_REST_Response($variation, 200);
+		} catch (Exception $e) {
+			return new WP_Error('no_variation', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	//Set variation data
+	public function setVariationData($variation, $data)
+	{
+		$variation->set_parent_id($data['parent_id']);
+		$variation->set_description($data['description']);
+		$variation->set_price($data['price']);
+		$variation->set_regular_price($data['regular_price']);
+		$variation->set_sale_price($data['sale_price']);
+		$variation->set_date_on_sale_from($data['date_on_sale_from']);
+		$variation->set_date_on_sale_to($data['date_on_sale_to']);
+
+		if (isset($data['image']) && $data['image'] !== null) {
+			$variation->set_image_id($data['image']);
+		}
+		if (
+			isset($data['attributes']) && count($data['attributes']) > 0 &&
+			$data['attributes']['name'] && $data['attributes']['option']
+		) {
+			$variation->set_attributes(array($data['attributes']['name'] => $data['attributes']['option']));
+		}
+		$variation->set_manage_stock($data['manage_stock']);
+		$variation->set_stock_quantity($data['stock_quantity']);
+		$variation->set_stock_status($data['stock_status']);
+		$variation->save();
+
+		return $variation;
 	}
 }
 
