@@ -170,6 +170,12 @@ class Lswp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
+		register_rest_route($namespace, '/' . 'test', array(
+			'methods' => WP_REST_Server::CREATABLE,
+			'callback' => array($this, 'lcwp_test'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
 	}
 
 	/**
@@ -1103,7 +1109,7 @@ class Lswp_api extends WP_REST_Controller
 				isset($data->errors->invalid_product_attribute_slug_already_exists[0])
 			) {
 				return new WP_Error(
-					'duplicagt_attribute',
+					'duplicate_attribute',
 					$data->errors->invalid_product_attribute_slug_already_exists[0],
 					array('status' => 404)
 				);
@@ -1126,7 +1132,6 @@ class Lswp_api extends WP_REST_Controller
 				$product = new WC_Product_Variable();
 			}
 			$product = $this->setProductData($product, $data);
-			return 1;
 
 			$product = wc_get_product($product->get_id());
 
@@ -1141,13 +1146,18 @@ class Lswp_api extends WP_REST_Controller
 	{
 		try {
 			$data = $request->get_params();
-			$product = wc_get_product($data['id']);
+
+			if ($data['type'] === 'simple') {
+				$product = new WC_Product_Simple($data['id']);
+			} else {
+				$product = new WC_Product_Variable($data['id']);
+			}
 
 			if ($product === false) {
 				return new WP_Error('no_product', 'Product not found', array('status' => 404));
 			} else {
 				$product = $this->setProductData($product, $data);
-				return $product;
+
 				$product = wc_get_product($product->get_id());
 				return new WP_REST_Response($this->getProductData($product), 200);
 			}
@@ -1185,29 +1195,28 @@ class Lswp_api extends WP_REST_Controller
 		$product->set_stock_status($data['stock_status']);
 		$product->set_stock_quantity($data['stock_quantity']);
 		$product->set_manage_stock($data['manage_stock']);
+		$product->save();
 
 		//Create attributes
 		$attributes = [];
 
 		if (isset($data['attributes']) && is_array($data['attributes']) && count($data['attributes']) > 0) {
-			foreach ($data['attributes'] as $attribute) {
+			// Loop through defined attribute data
+			foreach ($data['attributes'] as $attr) {
 				$attribute = new WC_Product_Attribute();
-				$attribute->set_name($attribute['name']);
-				$attribute->set_position($attribute['position']);
-				$attribute->set_visible($attribute['visible']);
-				$attribute->set_variation($attribute['variation']);
-				$attribute->set_options($attribute['options']);
+				$attribute->set_id(0);
+				$attribute->set_name($attr['name']);
+				$attribute->set_options($attr['options']);
+				$attribute->set_visible(true);
+				$attribute->set_variation(true);
 				$attributes[] = $attribute;
 			}
 		}
 
-		return $attributes;
-
 		if (count($attributes) > 0) {
 			$product->set_attributes($attributes);
+			$product->save();
 		}
-
-		$product->save();
 
 		return $product;
 	}
@@ -1237,6 +1246,7 @@ class Lswp_api extends WP_REST_Controller
 			$variation = new WC_Product_Variation($data['id']);
 
 			$variation = $this->setVariationData($variation, $data);
+			
 			$variation = new WC_Product_Variation($variation->get_id());
 
 			$variation = $this->getVariationData($variation);
@@ -1260,18 +1270,78 @@ class Lswp_api extends WP_REST_Controller
 		if (isset($data['image']) && $data['image'] !== null) {
 			$variation->set_image_id($data['image']);
 		}
+
+		$variation->set_manage_stock($data['manage_stock']);
+		$variation->set_stock_quantity($data['stock_quantity']);
+		$variation->set_stock_status($data['stock_status']);
+
 		if (
 			isset($data['attributes']) && count($data['attributes']) > 0 &&
 			$data['attributes']['name'] && $data['attributes']['option']
 		) {
-			$variation->set_attributes(array($data['attributes']['name'] => $data['attributes']['option']));
+			$variation->set_attributes([sanitize_title($data['attributes']['name']) => $data['attributes']['option']]);
+			// update_post_meta($variation->id, 'attribute_' . sanitize_title($data['attributes']['name']), $data['attributes']['option']);
 		}
-		$variation->set_manage_stock($data['manage_stock']);
-		$variation->set_stock_quantity($data['stock_quantity']);
-		$variation->set_stock_status($data['stock_status']);
+
 		$variation->save();
 
+		$product = wc_get_product($data['parent_id']);
+		$product->save();
+
 		return $variation;
+	}
+
+	public function lcwp_test()
+	{
+		$product = new WC_Product_Variable();
+		$product->set_description('T-shirt variable description');
+		$product->set_name('T-shirt variable');
+		$product->set_sku('test-shirt');
+		$product->set_price(1);
+		$product->set_regular_price(1);
+		$product->set_stock_status();
+		$product->save();
+
+		$atts = [];
+		$atts[] = $this->pricode_create_attributes('color', ['red', 'green']);
+		$atts[] = $this->pricode_create_attributes('size', ['S', 'M']);
+
+		//Adding attributes to the created product
+		$product->set_attributes($atts);
+		$product->save();
+
+		$data = new stdClass();
+		$data->sku = 'sku-123';
+		$data->price = '10';
+		$this->pricode_create_variations($product->get_id(), ['color' => 'red', 'size' => 'M'], $data);
+		return $product;
+	}
+
+	public function pricode_create_attributes($name, $options)
+	{
+		$attribute = new WC_Product_Attribute();
+		$attribute->set_id(0);
+		$attribute->set_name($name);
+		$attribute->set_options($options);
+		$attribute->set_visible(true);
+		$attribute->set_variation(true);
+		return $attribute;
+	}
+
+	function pricode_create_variations($product_id, $values, $data)
+	{
+		$variation = new WC_Product_Variation();
+		$variation->set_parent_id($product_id);
+		$variation->set_attributes($values);
+		$variation->set_status('publish');
+		$variation->set_sku($data->sku);
+		$variation->set_price($data->price);
+		$variation->set_regular_price($data->price);
+		$variation->set_stock_status();
+		$variation->save();
+		$product = wc_get_product($product_id);
+		$product->save();
+		return $product;
 	}
 }
 

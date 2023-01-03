@@ -1,0 +1,253 @@
+2023-01-03T03:44:50+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Simple::set_type() in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1163
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(1149): Lswp_api->setProductData(Object(WC_Product_Simple), Array)
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_product(Object(WP_REST_Request))
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#6 C:\laragon\www\woocomme in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1163
+
+2023-01-03T06:52:20+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:52:47+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:53:16+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:53:41+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:54:08+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:54:34+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:54:59+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:55:24+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:55:48+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:57:49+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:58:13+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:58:37+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:59:04+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:59:28+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T06:59:55+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T07:00:20+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T07:00:44+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T07:01:09+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T07:02:23+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1244
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1244
+
+2023-01-03T09:25:38+00:00 CRITICAL syntax error, unexpected '}' in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1341
+
+2023-01-03T09:27:49+00:00 CRITICAL Uncaught WC_Data_Exception: Invalid or duplicated SKU. in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-data.php:880
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-product.php(823): WC_Data->error('product_invalid...', 'Invalid or dupl...', 400, Array)
+#1 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(1296): WC_Product->set_sku('test-shirt')
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_test(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/te...', Array, NULL)
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Serv in C:\laragon\www\woocommerce-plugin\wp-content\plugins\woocommerce\includes\abstracts\abstract-wc-data.php on line 880
+
+2023-01-03T10:31:46+00:00 CRITICAL Uncaught Error: Call to a member function get_id() on array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1250
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes\plugin.php(522): WP_ in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1250
+
+2023-01-03T11:03:15+00:00 CRITICAL syntax error, unexpected '$data' (T_VARIABLE), expecting ')' in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1253
+
+2023-01-03T11:05:23+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Variation::get_attrributes() in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1251
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1251
+
+2023-01-03T11:06:12+00:00 CRITICAL Uncaught Error: Call to undefined method WC_Product_Variation::get_attrributes() in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:1251
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(331): WP_Hook->apply_filters(NULL, Array)
+#6 C:\laragon\www\woocommerce-plugin\wp-includes in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 1251
+
+2023-01-03T11:11:14+00:00 CRITICAL Uncaught Error: Cannot use object of type WC_Product_Variation as array in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php:762
+Stack trace:
+#0 C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php(1254): Lswp_api->getVariationData(Object(WC_Product_Variation), Array)
+#1 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(1141): Lswp_api->lcwp_update_variation(Object(WP_REST_Request))
+#2 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(988): WP_REST_Server->respond_to_request(Object(WP_REST_Request), '/lazychat/v1/up...', Array, NULL)
+#3 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api\class-wp-rest-server.php(414): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#4 C:\laragon\www\woocommerce-plugin\wp-includes\rest-api.php(386): WP_REST_Server->serve_request('/lazychat/v1/up...')
+#5 C:\laragon\www\woocommerce-plugin\wp-includes\class-wp-hook.php(307): rest_api_loaded(Object(WP))
+#6 C:\laragon\www\w in C:\laragon\www\woocommerce-plugin\wp-content\plugins\lazychat\api\api.php on line 762
+
