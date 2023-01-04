@@ -182,6 +182,18 @@ class Lswp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
+		register_rest_route($namespace, '/' . 'create-order', array(
+			'methods' => WP_REST_Server::CREATABLE,
+			'callback' => array($this, 'lcwp_create_order'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'update-order', array(
+			'methods' => WP_REST_Server::EDITABLE,
+			'callback' => array($this, 'lcwp_update_order'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
 	}
 
 	/**
@@ -460,75 +472,80 @@ class Lswp_api extends WP_REST_Controller
 		foreach ($orders as $order) {
 			$order = wc_get_order($order);
 
-			$all_orders[] = [
-				'id' => $order->get_id(),
-				'parent_id' => $order->get_parent_id(),
-				'order_key' => $order->get_order_key(),
-				'created_via' => $order->get_created_via(),
-				'version' => $order->get_version(),
-				'status' => $order->get_status(),
-				'currency' => $order->get_currency(),
-				'date_created' => $order->get_date_created(),
-				'date_modified' => $order->get_date_modified(),
-				'discount_total' => $order->get_discount_total(),
-				'discount_tax' => $order->get_discount_tax(),
-				'shipping_total' => $order->get_shipping_total(),
-				'shipping_tax' => $order->get_shipping_tax(),
-				'cart_tax' => $order->get_cart_tax(),
-				'total' => $order->get_total(),
-				'total_tax' => $order->get_total_tax(),
-				'prices_include_tax' => $order->get_prices_include_tax(),
-				'customer_id' => $order->get_customer_id(),
-				'customer_ip_address' => $order->get_customer_ip_address(),
-				'customer_user_agent' => $order->get_customer_user_agent(),
-				'customer_note' => $order->get_customer_note(),
-				'billing' => [
-					'first_name' => $order->get_billing_first_name(),
-					'last_name' => $order->get_billing_last_name(),
-					'company' => $order->get_billing_company(),
-					'address_1' => $order->get_billing_address_1(),
-					'address_2' => $order->get_billing_address_2(),
-					'city' => $order->get_billing_city(),
-					'state' => $order->get_billing_state(),
-					'postcode' => $order->get_billing_postcode(),
-					'country' => $order->get_billing_country(),
-				],
-				'shipping' => [
-					'first_name' => $order->get_shipping_first_name(),
-					'last_name' => $order->get_shipping_last_name(),
-					'company' => $order->get_shipping_company(),
-					'address_1' => $order->get_shipping_address_1(),
-					'address_2' => $order->get_shipping_address_2(),
-					'city' => $order->get_shipping_city(),
-					'state' => $order->get_shipping_state(),
-					'postcode' => $order->get_shipping_postcode(),
-					'country' => $order->get_shipping_country(),
-				],
-				'payment_method' => $order->get_payment_method(),
-				'payment_method_title' => $order->get_payment_method_title(),
-				'transaction_id' => $order->get_transaction_id(),
-				'date_paid' => $order->get_date_paid(),
-				'date_completed' => $order->get_date_completed(),
-				'cart_hash' => $order->get_cart_hash(),
-				'meta_data' => $order->get_meta_data(),
-				'line_items' => $this->getLineItems($order->get_items()),
-				'tax_lines' => $this->getTaxLines($order->get_items('tax')),
-				'shipping_lines' => $this->getShippingLines($order->get_items('shipping')),
-				'fee_lines' => $this->getFeeLines($order->get_items('fee')),
-				'coupon_lines' => $this->getCouponLines($order->get_items('coupon')),
-				'refunds' => $this->getRefunds($order->get_refunds()),
-				'currency_symbol' => get_woocommerce_currency_symbol($order->get_currency()),
-				'_links' => [
-					'self' => [
-						'href' => rest_url('wc/v3/orders/' . $order->get_id()),
-					],
-					'collection' => [
-						'href' => rest_url('wc/v3/orders'),
-					],
-				],
-			];
+			$all_orders[] = $this->getOrderData($order);
 		}
 		return new WP_REST_Response($all_orders, 200);
+	}
+
+	public function getOrderData($order)
+	{
+		return [
+			'id' => $order->get_id(),
+			'parent_id' => $order->get_parent_id(),
+			'order_key' => $order->get_order_key(),
+			'created_via' => $order->get_created_via(),
+			'version' => $order->get_version(),
+			'status' => $order->get_status(),
+			'currency' => $order->get_currency(),
+			'date_created' => $order->get_date_created(),
+			'date_modified' => $order->get_date_modified(),
+			'discount_total' => $order->get_discount_total(),
+			'discount_tax' => $order->get_discount_tax(),
+			'shipping_total' => $order->get_shipping_total(),
+			'shipping_tax' => $order->get_shipping_tax(),
+			'cart_tax' => $order->get_cart_tax(),
+			'total' => $order->get_total(),
+			'total_tax' => $order->get_total_tax(),
+			'prices_include_tax' => $order->get_prices_include_tax(),
+			'customer_id' => $order->get_customer_id(),
+			'customer_ip_address' => $order->get_customer_ip_address(),
+			'customer_user_agent' => $order->get_customer_user_agent(),
+			'customer_note' => $order->get_customer_note(),
+			'billing' => [
+				'first_name' => $order->get_billing_first_name(),
+				'last_name' => $order->get_billing_last_name(),
+				'company' => $order->get_billing_company(),
+				'address_1' => $order->get_billing_address_1(),
+				'address_2' => $order->get_billing_address_2(),
+				'city' => $order->get_billing_city(),
+				'state' => $order->get_billing_state(),
+				'postcode' => $order->get_billing_postcode(),
+				'country' => $order->get_billing_country(),
+			],
+			'shipping' => [
+				'first_name' => $order->get_shipping_first_name(),
+				'last_name' => $order->get_shipping_last_name(),
+				'company' => $order->get_shipping_company(),
+				'address_1' => $order->get_shipping_address_1(),
+				'address_2' => $order->get_shipping_address_2(),
+				'city' => $order->get_shipping_city(),
+				'state' => $order->get_shipping_state(),
+				'postcode' => $order->get_shipping_postcode(),
+				'country' => $order->get_shipping_country(),
+			],
+			'payment_method' => $order->get_payment_method(),
+			'payment_method_title' => $order->get_payment_method_title(),
+			'transaction_id' => $order->get_transaction_id(),
+			'date_paid' => $order->get_date_paid(),
+			'date_completed' => $order->get_date_completed(),
+			'cart_hash' => $order->get_cart_hash(),
+			'meta_data' => $order->get_meta_data(),
+			'line_items' => $this->getLineItems($order->get_items()),
+			'tax_lines' => $this->getTaxLines($order->get_items('tax')),
+			'shipping_lines' => $this->getShippingLines($order->get_items('shipping')),
+			'fee_lines' => $this->getFeeLines($order->get_items('fee')),
+			'coupon_lines' => $this->getCouponLines($order->get_items('coupon')),
+			'refunds' => $this->getRefunds($order->get_refunds()),
+			'currency_symbol' => get_woocommerce_currency_symbol($order->get_currency()),
+			'_links' => [
+				'self' => [
+					'href' => rest_url('wc/v3/orders/' . $order->get_id()),
+				],
+				'collection' => [
+					'href' => rest_url('wc/v3/orders'),
+				],
+			],
+		];
 	}
 
 	// Get line items
@@ -1346,6 +1363,67 @@ class Lswp_api extends WP_REST_Controller
 		$contact->save();
 
 		return $contact;
+	}
+
+	public function lcwp_create_order($request)
+	{
+		try {
+			$data = $request->get_params();
+			$order = new WC_Order();
+
+			$order = $this->setOrderData($order, $data);
+
+			if ($order->get_id()) {
+				return new WP_REST_Response($this->getOrderData($order), 200);
+			} else {
+				return new WP_Error('no_order', 'Order not created', array('status' => 404));
+			}
+		} catch (Exception $e) {
+			return new WP_Error('no_order', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	public function lcwp_update_order($request)
+	{
+		try {
+			$data = $request->get_params();
+			$order = new WC_Order($data['id']);
+
+			$order = $this->setOrderData($order, $data);
+
+			if ($order->get_id()) {
+				return new WP_REST_Response($this->getOrderData($order), 200);
+			} else {
+				return new WP_Error('no_order', 'Order not created', array('status' => 404));
+			}
+		} catch (Exception $e) {
+			return new WP_Error('no_order', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	public function setOrderData($order, $data)
+	{
+		$order->set_status($data['status']);
+		$order->set_currency($data['currency']);
+		$order->set_date_created($data['date_created']);
+		$order->set_discount_total($data['discount_total']);
+		$order->set_shipping_total($data['shipping_total']);
+		$order->set_total($data['total']);
+		$order->set_shipping_tax($data['total_tax']);
+		$order->set_customer_id($data['customer_id']);
+
+		if (isset($data['line_items']) && count($data['line_items']) > 0) {
+			foreach ($data['line_items'] as $line_item) {
+				if ($data['variation_id'] !== 0) {
+					$order->add_product(wc_get_product($line_item['variation_id']), $line_item['quantity']);
+				} else {
+					$order->add_product(wc_get_product($line_item['product_id']), $line_item['quantity']);
+				}
+			}
+		}
+
+		$order->save();
+		return $order;
 	}
 }
 
