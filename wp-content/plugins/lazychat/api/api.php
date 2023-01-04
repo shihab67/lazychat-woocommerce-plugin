@@ -1181,7 +1181,7 @@ class Lswp_api extends WP_REST_Controller
 		$product->set_purchase_note($data['purchase_note']);
 		$product->set_description($data['description']);
 		$product->set_short_description($data['short_description']);
-		$product->set_category_ids($data['category_ids']);
+		$product->set_category_ids($data['categories']);
 
 		if (isset($data['thumbnail_image']) && isset($data['thumbnail_image']['id'])) {
 			$product->set_image_id($data['thumbnail_image']['id']);
@@ -1243,7 +1243,7 @@ class Lswp_api extends WP_REST_Controller
 	{
 		try {
 			$data = $request->get_params();
-			$variation = new WC_Product_Variation($data['id']);
+			$variation = new WC_Product_Variation($data['variation_id']);
 
 			$variation = $this->setVariationData($variation, $data);
 			
@@ -1276,11 +1276,9 @@ class Lswp_api extends WP_REST_Controller
 		$variation->set_stock_status($data['stock_status']);
 
 		if (
-			isset($data['attributes']) && count($data['attributes']) > 0 &&
-			$data['attributes']['name'] && $data['attributes']['option']
+			isset($data['attributes']) && count($data['attributes']) > 0
 		) {
-			$variation->set_attributes([sanitize_title($data['attributes']['name']) => $data['attributes']['option']]);
-			// update_post_meta($variation->id, 'attribute_' . sanitize_title($data['attributes']['name']), $data['attributes']['option']);
+			$variation->set_attributes($data['attributes']);
 		}
 
 		$variation->save();
