@@ -21,19 +21,21 @@ if (!class_exists('Lswp_settings')) {
 				switch ($_POST['upload_type']) {
 					case 'upload_product':
 						$this->lswp_upload_data('upload_product');
-						exit;
 						break;
 					case 'upload_contact':
 						$this->lswp_upload_data('upload_contact');
-						exit;
 						break;
 					case 'upload_order':
 						$this->lswp_upload_data('upload_order');
-						exit;
 						break;
 					case 'fetch_product':
 						$this->lswp_upload_data('fetch_product');
-						exit;
+						break;
+					case 'fetch_contact':
+						$this->lswp_upload_data('fetch_contact');
+						break;
+					case 'fetch_order':
+						$this->lswp_upload_data('fetch_order');
 						break;
 					default:
 						# code...

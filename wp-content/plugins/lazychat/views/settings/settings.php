@@ -105,9 +105,12 @@
 				</div>
 				<div class="row d-flex justify-content-center align-items-center">
 					<div class="col-md-6 col-lg-6 col-xs-12">
-						<a href="{{ route('sync', 'order') }}" class="btn btn-primary fetch-btn order-fetch-btn">
-							<?php _e('Fetch Now') ?>
-						</a>
+						<form action="admin-post.php" method="POST">
+							<input type="hidden" name="action" value="lswp_upload_data">
+							<input type="hidden" name="upload_type" value="fetch_order">
+							<?php wp_nonce_field('lswp_upload_data_verify') ?>
+							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn"><?php _e('Fetch Now') ?></button>
+						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
 						<!-- @if (isset($last_synced_orders))
@@ -160,9 +163,12 @@
 				</div>
 				<div class="row d-flex justify-content-center align-items-center">
 					<div class="col-md-6 col-lg-6 col-xs-12">
-						<a href="{{ route('sync', 'customer') }}" class="btn btn-primary fetch-btn contact-fetch-btn">
-							<?php _e('Fetch Now') ?>
-						</a>
+						<form action="admin-post.php" method="POST">
+							<input type="hidden" name="action" value="lswp_upload_data">
+							<input type="hidden" name="upload_type" value="fetch_contact">
+							<?php wp_nonce_field('lswp_upload_data_verify') ?>
+							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn"><?php _e('Fetch Now') ?></button>
+						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
 						<!-- @if (isset($last_synced_customers))

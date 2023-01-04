@@ -170,9 +170,15 @@ class Lswp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
-		register_rest_route($namespace, '/' . 'test', array(
+		register_rest_route($namespace, '/' . 'create-contact', array(
 			'methods' => WP_REST_Server::CREATABLE,
-			'callback' => array($this, 'lcwp_test'),
+			'callback' => array($this, 'lcwp_create_contact'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'update-contact', array(
+			'methods' => WP_REST_Server::EDITABLE,
+			'callback' => array($this, 'lcwp_update_contact'),
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
@@ -1246,7 +1252,7 @@ class Lswp_api extends WP_REST_Controller
 			$variation = new WC_Product_Variation($data['variation_id']);
 
 			$variation = $this->setVariationData($variation, $data);
-			
+
 			$variation = new WC_Product_Variation($variation->get_id());
 
 			$variation = $this->getVariationData($variation);
@@ -1287,6 +1293,59 @@ class Lswp_api extends WP_REST_Controller
 		$product->save();
 
 		return $variation;
+	}
+
+	public function lcwp_create_contact($request)
+	{
+		try {
+			$data = $request->get_params();
+			$contact = new WC_Customer();
+
+			$contact = $this->setContactData($contact, $data);
+
+			if ($contact->get_id()) {
+				return new WP_REST_Response($this->getContactData($contact), 200);
+			} else {
+				return new WP_Error('no_contact', 'Contact not created', array('status' => 404));
+			}
+		} catch (Exception $e) {
+			return new WP_Error('no_contact', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	public function lcwp_update_contact($request)
+	{
+		try {
+			$data = $request->get_params();
+			$contact = new WC_Customer($data['id']);
+
+			$contact = $this->setContactData($contact, $data);
+			if ($contact->get_id()) {
+				return new WP_REST_Response($this->getContactData($contact), 200);
+			} else {
+				return new WP_Error('no_contact', 'Contact not updated', array('status' => 404));
+			}
+		} catch (Exception $e) {
+			return new WP_Error('no_contact', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	public function setContactData($contact, $data)
+	{
+		if (isset($data['email'])) {
+			$contact->set_email($data['email']);
+		}
+
+		$contact->set_first_name($data['first_name']);
+		$contact->set_last_name($data['last_name']);
+		$contact->set_billing_first_name($data['billing']['first_name']);
+		$contact->set_billing_last_name($data['billing']['last_name']);
+		$contact->set_billing_address($data['billing']['address']);
+		$contact->set_billing_email($data['billing']['email']);
+		$contact->set_billing_phone($data['billing']['phone']);
+		$contact->save();
+
+		return $contact;
 	}
 }
 
