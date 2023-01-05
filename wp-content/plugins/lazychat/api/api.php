@@ -36,6 +36,14 @@ class Lswp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
+		register_rest_route($namespace, '/' . 'get-order/(?P<id>[\d]+)', array(
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array($this, 'lcwp_get_order'),
+				'permission_callback' => array($this, 'lswp_api_permission'),
+				'args'                => array(),
+			),
+		));
 		register_rest_route($namespace, '/' . 'get-contacts', array(
 			'methods' => WP_REST_Server::READABLE,
 			'callback' => array($this, 'lswp_get_contacts'),
@@ -191,6 +199,13 @@ class Lswp_api extends WP_REST_Controller
 		register_rest_route($namespace, '/' . 'update-order', array(
 			'methods' => WP_REST_Server::EDITABLE,
 			'callback' => array($this, 'lcwp_update_order'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+
+		register_rest_route($namespace, '/' . 'test', array(
+			'methods' => WP_REST_Server::READABLE,
+			'callback' => array($this, 'test'),
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
@@ -477,6 +492,19 @@ class Lswp_api extends WP_REST_Controller
 		return new WP_REST_Response($all_orders, 200);
 	}
 
+	//Get single order
+	public function lcwp_get_order($request)
+	{
+		$id = $request->get_params();
+		$order = wc_get_order($id['id']);
+
+		if ($order) {
+			return new WP_REST_Response($this->getOrderData($order), 200);
+		} else {
+			return new WP_Error('no_customer', 'Order not found', array('status' => 404));
+		}
+	}
+
 	public function getOrderData($order)
 	{
 		return [
@@ -737,7 +765,6 @@ class Lswp_api extends WP_REST_Controller
 	}
 
 	//Get single customer data
-	//Get all contacts
 	public function lcwp_get_contact($request)
 	{
 		$id = $request->get_params();
@@ -1403,27 +1430,64 @@ class Lswp_api extends WP_REST_Controller
 
 	public function setOrderData($order, $data)
 	{
-		$order->set_status($data['status']);
-		$order->set_currency($data['currency']);
-		$order->set_date_created($data['date_created']);
-		$order->set_discount_total($data['discount_total']);
-		$order->set_shipping_total($data['shipping_total']);
-		$order->set_total($data['total']);
-		$order->set_shipping_tax($data['total_tax']);
-		$order->set_customer_id($data['customer_id']);
-
+		if (isset($data['status'])) {
+			$order->set_status($data['status']);
+		}
+		if (isset($data['currency'])) {
+			$order->set_currency($data['currency']);
+		}
+		if (isset($data['date_created'])) {
+			$order->set_date_created($data['date_created']);
+		}
+		if (isset($data['discount_total'])) {
+			$order->set_discount_total($data['discount_total']);
+		}
+		if (isset($data['shipping_total'])) {
+			$order->set_shipping_total($data['shipping_total']);
+		}
+		if (isset($data['net_total'])) {
+			$order->set_total($data['net_total']);
+		}
+		if (isset($data['total_tax'])) {
+			$fee = new WC_Order_Item_Fee();
+			$fee->set_name('Vat/Tax');
+			$fee->set_amount($data['total_tax']);
+			$fee->set_total($data['total_tax']);
+			$fee->save();
+			$order->add_item($fee);
+		}
+		if (isset($data['customer_id'])) {
+			$order->set_customer_id($data['customer_id']);
+		}
+		if (isset($data['billing_address'])) {
+			$order->set_address($data['billing_address'], 'billing');
+		}
 		if (isset($data['line_items']) && count($data['line_items']) > 0) {
+			// return $data['line_items'];
+
+			//Delete previous line items
+			foreach ($order->get_items() as $item) {
+				wc_delete_order_item($item->get_id());
+			}
 			foreach ($data['line_items'] as $line_item) {
-				if ($data['variation_id'] !== 0) {
-					$order->add_product(wc_get_product($line_item['variation_id']), $line_item['quantity']);
-				} else {
-					$order->add_product(wc_get_product($line_item['product_id']), $line_item['quantity']);
-				}
+				$product = wc_get_product(isset($line_item['variation_id']) &&
+					$line_item['variation_id'] > 0 ? $line_item['variation_id'] : $line_item['product_id']);
+				$order->add_product($product, $line_item['quantity'], $line_item);
 			}
 		}
-
+		$order->calculate_totals();
 		$order->save();
 		return $order;
+	}
+
+	public function test()
+	{
+		$fee = new WC_Order_Item_Fee();
+		$fee->set_name('Vat/Tax');
+		$fee->set_amount(20);
+		$fee->set_total(20);
+		$fee->save();
+		return $fee->get_id();
 	}
 }
 
