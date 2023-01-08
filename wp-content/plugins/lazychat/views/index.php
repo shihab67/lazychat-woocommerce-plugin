@@ -17,7 +17,7 @@ function lazychat_settings_page()
 	<link rel="stylesheet" href="<?php echo plugins_url('lazychat/assets/css/custom.css'); ?>">
 	<link rel="stylesheet" href="<?php echo plugins_url('lazychat/assets/css/loader.css'); ?>">
 
-	<div class="container-fluid">
+	<div class="container-fluid lazychat-body">
 		<img class="mb-2" src="<?php echo plugins_url('lazychat/assets/images/Lazychat Logo-03.png'); ?>" alt="lazychat logo" height="30">
 
 		<?php include(LCWP_PATH . 'views/alert/alert.php'); ?>
