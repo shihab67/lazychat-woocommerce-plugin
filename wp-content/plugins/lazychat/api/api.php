@@ -1417,7 +1417,6 @@ class Lswp_api extends WP_REST_Controller
 			$order = new WC_Order($data['id']);
 
 			$order = $this->setOrderData($order, $data);
-
 			if ($order->get_id()) {
 				return new WP_REST_Response($this->getOrderData($order), 200);
 			} else {
@@ -1443,12 +1442,33 @@ class Lswp_api extends WP_REST_Controller
 			$order->set_discount_total($data['discount_total']);
 		}
 		if (isset($data['shipping_total'])) {
-			$order->set_shipping_total($data['shipping_total']);
+			//Remove previous delivery charge starts
+			foreach ($order->get_items('fee') as $item_id => $item) {
+				if ($item->get_name() === 'Delivery Charge') {
+					$order->remove_item($item_id);
+				}
+			}
+			//Remove previous delivery charge ends
+
+			$fee = new WC_Order_Item_Fee();
+			$fee->set_name('Delivery Charge');
+			$fee->set_amount($data['shipping_total']);
+			$fee->set_total($data['shipping_total']);
+			$fee->save();
+			$order->add_item($fee);
 		}
 		if (isset($data['net_total'])) {
 			$order->set_total($data['net_total']);
 		}
 		if (isset($data['total_tax'])) {
+			//Remove previous vat/tax starts
+			foreach ($order->get_items('fee') as $item_id => $item) {
+				if ($item->get_name() === 'Vat/Tax') {
+					$order->remove_item($item_id);
+				}
+			}
+			//Remove previous vat/tax ends
+
 			$fee = new WC_Order_Item_Fee();
 			$fee->set_name('Vat/Tax');
 			$fee->set_amount($data['total_tax']);
@@ -1462,9 +1482,10 @@ class Lswp_api extends WP_REST_Controller
 		if (isset($data['billing_address'])) {
 			$order->set_address($data['billing_address'], 'billing');
 		}
+		if (isset($data['shipping_address'])) {
+			$order->set_address($data['shipping_address'], 'shipping');
+		}
 		if (isset($data['line_items']) && count($data['line_items']) > 0) {
-			// return $data['line_items'];
-
 			//Delete previous line items
 			foreach ($order->get_items() as $item) {
 				wc_delete_order_item($item->get_id());
@@ -1475,7 +1496,6 @@ class Lswp_api extends WP_REST_Controller
 				$order->add_product($product, $line_item['quantity'], $line_item);
 			}
 		}
-		$order->calculate_totals();
 		$order->save();
 		return $order;
 	}
