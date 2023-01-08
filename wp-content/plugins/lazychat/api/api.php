@@ -1187,39 +1187,78 @@ class Lswp_api extends WP_REST_Controller
 	//Set product data
 	public function setProductData($product, $data)
 	{
-		$product->set_name($data['name']);
-		$product->set_slug($data['slug']);
-		$product->set_status($data['status']);
-		$product->set_featured($data['featured']);
-		$product->set_price($data['price']);
-		$product->set_regular_price($data['regular_price']);
-		$product->set_sale_price($data['sale_price']);
-		$product->set_date_on_sale_from($data['date_on_sale_from']);
-		$product->set_date_on_sale_to($data['date_on_sale_to']);
-		$product->set_purchase_note($data['purchase_note']);
-		$product->set_description($data['description']);
-		$product->set_short_description($data['short_description']);
-		$product->set_category_ids($data['categories']);
-
+		if (isset($data['name'])) {
+			$product->set_name($data['name']);
+		}
+		if (isset($data['slug'])) {
+			$product->set_slug($data['slug']);
+		}
+		if (isset($data['status'])) {
+			$product->set_status($data['status']);
+		}
+		if (isset($data['featured'])) {
+			$product->set_featured($data['featured']);
+		}
+		if (isset($data['price'])) {
+			$product->set_price($data['price']);
+		}
+		if (isset($data['regular_price'])) {
+			$product->set_regular_price($data['regular_price']);
+		}
+		if (isset($data['sale_price'])) {
+			$product->set_sale_price($data['sale_price']);
+		}
+		if (isset($data['date_on_sale_from'])) {
+			$product->set_date_on_sale_from($data['date_on_sale_from']);
+		}
+		if (isset($data['date_on_sale_to'])) {
+			$product->set_date_on_sale_to($data['date_on_sale_to']);
+		}
+		if (isset($data['purchase_note'])) {
+			$product->set_purchase_note($data['purchase_note']);
+		}
+		if (isset($data['description'])) {
+			$product->set_description($data['description']);
+		}
+		if (isset($data['short_description'])) {
+			$product->set_short_description($data['short_description']);
+		}
+		if (isset($data['categories'])) {
+			$product->set_category_ids($data['categories']);
+		}
 		if (isset($data['thumbnail_image']) && isset($data['thumbnail_image']['id'])) {
 			$product->set_image_id($data['thumbnail_image']['id']);
 		}
-
-		$product->set_gallery_image_ids($data['gallery_images']);
-		$product->set_tag_ids($data['tags']);
-		$product->set_upsell_ids($data['upsell_ids']);
-		$product->set_cross_sell_ids($data['cross_sell_ids']);
-		$product->set_attributes(['attributes']);
-		$product->set_stock_status($data['stock_status']);
-		$product->set_stock_quantity($data['stock_quantity']);
-		$product->set_manage_stock($data['manage_stock']);
+		if (isset($data['gallery_images'])) {
+			$product->set_gallery_image_ids($data['gallery_images']);
+		}
+		if (isset($data['tags'])) {
+			$product->set_tag_ids($data['tags']);
+		}
+		if (isset($data['upsell_ids'])) {
+			$product->set_upsell_ids($data['upsell_ids']);
+		}
+		if (isset($data['cross_sell_ids'])) {
+			$product->set_cross_sell_ids($data['cross_sell_ids']);
+		}
+		if (isset($data['attributes'])) {
+			$product->set_attributes(['attributes']);
+		}
+		if (isset($data['stock_status'])) {
+			$product->set_stock_status($data['stock_status']);
+		}
+		if (isset($data['stock_quantity'])) {
+			$product->set_stock_quantity($data['stock_quantity']);
+		}
+		if (isset($data['manage_stock'])) {
+			$product->set_manage_stock($data['manage_stock']);
+		}
 		$product->save();
 
 		//Create attributes
 		$attributes = [];
 
 		if (isset($data['attributes']) && is_array($data['attributes']) && count($data['attributes']) > 0) {
-			// Loop through defined attribute data
 			foreach ($data['attributes'] as $attr) {
 				$attribute = new WC_Product_Attribute();
 				$attribute->set_id(0);
@@ -1277,22 +1316,39 @@ class Lswp_api extends WP_REST_Controller
 	//Set variation data
 	public function setVariationData($variation, $data)
 	{
-		$variation->set_parent_id($data['parent_id']);
-		$variation->set_description($data['description']);
-		$variation->set_price($data['price']);
-		$variation->set_regular_price($data['regular_price']);
-		$variation->set_sale_price($data['sale_price']);
-		$variation->set_date_on_sale_from($data['date_on_sale_from']);
-		$variation->set_date_on_sale_to($data['date_on_sale_to']);
-
+		if (isset($data['parent_id'])) {
+			$variation->set_parent_id($data['parent_id']);
+		}
+		if (isset($data['description'])) {
+			$variation->set_description($data['description']);
+		}
+		if (isset($data['price'])) {
+			$variation->set_price($data['price']);
+		}
+		if (isset($data['regular_price'])) {
+			$variation->set_regular_price($data['regular_price']);
+		}
+		if (isset($data['sale_price'])) {
+			$variation->set_sale_price($data['sale_price']);
+		}
+		if (isset($data['date_on_sale_from'])) {
+			$variation->set_date_on_sale_from($data['date_on_sale_from']);
+		}
+		if (isset($data['date_on_sale_to'])) {
+			$variation->set_date_on_sale_to($data['date_on_sale_to']);
+		}
 		if (isset($data['image']) && $data['image'] !== null) {
 			$variation->set_image_id($data['image']);
 		}
-
-		$variation->set_manage_stock($data['manage_stock']);
-		$variation->set_stock_quantity($data['stock_quantity']);
-		$variation->set_stock_status($data['stock_status']);
-
+		if (isset($data['manage_stock'])) {
+			$variation->set_manage_stock($data['manage_stock']);
+		}
+		if (isset($data['stock_quantity'])) {
+			$variation->set_stock_quantity($data['stock_quantity']);
+		}
+		if (isset($data['stock_status'])) {
+			$variation->set_stock_status($data['stock_status']);
+		}
 		if (
 			isset($data['attributes']) && count($data['attributes']) > 0
 		) {
@@ -1301,8 +1357,10 @@ class Lswp_api extends WP_REST_Controller
 
 		$variation->save();
 
-		$product = wc_get_product($data['parent_id']);
-		$product->save();
+		if (isset($data['parent_id'])) {
+			$product = wc_get_product($data['parent_id']);
+			$product->save();
+		}
 
 		return $variation;
 	}
@@ -1342,19 +1400,34 @@ class Lswp_api extends WP_REST_Controller
 		}
 	}
 
+	//Set contact data
 	public function setContactData($contact, $data)
 	{
 		if (isset($data['email'])) {
 			$contact->set_email($data['email']);
 		}
 
-		$contact->set_first_name($data['first_name']);
-		$contact->set_last_name($data['last_name']);
-		$contact->set_billing_first_name($data['billing']['first_name']);
-		$contact->set_billing_last_name($data['billing']['last_name']);
-		$contact->set_billing_address($data['billing']['address']);
-		$contact->set_billing_email($data['billing']['email']);
-		$contact->set_billing_phone($data['billing']['phone']);
+		if (isset($data['first_name'])) {
+			$contact->set_first_name($data['first_name']);
+		}
+		if (isset($data['last_name'])) {
+			$contact->set_last_name($data['last_name']);
+		}
+		if (isset($data['billing']) && isset($data['billing']['first_name'])) {
+			$contact->set_billing_first_name($data['billing']['first_name']);
+		}
+		if (isset($data['billing']) && isset($data['billing']['last_name'])) {
+			$contact->set_billing_last_name($data['billing']['last_name']);
+		}
+		if (isset($data['billing']) && isset($data['billing']['address'])) {
+			$contact->set_billing_address($data['billing']['address']);
+		}
+		if (isset($data['billing']) && isset($data['billing']['email'])) {
+			$contact->set_billing_email($data['billing']['email']);
+		}
+		if (isset($data['billing']) && isset($data['billing']['phone'])) {
+			$contact->set_billing_phone($data['billing']['phone']);
+		}
 		$contact->save();
 
 		return $contact;
@@ -1454,10 +1527,12 @@ class Lswp_api extends WP_REST_Controller
 			$order->set_address($data['shipping_address'], 'shipping');
 		}
 		if (isset($data['line_items']) && count($data['line_items']) > 0) {
-			//Delete previous line items
+			//Delete previous line items starts
 			foreach ($order->get_items() as $item) {
 				wc_delete_order_item($item->get_id());
 			}
+			//Delete previous line items ends
+
 			foreach ($data['line_items'] as $line_item) {
 				$product = wc_get_product(isset($line_item['variation_id']) &&
 					$line_item['variation_id'] > 0 ? $line_item['variation_id'] : $line_item['product_id']);
