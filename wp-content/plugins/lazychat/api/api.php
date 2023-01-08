@@ -124,12 +124,6 @@ class Lswp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
-		register_rest_route($namespace, '/' . 'delete-image', array(
-			'methods' => WP_REST_Server::DELETABLE,
-			'callback' => array($this, 'lcwp_delete_image'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
-			'args' => array(),
-		));
 		register_rest_route($namespace, '/' . 'create-category', array(
 			'methods' => WP_REST_Server::CREATABLE,
 			'callback' => array($this, 'lswp_create_category'),
@@ -203,9 +197,28 @@ class Lswp_api extends WP_REST_Controller
 			'args' => array(),
 		));
 
-		register_rest_route($namespace, '/' . 'test', array(
-			'methods' => WP_REST_Server::READABLE,
-			'callback' => array($this, 'test'),
+		//Delete endpoints
+		register_rest_route($namespace, '/' . 'delete-product/(?P<id>[\d]+)', array(
+			'methods' => WP_REST_Server::DELETABLE,
+			'callback' => array($this, 'lcwp_delete_product'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'delete-order/(?P<id>[\d]+)', array(
+			'methods' => WP_REST_Server::DELETABLE,
+			'callback' => array($this, 'lcwp_delete_order'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'delete-contact/(?P<id>[\d]+)', array(
+			'methods' => WP_REST_Server::DELETABLE,
+			'callback' => array($this, 'lcwp_delete_contact'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
+		register_rest_route($namespace, '/' . 'delete-image/(?P<id>[\d]+)', array(
+			'methods' => WP_REST_Server::DELETABLE,
+			'callback' => array($this, 'lcwp_delete_image'),
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
@@ -252,11 +265,14 @@ class Lswp_api extends WP_REST_Controller
 			'paged' => $page,
 			'fields' => 'ids',
 			'post_type' => 'product',
+			'post_status' => 'pending/publish',
 		));
 
 		foreach ($products as $product) {
 			$product = wc_get_product($product);
-			$all_products[] = $this->getProductData($product);
+			if ($product->get_name() !== 'AUTO-DRAFT') {
+				$all_products[] = $this->getProductData($product);
+			}
 		}
 		return new WP_REST_Response($all_products, 200);
 	}
@@ -996,7 +1012,7 @@ class Lswp_api extends WP_REST_Controller
 	}
 
 	//Delete an image
-	public function lswp_delete_image($request)
+	public function lcwp_delete_image($request)
 	{
 		$id = $request->get_params();
 		$attachment = get_post($id['id']);
@@ -1500,14 +1516,63 @@ class Lswp_api extends WP_REST_Controller
 		return $order;
 	}
 
-	public function test()
+	//Delete product
+	public function lcwp_delete_product($request)
 	{
-		$fee = new WC_Order_Item_Fee();
-		$fee->set_name('Vat/Tax');
-		$fee->set_amount(20);
-		$fee->set_total(20);
-		$fee->save();
-		return $fee->get_id();
+		try {
+			$data = $request->get_params();
+			$product = wc_get_product($data['id']);
+			if ($product && $product->delete(true)) {
+				return new WP_REST_Response([
+					'deleted' => true,
+					'message' => 'Product deleted successfully',
+				], 200);
+			} else {
+				return new WP_Error('no_product', 'Product not found', array('status' => 404));
+			}
+		} catch (Exception $e) {
+			return new WP_Error('no_product', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	//Delete order
+	public function lcwp_delete_order($request)
+	{
+		try {
+			$data = $request->get_params();
+			$order = new WC_Order($data['id']);
+			if ($order->delete(true)) {
+				return new WP_REST_Response([
+					'deleted' => true,
+					'message' => 'Order deleted successfully',
+				], 200);
+			} else {
+				return new WP_Error('no_order', 'Order not found', array('status' => 404));
+			}
+		} catch (Exception $e) {
+			return new WP_Error('no_order', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	//Delete customer
+	public function lcwp_delete_contact($request)
+	{
+		try {
+			require_once(ABSPATH . 'wp-admin/includes/user.php');
+
+			$data = $request->get_params();
+			$customer = get_userdata($data['id']);
+			if ($customer && in_array('customer', $customer->roles) && wp_delete_user($customer->ID)) {
+				return new WP_REST_Response([
+					'deleted' => true,
+					'message' => 'Contact deleted successfully',
+				], 200);
+			} else {
+				return new WP_Error('no_customer', 'Contact not found', array('status' => 404));
+			}
+		} catch (Exception $e) {
+			return new WP_Error('no_customer', $e->getMessage(), array('status' => 404));
+		}
 	}
 }
 
