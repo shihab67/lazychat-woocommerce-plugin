@@ -1066,54 +1066,6 @@ class Lswp_api extends WP_REST_Controller
 		}
 	}
 
-	//Update product
-	public function lswp_update_product($request)
-	{
-		//update product
-		$data = $request->get_params();
-		$product = wc_get_product($data['id']);
-		if ($product) {
-			$product->set_name($data['name']);
-			$product->set_description($data['description']);
-			$product->set_short_description($data['short_description']);
-			$product->set_regular_price($data['regular_price']);
-			$product->set_sale_price($data['sale_price']);
-			$product->set_stock_quantity($data['stock_quantity']);
-			$product->set_stock_status($data['stock_status']);
-			$product->set_manage_stock($data['manage_stock']);
-			$product->set_backorders($data['backorders']);
-			$product->set_sold_individually($data['sold_individually']);
-			$product->set_status($data['status']);
-			$product->set_catalog_visibility($data['catalog_visibility']);
-			$product->set_featured($data['featured']);
-			$product->set_reviews_allowed($data['reviews_allowed']);
-			$product->set_weight($data['weight']);
-			$product->set_length($data['length']);
-			$product->set_width($data['width']);
-			$product->set_height($data['height']);
-			$product->set_sku($data['sku']);
-			$product->set_tax_status($data['tax_status']);
-			$product->set_tax_class($data['tax_class']);
-			$product->set_purchase_note($data['purchase_note']);
-			$product->set_menu_order($data['menu_order']);
-			$product->set_virtual($data['virtual']);
-			$product->set_downloadable($data['downloadable']);
-			$product->set_price($data['price']);
-			$product->set_attributes($data['attributes']);
-			$product->set_category_ids($data['category_ids']);
-			$product->set_tag_ids($data['tag_ids']);
-			$product->set_gallery_image_ids($data['gallery_image_ids']);
-			$product->set_image_id($data['image_id']);
-			$product->set_download_limit($data['download_limit']);
-			$product->set_download_expiry($data['download_expiry']);
-			$product->set_downloads($data['downloads']);
-			$product->set_parent_id($data['parent_id']);
-			$product->set_reviews_allowed($data['reviews_allowed']);
-			$product->set_upsell_ids($data['upsell_ids']);
-			$product->set_cross_sell_ids($data['cross_sell_ids']);
-		}
-	}
-
 	//Create tag
 	public function lcwp_create_tag($request)
 	{
