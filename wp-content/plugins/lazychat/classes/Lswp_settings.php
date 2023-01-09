@@ -83,5 +83,48 @@ if (!class_exists('Lswp_settings')) {
 				exit;
 			}
 		}
+
+		public function lcwp_sync_options()
+		{
+			check_admin_referer('lcwp_sync_options_verify');
+
+			if (!current_user_can('manage_options')) {
+				echo json_encode([
+					'status' => 'error',
+					'msg' => 'You do not have sufficient permissions to perform this operation!'
+				]);
+				exit;
+			} else {
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/sync-options');
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($_POST));
+				$headers = array();
+				$headers[] = 'Content-Type: application/json';
+				$headers[] = 'Authorization: Bearer ' . get_option('lswp_auth_token');
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				$result = curl_exec($ch);
+				if (curl_errno($ch)) {
+					echo 'Error:' . curl_error($ch);
+				}
+				curl_close($ch);
+
+				if (isset($result)) $result = json_decode($result, true);
+
+				if (isset($result['status']) && $result['status'] === 'success' && get_option('lcwp_sync_options')) {
+					update_option(
+						'lcwp_sync_options',
+						$result['options']
+					);
+				}
+
+				echo json_encode([
+					'status' => $result['status'],
+					'msg' => $result['message'],
+				]);
+				exit;
+			}
+		}
 	}
 }

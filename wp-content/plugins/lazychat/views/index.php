@@ -146,6 +146,33 @@ function lazychat_settings_page()
 					});
 				}
 			});
+
+			$(document).on('change', '.sync', function() {
+				var value = $(this).val();
+
+				$.ajax({
+					url: '<?php echo admin_url('admin-ajax.php'); ?>',
+					method: "POST",
+					data: new FormData($('#sync-options-form')[0]),
+					contentType: false,
+					cache: false,
+					processData: false,
+					dataType: "json",
+					success: function(res) {
+						if (res.status === 'success') {
+							toastr.success(res.msg, {
+								progressBar: !0,
+								closeButton: !0
+							});
+						} else {
+							toastr.error(res.msg, {
+								progressBar: !0,
+								closeButton: !0
+							});
+						}
+					}
+				});
+			});
 		});
 	</script>
 <?php

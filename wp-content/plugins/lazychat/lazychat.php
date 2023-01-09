@@ -38,7 +38,7 @@ session_start();
 // Constants
 define('LCWP_PATH', plugin_dir_path(__FILE__));
 define('LCWP_URI', plugin_dir_url(__FILE__));
-define('LAZYCHAT_URL', 'http://8153-103-12-74-32.ngrok.io');
+define('LAZYCHAT_URL', 'http://96a8-103-12-74-40.ngrok.io');
 
 // Check if WooCommerce is active
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -105,6 +105,10 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
 				add_action(
 					'wp_ajax_lswp_map_order_phase',
 					[new Lswp_connect(), 'lswp_map_order_phase']
+				);
+				add_action(
+					'wp_ajax_lcwp_sync_options',
+					[new Lswp_settings(), 'lcwp_sync_options']
 				);
 				add_action('rest_api_init', [new Lswp_api, 'register_routes']);
 

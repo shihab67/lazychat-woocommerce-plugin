@@ -33,6 +33,13 @@
                             font-weight: 600;
                             font-size: 0.8rem;"><?php _e('Map WooCommerce Phases') ?></a>
 				</div>
+				<div>
+					<a href="#" class="m-1 text-secondary" data-toggle="modal" data-target="#syncSettingsModal" style="cursor: pointer;
+                            font-weight: 600;
+                            font-size: 0.8rem;">
+						<fa class="fas fa-cog"></fa> <?php _e('Settings') ?>
+					</a>
+				</div>
 			</div>
 		</div>
 
@@ -42,7 +49,6 @@
 				<div class="row pb-2">
 					<div class="col-md-12 d-flex">
 						<h4 class="text-primary font-weight-bold pr-2"><ins>P</ins>roduct Sync</h4>
-						<a href="#" data-toggle="modal" data-target="#syncSettingsModalProduct" style="font-size: 15px; color: #000; "><i class="fas fa-cog"></i></a>
 					</div>
 				</div>
 				<div class="row d-flex justify-content-center align-items-center">
@@ -100,7 +106,6 @@
 				<div class="row pt-4">
 					<div class="col-md-12 d-flex">
 						<h4 class="text-primary font-weight-bold pr-2"><ins>O</ins>rder Sync</h4>
-						<a href="#" data-toggle="modal" data-target="#syncSettingsModalOrder" style="font-size: 15px; color: #000; "><i class="fas fa-cog"></i></a>
 					</div>
 				</div>
 				<div class="row d-flex justify-content-center align-items-center">
@@ -158,7 +163,6 @@
 				<div class="row pt-4">
 					<div class="col-md-12 d-flex">
 						<h4 class="text-primary font-weight-bold pr-2"><ins>C</ins>ontacts Sync</h4>
-						<a href="#" data-toggle="modal" data-target="#syncSettingsModalContact" style="font-size: 15px; color: #000; "><i class="fas fa-cog"></i></a>
 					</div>
 				</div>
 				<div class="row d-flex justify-content-center align-items-center">
@@ -242,7 +246,7 @@
 <!-- Map order phases modal ends -->
 
 <!-- sync settings modal starts -->
-<div class="modal fade" id="syncSettingsModalProduct" tabindex="-1" role="dialog" aria-labelledby="syncSettingsModal" aria-hidden="true">
+<div class="modal fade" id="syncSettingsModal" tabindex="-1" role="dialog" aria-labelledby="syncSettingsModal" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -250,128 +254,126 @@
 				<button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
 			</div>
 			<div class="modal-body">
-				<div class="row">
-					<div class="col-md-12">
-						<h4 class="text-primary font-weight-bold"><ins>P</ins>roducts</h4>
-					</div>
+				<form method="post" id="sync-options-form">
+					<input type="hidden" name="action" value="lcwp_sync_options">
+					<?php wp_nonce_field('lcwp_sync_options_verify') ?>
 
-					<div class="row" style="padding-left: 15px;">
+					<div class="row">
 						<div class="col-md-12">
-							<div class="pt-2">
-								<label class="checkbox checkbox-primary">
-									<input type="checkbox" class="sync" value="sync_products_created" /><span>When
-										a product is created in
-										LazyChat, Create in
-										WooCommerce too</span><span class="checkmark"></span>
-								</label>
-								<label class="checkbox checkbox-primary">
-									<input type="checkbox" class="sync" value="sync_products_updated" /><span>When
-										a product is updated in
-										LazyChat, Update in
-										WooCommerce too</span><span class="checkmark"></span>
-								</label>
-								<label class="checkbox checkbox-primary">
-									<input type="checkbox" class="sync" value="sync_products_removed" /><span>When
-										a product is removed in
-										LazyChat, Remove in
-										WooCommerce too</span><span class="checkmark"></span>
-								</label>
+							<h4 class="text-primary font-weight-bold"><ins>P</ins>roducts</h4>
+						</div>
+
+						<div class="row" style="padding-left: 15px;">
+							<div class="col-md-12">
+								<div class="pt-2">
+									<label class="checkbox checkbox-primary">
+										<input type="checkbox" class="sync" name="options[]" value="lcwp_product_created" <?php is_array(get_option('lcwp_sync_options')) &&
+																																get_option('lcwp_sync_options')['lcwp_product_created'] === 1 ? print 'checked' : ''
+																															?> /><span>
+											When a product is created in LazyChat, Create in WooCommerce too</span>
+										<span class="checkmark"></span>
+									</label>
+									<label class="checkbox checkbox-primary">
+										<input type="checkbox" class="sync" name="options[]" value="lcwp_product_updated" <?php is_array(get_option('lcwp_sync_options')) &&
+																																get_option('lcwp_sync_options')['lcwp_product_updated'] === 1 ? print 'checked' : ''
+																															?> /><span>
+											When a product is updated in LazyChat, Update in WooCommerce too</span>
+										<span class="checkmark"></span>
+									</label>
+									<label class="checkbox checkbox-primary">
+										<input type="checkbox" class="sync" name="options[]" value="lcwp_product_removed" <?php is_array(get_option('lcwp_sync_options')) &&
+																																get_option('lcwp_sync_options')['lcwp_product_removed'] === 1 ? print 'checked' : ''
+																															?> /><span>
+											When a product is removed in LazyChat, Remove in WooCommerce too</span>
+										<span class="checkmark"></span>
+									</label>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
 
-<div class="modal fade" id="syncSettingsModalContact" tabindex="-1" role="dialog" aria-labelledby="syncSettingsModal" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title font-weight-bold" id="syncSettingsModal"> <?php _e('Sync Settings') ?></h5>
-				<button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="col-md-12">
-						<h4 class="text-primary font-weight-bold"><ins>C</ins>ontacts</h4>
-					</div>
-
-					<div class="row" style="padding-left: 15px;">
+					<div class="row pt-4">
 						<div class="col-md-12">
-							<div class="pt-2">
-								<label class="checkbox checkbox-primary">
-									<input type="checkbox" class="sync" value="sync_customers_created" /><span>When
-										a contact is created in
-										LazyChat, Create in
-										WooCommerce too</span><span class="checkmark"></span>
-								</label>
-								<label class="checkbox checkbox-primary">
-									<input type="checkbox" class="sync" value="sync_customers_updated" /><span>When
-										a contact is updated in
-										LazyChat, Update in
-										WooCommerce too</span><span class="checkmark"></span>
-								</label>
-								<label class="checkbox checkbox-primary">
-									<input type="checkbox" class="sync" value="sync_customers_removed" /><span>When
-										a contact is removed in
-										LazyChat, Remove in
-										WooCommerce too</span><span class="checkmark"></span>
-								</label>
+							<h4 class="text-primary font-weight-bold"><ins>C</ins>ontacts</h4>
+						</div>
+
+						<div class="row" style="padding-left: 15px;">
+							<div class="col-md-12">
+								<div class="pt-2">
+									<label class="checkbox checkbox-primary">
+										<input type="checkbox" class="sync" name="options[]" value="lcwp_customer_created" <?php is_array(get_option('lcwp_sync_options')) &&
+																																get_option('lcwp_sync_options')['lcwp_customer_created'] === 1 ? print 'checked' : ''
+																															?> /><span>
+											When a contact is created in LazyChat, Create in WooCommerce too</span>
+										<span class="checkmark"></span>
+									</label>
+									<label class="checkbox checkbox-primary">
+										<input type="checkbox" class="sync" name="options[]" value="lcwp_customer_updated" <?php is_array(get_option('lcwp_sync_options')) &&
+																																get_option('lcwp_sync_options')['lcwp_customer_updated'] === 1 ? print 'checked' : ''
+																															?> /><span>
+											When a contact is updated in LazyChat, Update in WooCommerce too</span>
+										<span class="checkmark"></span>
+									</label>
+									<label class="checkbox checkbox-primary">
+										<input type="checkbox" class="sync" name="options[]" value="lcwp_customer_removed" <?php is_array(get_option('lcwp_sync_options')) &&
+																																get_option('lcwp_sync_options')['lcwp_customer_removed'] === 1 ? print 'checked' : ''
+																															?> /><span>
+											When a contact is removed in LazyChat, Remove in WooCommerce too</span>
+										<span class="checkmark"></span>
+									</label>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
 
-<div class="modal fade" id="syncSettingsModalOrder" tabindex="-1" role="dialog" aria-labelledby="syncSettingsModal" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title font-weight-bold" id="syncSettingsModal"> <?php _e('Sync Settings') ?></h5>
-				<button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-			</div>
-			<div class="modal-body">
-				<div class="row">
-					<div class="col-md-12">
-						<h4 class="text-primary font-weight-bold"><ins>O</ins>rders</h4>
-					</div>
-
-					<div class="row" style="padding-left: 15px;">
+					<div class="row pt-4">
 						<div class="col-md-12">
-							<div class="pt-2">
-								<label class="checkbox checkbox-primary">
-									<input type="checkbox" class="sync" value="sync_orders_created" /><span>When
-										an order is created in
-										LazyChat, Create in
-										WooCommerce too</span><span class="checkmark"></span>
-								</label>
-								<label class="checkbox checkbox-primary">
-									<input type="checkbox" class="sync" value="sync_orders_updated" /><span>When
-										an order is updated in
-										LazyChat, Update in
-										WooCommerce too</span><span class="checkmark"></span>
-								</label>
-								<label class="checkbox checkbox-primary">
-									<input type="checkbox" class="sync" value="sync_orders_removed" /><span>When
-										an order is removed in
-										LazyChat, Remove in
-										WooCommerce too</span><span class="checkmark"></span>
-								</label>
+							<h4 class="text-primary font-weight-bold"><ins>O</ins>rders</h4>
+						</div>
+
+						<div class="row" style="padding-left: 15px;">
+							<div class="col-md-12">
+								<div class="pt-2">
+									<label class="checkbox checkbox-primary">
+										<input type="checkbox" class="sync" name="options[]" value="lcwp_order_created" <?php is_array(get_option('lcwp_sync_options')) &&
+																															get_option('lcwp_sync_options')['lcwp_order_created'] === 1 ? print 'checked' : ''
+																														?> /><span>
+											When an order is created in LazyChat, Create in WooCommerce too</span>
+										<span class="checkmark"></span>
+									</label>
+									<label class="checkbox checkbox-primary">
+										<input type="checkbox" class="sync" name="options[]" value="lcwp_order_updated" <?php is_array(get_option('lcwp_sync_options')) &&
+																															get_option('lcwp_sync_options')['lcwp_order_updated'] === 1 ? print 'checked' : ''
+																														?> /><span>
+											When an order is updated in LazyChat, Update in WooCommerce too</span>
+										<span class="checkmark"></span>
+									</label>
+									<label class="checkbox checkbox-primary">
+										<input type="checkbox" class="sync" name="options[]" value="lcwp_order_removed" <?php is_array(get_option('lcwp_sync_options')) &&
+																															get_option('lcwp_sync_options')['lcwp_order_removed'] === 1 ? print 'checked' : ''
+																														?> /><span>
+											When an order is removed in LazyChat, Remove in WooCommerce too</span>
+										<span class="checkmark"></span>
+									</label>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+					<?php
+					$all_options = [
+						'lcwp_product_created',
+						'lcwp_product_updated',
+						'lcwp_product_removed',
+						'lcwp_customer_created',
+						'lcwp_customer_updated',
+						'lcwp_customer_removed',
+						'lcwp_order_created',
+						'lcwp_order_updated',
+						'lcwp_order_removed'
+					];
+					echo "<input type='hidden' name='all_options' value='" . base64_encode(json_encode($all_options)) . "'/>";
+					?>
+				</form>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
