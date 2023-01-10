@@ -31,10 +31,11 @@
 				<div>
 					<a href="#" class="m-1" data-toggle="modal" data-target="#mapOrderPhasesModal" style="cursor: pointer;
                             font-weight: 600;
-                            font-size: 0.8rem;"><?php _e('Map WooCommerce Phases') ?></a>
+                            font-size: 0.8rem;">
+						<i class="fas fa-code-merge"></i> <?php _e('Map WooCommerce Phases') ?></a>
 				</div>
 				<div>
-					<a href="#" class="m-1 text-secondary" data-toggle="modal" data-target="#syncSettingsModal" style="cursor: pointer;
+					<a href="#" class="m-1 text-info" data-toggle="modal" data-target="#syncSettingsModal" style="cursor: pointer;
                             font-weight: 600;
                             font-size: 0.8rem;">
 						<fa class="fas fa-cog"></fa> <?php _e('Settings') ?>

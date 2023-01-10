@@ -102,6 +102,22 @@ class Lswp_api extends WP_REST_Controller
 				'args'                => array(),
 			),
 		));
+		register_rest_route($namespace, '/' . 'get-attribute-terms/(?P<id>[\d]+)', array(
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array($this, 'lcwp_get_attribute_terms'),
+				'permission_callback' => array($this, 'lswp_api_permission'),
+				'args'                => array(),
+			),
+		));
+		register_rest_route($namespace, '/' . 'get-attribute-term(?:/(&P<attribute_id>\d+))?(?:/(?P<term_id>\d+))?', array(
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array($this, 'lcwp_get_attribute_term'),
+				'permission_callback' => array($this, 'lswp_api_permission'),
+				'args'                => array(),
+			),
+		));
 		register_rest_route($namespace, '/' . 'get-tags', array(
 			'methods' => WP_REST_Server::READABLE,
 			'callback' => array($this, 'lcwp_get_tags'),
@@ -389,6 +405,54 @@ class Lswp_api extends WP_REST_Controller
 			}
 		}
 		return $attributes;
+	}
+
+	//Get an attribute terms
+	public function lcwp_get_attribute_terms($request)
+	{
+		$id = $request->get_params()['id']; //attribute id
+		$attribute = wc_get_attribute($id);
+		$terms = get_terms($attribute->slug, array('hide_empty' => false));
+		$all_terms = [];
+		foreach ($terms as $term) {
+			$all_terms[] = [
+				'id' => $term->term_id,
+				'name' => $term->name,
+				'slug' => $term->slug,
+				'permalink' => get_term_link($term),
+			];
+		}
+		return new WP_REST_Response($all_terms, 200);
+	}
+
+	//Get specific term
+	public function lcwp_get_attribute_term($request)
+	{
+		$attribute_id = $request->get_params()['attribute_id']; //attribute id
+		$term_id = $request->get_params()['term_id']; //term id
+		$attribute = wc_get_attribute($attribute_id);
+		$terms = get_terms($attribute->slug, array('hide_empty' => false));
+		$all_terms = [];
+		foreach ($terms as $term) {
+			$all_terms[] = [
+				'id' => $term->term_id,
+				'name' => $term->name,
+				'slug' => $term->slug,
+				'permalink' => get_term_link($term),
+			];
+		}
+
+		if (count($all_terms) > 0) {
+			foreach ($all_terms as $term) {
+				if ($term['id'] == $term_id) {
+					return new WP_REST_Response($term, 200);
+				} else {
+					return new WP_Error('no_term', 'No term found', array('status' => 404));
+				}
+			}
+		} else {
+			return new WP_Error('no_terms', 'No terms found', array('status' => 404));
+		}
 	}
 
 	//Get all categories
@@ -835,7 +899,7 @@ class Lswp_api extends WP_REST_Controller
 			'sku' => $data->get_sku(),
 			'price' => $data->get_price(),
 			'regular_price' => $data->get_regular_price(),
-			'sale_Price' => $data->get_sale_price(),
+			'sale_price' => $data->get_sale_price(),
 			'date_on_sale_from' => $data->get_date_on_sale_from(),
 			'date_on_sale_to' => $data->get_date_on_sale_to(),
 			'on_sale' => $data->is_on_sale(),

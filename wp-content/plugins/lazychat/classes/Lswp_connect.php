@@ -101,6 +101,13 @@ if (!class_exists('Lswp_connect')) {
 					if ($_POST['is_mapped'] === 0) {
 						//create woocommerce webhooks
 						$this->lswp_create_webhooks();
+
+						if (get_option('lcwp_shop_id')) {
+							update_option(
+								'lcwp_shop_id',
+								$result['shop_id']
+							);
+						}
 					}
 
 					//Store order phases in session

@@ -55,6 +55,8 @@ function lazychat_settings_page()
 	<script src="<?php echo plugins_url('lazychat/assets/js/bootstrap.bundle.min.js'); ?>"></script>
 	<script src="<?php echo plugins_url('lazychat/assets/js/toastr.min.js'); ?>"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://js.pusher.com/7.2.0/pusher.min.js"></script>
+	<script src="<?php echo plugins_url('lazychat/assets/js/echo.js'); ?>"></script>
 	<script src="<?php echo plugins_url('lazychat/assets/js/scripts.js'); ?>"></script>
 
 	<script type="text/javascript">
@@ -173,6 +175,27 @@ function lazychat_settings_page()
 					}
 				});
 			});
+
+			const isLocalhost = () => {
+				return "<?php print PUSHER_APP_HOST; ?>" === 'localhost' || "<?php print PUSHER_APP_HOST; ?>" === '127.0.0.1';
+			}
+
+			window.Echo = new Echo({
+				broadcaster: 'pusher',
+				key: "<?php print PUSHER_APP_KEY; ?>",
+				encrypted: true,
+				wsHost: "<?php print PUSHER_APP_HOST; ?>",
+				wsPort: 6001,
+				wssPort: 6001,
+				disableStats: false,
+				forceTLS: !isLocalhost(),
+			});
+
+			Echo.channel("<?php echo "user-channel-" . md5(get_option('lcwp_shop_id')); ?>").listen(
+				'QueueProgress',
+				(data) => {
+					console.log(data);
+				});
 		});
 	</script>
 <?php

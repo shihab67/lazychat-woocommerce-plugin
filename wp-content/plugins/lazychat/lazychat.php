@@ -38,7 +38,9 @@ session_start();
 // Constants
 define('LCWP_PATH', plugin_dir_path(__FILE__));
 define('LCWP_URI', plugin_dir_url(__FILE__));
-define('LAZYCHAT_URL', 'http://96a8-103-12-74-40.ngrok.io');
+define('LAZYCHAT_URL', 'http://chatbot.test');
+define('PUSHER_APP_KEY', '68cdc42e480c1f64420d');
+define('PUSHER_APP_HOST', '127.0.0.1');
 
 // Check if WooCommerce is active
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {

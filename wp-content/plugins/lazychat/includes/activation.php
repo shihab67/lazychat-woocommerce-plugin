@@ -20,7 +20,7 @@ if (!function_exists('lswp_activation')) {
 		}
 
 		if (!get_option('lswp_order_phases')) {
-			add_option('lswp_auth_token', [
+			add_option('lswp_order_phases', [
 				'mapped' => false,
 				'phases' => []
 			]);
@@ -38,6 +38,10 @@ if (!function_exists('lswp_activation')) {
 				'lcwp_order_updated' => 0,
 				'lcwp_order_removed' => 0,
 			]);
+		}
+
+		if (!get_option('lcwp_shop_id')) {
+			add_option('lcwp_shop_id', null);
 		}
 	}
 }
