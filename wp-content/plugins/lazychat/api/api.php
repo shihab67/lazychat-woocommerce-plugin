@@ -434,21 +434,18 @@ class Lswp_api extends WP_REST_Controller
 		$terms = get_terms($attribute->slug, array('hide_empty' => false));
 		$all_terms = [];
 		foreach ($terms as $term) {
-			$all_terms[] = [
+			$all_terms[$term->term_id] = [
 				'id' => $term->term_id,
 				'name' => $term->name,
 				'slug' => $term->slug,
 				'permalink' => get_term_link($term),
 			];
 		}
-
 		if (count($all_terms) > 0) {
-			foreach ($all_terms as $term) {
-				if ($term['id'] == $term_id) {
-					return new WP_REST_Response($term, 200);
-				} else {
-					return new WP_Error('no_term', 'No term found', array('status' => 404));
-				}
+			if (isset($all_terms[$term_id])) {
+				return new WP_REST_Response($all_terms[$term_id], 200);
+			} else {
+				return new WP_Error('no_term', 'No term found', array('status' => 404));
 			}
 		} else {
 			return new WP_Error('no_terms', 'No terms found', array('status' => 404));
