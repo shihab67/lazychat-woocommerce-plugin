@@ -176,6 +176,12 @@ class Lswp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
+		register_rest_route($namespace, '/' . 'create-attribute-term', array(
+			'methods' => WP_REST_Server::CREATABLE,
+			'callback' => array($this, 'lcwp_create_attribute_term'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
 		register_rest_route($namespace, '/' . 'create-variation', array(
 			'methods' => WP_REST_Server::CREATABLE,
 			'callback' => array($this, 'lcwp_create_variation'),
@@ -989,14 +995,7 @@ class Lswp_api extends WP_REST_Controller
 		$attributes = wc_get_attribute_taxonomies();
 		$all_attributes = [];
 		foreach ($attributes as $attribute) {
-			$all_attributes[] = [
-				'id' => $attribute->attribute_id,
-				'name' => $attribute->attribute_label,
-				'slug' => $attribute->attribute_name,
-				'type' => $attribute->attribute_type,
-				'order_by' => $attribute->attribute_orderby,
-				'has_archives' => $attribute->attribute_public,
-			];
+			$all_attributes[] = wc_get_attribute($attribute->attribute_id);
 		}
 		return new WP_REST_Response($all_attributes, 200);
 	}
@@ -1236,7 +1235,7 @@ class Lswp_api extends WP_REST_Controller
 				return new WP_Error('no_product', 'Product not found', array('status' => 404));
 			} else {
 				$product = $this->setProductData($product, $data);
-
+				
 				$product = wc_get_product($product->get_id());
 				return new WP_REST_Response($this->getProductData($product), 200);
 			}
@@ -1302,9 +1301,6 @@ class Lswp_api extends WP_REST_Controller
 		if (isset($data['cross_sell_ids'])) {
 			$product->set_cross_sell_ids($data['cross_sell_ids']);
 		}
-		if (isset($data['attributes'])) {
-			$product->set_attributes(['attributes']);
-		}
 		if (isset($data['stock_status'])) {
 			$product->set_stock_status($data['stock_status']);
 		}
@@ -1317,22 +1313,66 @@ class Lswp_api extends WP_REST_Controller
 		$product->save();
 
 		//Create attributes
-		$attributes = [];
+		$product_level_attributes = [];
+		// $taxonomy_based_attributes = [];
 
 		if (isset($data['attributes']) && is_array($data['attributes']) && count($data['attributes']) > 0) {
-			foreach ($data['attributes'] as $attr) {
-				$attribute = new WC_Product_Attribute();
-				$attribute->set_id(0);
-				$attribute->set_name($attr['name']);
-				$attribute->set_options($attr['options']);
-				$attribute->set_visible(true);
-				$attribute->set_variation(true);
-				$attributes[] = $attribute;
+			foreach ($data['attributes'] as $key => $attribute) {
+				if ($attribute['id'] <= 0) {
+					$create_attribute = new WC_Product_Attribute();
+					$create_attribute->set_id(0);
+					$create_attribute->set_name($attribute['name']);
+					$create_attribute->set_options($attribute['options']);
+					$create_attribute->set_visible(true);
+					$create_attribute->set_variation(true);
+
+					$product_level_attributes[] = $create_attribute;
+				} else {
+					if (isset($attribute['name']) && isset($attribute['options'])) {
+						// Clean attribute name to get the taxonomy
+						$taxonomy = $attribute['slug'];
+
+						$option_term_ids = array(); // Initializing
+
+						// Loop through defined attribute data options (terms values)
+						foreach ($attribute['options'] as $option) {
+							if (term_exists($option, $taxonomy)) {
+								// Save the possible option value for the attribute which will be used for variation later
+								wp_set_object_terms($product->id, $option, $taxonomy, true);
+								// Get the term ID
+								$option_term_ids[] = get_term_by('name', $option, $taxonomy)->term_id;
+							}
+						}
+					}
+					// Loop through defined attribute data
+
+					// $taxonomy_based_attributes[$taxonomy] = array(
+					// 	'name'          => $taxonomy,
+					// 	'value'         => $option_term_ids, // Need to be term IDs
+					// 	'position'      => $key + 1,
+					// 	'is_visible'    => $attribute['visible'],
+					// 	'is_variation'  => $attribute['variation'],
+					// 	'is_taxonomy'   => '1'
+					// );
+					$create_attribute = new WC_Product_Attribute();
+					$create_attribute->set_id($attribute['id']);
+					$create_attribute->set_name($taxonomy);
+					$create_attribute->set_options($option_term_ids);
+					$create_attribute->set_visible(true);
+					$create_attribute->set_variation(true);
+
+					$product_level_attributes[] = $create_attribute;
+				}
 			}
 		}
+		
+		// if (count($taxonomy_based_attributes) > 0) {
+		// 	// Save the meta entry for product attributes
+		// 	update_post_meta($product->id, '_product_attributes', $taxonomy_based_attributes);
+		// }
 
-		if (count($attributes) > 0) {
-			$product->set_attributes($attributes);
+		if (count($product_level_attributes) > 0) {
+			$product->set_attributes($product_level_attributes);
 			$product->save();
 		}
 
@@ -1660,6 +1700,27 @@ class Lswp_api extends WP_REST_Controller
 			}
 		} catch (Exception $e) {
 			return new WP_Error('no_customer', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	public function lcwp_create_attribute_term($request)
+	{
+		try {
+			$data = $request->get_params();
+			$taxonomy = $data['parent_attribute_slug'];
+			if (!$term = get_term_by('slug', $data['slug'], $taxonomy)) {
+				$term = wp_insert_term($data['term_name'], $taxonomy, array(
+					'slug' => $data['slug'],
+				));
+				$term = get_term_by('id', $term['term_id'], $taxonomy);
+				if ($term) {
+					update_term_meta($term->term_id, 'order', 0);
+				}
+			}
+
+			return new WP_REST_Response($term, 200);
+		} catch (Exception $e) {
+			return new WP_Error('no_attribute', $e->getMessage(), array('status' => 404));
 		}
 	}
 }
