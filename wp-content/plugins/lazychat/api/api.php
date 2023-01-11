@@ -358,9 +358,10 @@ class Lswp_api extends WP_REST_Controller
 		$categories = [];
 		if ($data !== null) {
 			foreach ($data as $item) {
+				$name = get_term_by('id', $item, 'product_cat');
 				$categories[] = [
 					'id' => $item,
-					'name' => get_cat_name($item) === "" ? 'Uncategorized' : get_cat_name($item),
+					'name' => $name->name,
 					'slug' => get_category($item)->slug,
 					'permalink' => get_category_link($item),
 				];
@@ -400,9 +401,10 @@ class Lswp_api extends WP_REST_Controller
 		$attributes = [];
 		if ($data !== null) {
 			foreach ($data->get_attributes() as $item) {
+				$name = wc_get_attribute($item->get_id());
 				$attributes[] = [
 					'id' => $item->get_id(),
-					'name' => $item->get_name(),
+					'name' => $name->name,
 					'options' => $item->get_options(),
 					'position' => $item->get_position(),
 					'visible' => $item->get_visible(),
