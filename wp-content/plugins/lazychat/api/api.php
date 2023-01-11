@@ -401,10 +401,9 @@ class Lswp_api extends WP_REST_Controller
 		$attributes = [];
 		if ($data !== null) {
 			foreach ($data->get_attributes() as $item) {
-				$name = wc_get_attribute($item->get_id());
 				$attributes[] = [
 					'id' => $item->get_id(),
-					'name' => $name->name,
+					'name' => $item->get_id() > 0 ?  wc_get_attribute($item->get_id())->name : $item->get_name(),
 					'options' => $item->get_options(),
 					'position' => $item->get_position(),
 					'visible' => $item->get_visible(),
