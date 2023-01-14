@@ -43,5 +43,9 @@ if (!function_exists('lswp_activation')) {
 		if (!get_option('lcwp_shop_id')) {
 			add_option('lcwp_shop_id', null);
 		}
+
+		if (!get_option('lcwp_last_fetched_time')) {
+			add_option('lcwp_last_fetched_time', null);
+		}
 	}
 }

@@ -226,6 +226,12 @@ class Lswp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lswp_api_permission'),
 			'args' => array(),
 		));
+		register_rest_route($namespace, '/' . 'send-last-fetched-time', array(
+			'methods' => WP_REST_Server::CREATABLE,
+			'callback' => array($this, 'lcwp_store_last_fetched_time'),
+			'permission_callback' => array($this, 'lswp_api_permission'),
+			'args' => array(),
+		));
 
 		//Delete endpoints
 		register_rest_route($namespace, '/' . 'delete-product/(?P<id>[\d]+)', array(
@@ -1736,7 +1742,25 @@ class Lswp_api extends WP_REST_Controller
 	public function lcwp_get_attribute_term_by_name($request)
 	{
 		$data = $request->get_params();
-		return get_term_by('name', $data['term_name'] , $data['attribute_slug']);
+		return get_term_by('name', $data['term_name'], $data['attribute_slug']);
+	}
+
+	public function lcwp_store_last_fetched_time($request)
+	{
+		$data = $request->get_params();
+		if (get_option('lcwp_last_fetched_time')) {
+			update_option('lcwp_last_fetched_time', $data);
+			return new WP_REST_Response([
+				'success' => true,
+				'message' => 'Last fetched time stored successfully',
+			], 200);
+		} else {
+			add_option('lcwp_last_fetched_time', $data);
+			return new WP_REST_Response([
+				'success' => false,
+				'message' => 'Last fetched time not stored',
+			], 404);
+		}
 	}
 }
 

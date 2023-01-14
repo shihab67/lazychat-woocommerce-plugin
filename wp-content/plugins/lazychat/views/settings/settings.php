@@ -29,21 +29,16 @@
 		<div class="row">
 			<div class="col-md-12 d-flex justify-content-end">
 				<div>
-					<a href="#" class="m-1" data-toggle="modal" data-target="#mapOrderPhasesModal" style="cursor: pointer;
-                            font-weight: 600;
-                            font-size: 0.8rem;">
+					<a class="btn btn-primary btn-sm m-1" href="#" data-toggle="modal" data-target="#mapOrderPhasesModal">
 						<i class="fas fa-code-merge"></i> <?php _e('Map WooCommerce Phases') ?></a>
 				</div>
 				<div>
-					<a href="#" class="m-1 text-info" data-toggle="modal" data-target="#syncSettingsModal" style="cursor: pointer;
-                            font-weight: 600;
-                            font-size: 0.8rem;">
+					<a href="#" class="m-1 btn btn-info btn-sm" data-toggle="modal" data-target="#syncSettingsModal">
 						<fa class="fas fa-cog"></fa> <?php _e('Settings') ?>
 					</a>
 				</div>
 			</div>
 		</div>
-
 
 		<div class="row">
 			<div class="col-md-8 col-lg-8 col-sm-12">
@@ -62,15 +57,23 @@
 						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
-						<!-- @if (isset($last_synced_products))
-						<span class="pt-2" style="color: #979696">
-							Last Fetch Completed:
-						</span><span style="font-size: 14px; font-weight: bold;">{{ date('d M Y h:i A', strtotime($last_synced_products->updated_at)) }}</span>
-						@else
-						<span class="pt-2" style="color: #979696">
-							Last Fetch Completed:
-						</span> <span style="font-size: 14px; font-weight: bold;">Never Fetched</span>
-						@endif -->
+						<?php
+						if (
+							get_option('lcwp_last_fetched_time') &&
+							get_option('lcwp_last_fetched_time') !== null &&
+							isset(get_option('lcwp_last_fetched_time')['lcwpSyncProductsInWoocommerce'])
+						) {
+						?>
+							<span class="pt-2" style="color: #979696">
+								Last Fetch Completed:
+							</span><span style="font-size: 14px; font-weight: bold;">
+								<?php print get_option('lcwp_last_fetched_time')['lcwpSyncProductsInWoocommerce']; ?>
+							</span>
+						<?php } else { ?>
+							<span class="pt-2" style="color: #979696">
+								Last Fetch Completed:
+							</span> <span style="font-size: 14px; font-weight: bold;">Never Fetched</span>
+						<?php } ?>
 					</div>
 				</div>
 				<div class="row pt-2 d-flex justify-content-center align-items-center">
@@ -83,15 +86,23 @@
 						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
-						<!-- @if (isset($last_synced_products_upload))
-						<span class="pt-2" style="color: #979696">
-							Last Upload Completed:
-						</span> <span style="font-size: 14px; font-weight: bold;">{{ date('d M Y h:i A', strtotime($last_synced_products_upload->updated_at)) }}</span>
-						@else
-						<span class="pt-2" style="color: #979696">
-							Last Upload Completed:
-						</span> <span style="font-size: 14px; font-weight: bold;">Never Uploaded</span>
-						@endif -->
+						<?php
+						if (
+							get_option('lcwp_last_fetched_time') &&
+							get_option('lcwp_last_fetched_time') !== null &&
+							isset(get_option('lcwp_last_fetched_time')['lcwpSyncProductsFromWoocommerce'])
+						) {
+						?>
+							<span class="pt-2" style="color: #979696">
+								Last Upload Completed:
+							</span><span style="font-size: 14px; font-weight: bold;">
+								<?php print get_option('lcwp_last_fetched_time')['lcwpSyncProductsFromWoocommerce']; ?>
+							</span>
+						<?php } else { ?>
+							<span class="pt-2" style="color: #979696">
+								Last Upload Completed:
+							</span> <span style="font-size: 14px; font-weight: bold;">Never Uploaded</span>
+						<?php } ?>
 					</div>
 				</div>
 				<div class="row">
@@ -119,15 +130,23 @@
 						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
-						<!-- @if (isset($last_synced_orders))
-						<span class="pt-2" style="color: #979696">
-							Last Fetch Completed:
-						</span> <span style="font-size: 14px; font-weight: bold;">{{ date('d M Y h:i A', strtotime($last_synced_orders->updated_at)) }}</span>
-						@else
-						<span class="pt-2" style="color: #979696">
-							Last Fetch Completed:
-						</span> <span style="font-size: 14px; font-weight: bold;">Never Fetched</span>
-						@endif -->
+						<?php
+						if (
+							get_option('lcwp_last_fetched_time') &&
+							get_option('lcwp_last_fetched_time') !== null &&
+							isset(get_option('lcwp_last_fetched_time')['lcwpSyncOrdersInWoocommerce'])
+						) {
+						?>
+							<span class="pt-2" style="color: #979696">
+								Last Fetch Completed:
+							</span><span style="font-size: 14px; font-weight: bold;">
+								<?php print get_option('lcwp_last_fetched_time')['lcwpSyncOrdersInWoocommerce']; ?>
+							</span>
+						<?php } else { ?>
+							<span class="pt-2" style="color: #979696">
+								Last Fetch Completed:
+							</span> <span style="font-size: 14px; font-weight: bold;">Never Fetched</span>
+						<?php } ?>
 					</div>
 				</div>
 				<div class="row pt-2 d-flex justify-content-center align-items-center">
@@ -140,15 +159,23 @@
 						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
-						<!-- @if (isset($last_synced_orders_upload))
-						<span class="pt-2" style="color: #979696">
-							Last Upload Completed:
-						</span> <span style="font-size: 14px; font-weight: bold;">{{ date('d M Y h:i A', strtotime($last_synced_orders_upload->updated_at)) }}</span>
-						@else
-						<span class="pt-2" style="color: #979696">
-							Last Upload Completed:
-						</span> <span style="font-size: 14px; font-weight: bold;">Never Uploaded</span>
-						@endif -->
+						<?php
+						if (
+							get_option('lcwp_last_fetched_time') &&
+							get_option('lcwp_last_fetched_time') !== null &&
+							isset(get_option('lcwp_last_fetched_time')['lcwpSyncOrdersFromWoocommerce'])
+						) {
+						?>
+							<span class="pt-2" style="color: #979696">
+								Last Upload Completed:
+							</span><span style="font-size: 14px; font-weight: bold;">
+								<?php print get_option('lcwp_last_fetched_time')['lcwpSyncOrdersFromWoocommerce']; ?>
+							</span>
+						<?php } else { ?>
+							<span class="pt-2" style="color: #979696">
+								Last Upload Completed:
+							</span> <span style="font-size: 14px; font-weight: bold;">Never Uploaded</span>
+						<?php } ?>
 					</div>
 				</div>
 				<div class="row">
@@ -176,15 +203,23 @@
 						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
-						<!-- @if (isset($last_synced_customers))
-						<span class="pt-2" style="color: #979696">
-							Last Fetch Completed:
-						</span> <span style="font-size: 14px; font-weight: bold;">{{ date('d M Y h:i A', strtotime($last_synced_customers->updated_at)) }}</span>
-						@else
-						<span class="pt-2" style="color: #979696">
-							Last Fetch Completed:
-						</span> <span style="font-size: 14px; font-weight: bold;">Never Fetched</span>
-						@endif -->
+						<?php
+						if (
+							get_option('lcwp_last_fetched_time') &&
+							get_option('lcwp_last_fetched_time') !== null &&
+							isset(get_option('lcwp_last_fetched_time')['lcwpSyncContactsInWoocommerce'])
+						) {
+						?>
+							<span class="pt-2" style="color: #979696">
+								Last Fetch Completed:
+							</span><span style="font-size: 14px; font-weight: bold;">
+								<?php print get_option('lcwp_last_fetched_time')['lcwpSyncContactsInWoocommerce']; ?>
+							</span>
+						<?php } else { ?>
+							<span class="pt-2" style="color: #979696">
+								Last Fetch Completed:
+							</span> <span style="font-size: 14px; font-weight: bold;">Never Fetched</span>
+						<?php } ?>
 					</div>
 				</div>
 				<div class="row pt-2 d-flex justify-content-center align-items-center">
@@ -197,15 +232,23 @@
 						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
-						<!-- @if (isset($last_synced_customers_upload))
-						<span class="pt-2" style="color: #979696">
-							Last Upload Completed:
-						</span> <span style="font-size: 14px; font-weight: bold;">{{ date('d M Y h:i A', strtotime($last_synced_customers_upload->updated_at)) }}</span>
-						@else
-						<span class="pt-2" style="color: #979696">
-							Last Upload Completed:
-						</span> <span style="font-size: 14px; font-weight: bold;">Never Uploaded</span>
-						@endif -->
+						<?php
+						if (
+							get_option('lcwp_last_fetched_time') &&
+							get_option('lcwp_last_fetched_time') !== null &&
+							isset(get_option('lcwp_last_fetched_time')['lcwpSyncContactsFromWoocommerce'])
+						) {
+						?>
+							<span class="pt-2" style="color: #979696">
+								Last Upload Completed:
+							</span><span style="font-size: 14px; font-weight: bold;">
+								<?php print get_option('lcwp_last_fetched_time')['lcwpSyncContactsFromWoocommerce']; ?>
+							</span>
+						<?php } else { ?>
+							<span class="pt-2" style="color: #979696">
+								Last Upload Completed:
+							</span> <span style="font-size: 14px; font-weight: bold;">Never Uploaded</span>
+						<?php } ?>
 					</div>
 				</div>
 				<div class="row pb-3">
