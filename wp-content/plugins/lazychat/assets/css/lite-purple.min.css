@@ -196,6 +196,9 @@ sub {
 sup {
 	top: -0.5em;
 }
+.lazychat-body {
+	min-height: 100vh !important;
+}
 
 .lazychat-body a {
 	color: #006c67;
