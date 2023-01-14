@@ -72,6 +72,16 @@ html {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+/* remove update/nag notices */
+.update-nag,
+.notice,
+.notice-error,
+.notice-warning,
+.notice-success,
+.notice-info {
+	display: none;
+}
+
 @-ms-viewport {
 	width: device-width;
 }
