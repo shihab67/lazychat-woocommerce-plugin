@@ -118,6 +118,14 @@ class Lswp_api extends WP_REST_Controller
 				'args'                => array(),
 			),
 		));
+		register_rest_route($namespace, '/' . 'get-attribute-term-by-name(?:/(&P<term_name>\d+))?(?:/(?P<attribute_slug>\d+))?', array(
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array($this, 'lcwp_get_attribute_term_by_name'),
+				'permission_callback' => array($this, 'lswp_api_permission'),
+				'args'                => array(),
+			),
+		));
 		register_rest_route($namespace, '/' . 'get-tags', array(
 			'methods' => WP_REST_Server::READABLE,
 			'callback' => array($this, 'lcwp_get_tags'),
@@ -1236,7 +1244,7 @@ class Lswp_api extends WP_REST_Controller
 				return new WP_Error('no_product', 'Product not found', array('status' => 404));
 			} else {
 				$product = $this->setProductData($product, $data);
-				
+
 				$product = wc_get_product($product->get_id());
 				return new WP_REST_Response($this->getProductData($product), 200);
 			}
@@ -1366,7 +1374,7 @@ class Lswp_api extends WP_REST_Controller
 				}
 			}
 		}
-		
+
 		// if (count($taxonomy_based_attributes) > 0) {
 		// 	// Save the meta entry for product attributes
 		// 	update_post_meta($product->id, '_product_attributes', $taxonomy_based_attributes);
@@ -1723,6 +1731,12 @@ class Lswp_api extends WP_REST_Controller
 		} catch (Exception $e) {
 			return new WP_Error('no_attribute', $e->getMessage(), array('status' => 404));
 		}
+	}
+
+	public function lcwp_get_attribute_term_by_name($request)
+	{
+		$data = $request->get_params();
+		return get_term_by('name', $data['term_name'] , $data['attribute_slug']);
 	}
 }
 
