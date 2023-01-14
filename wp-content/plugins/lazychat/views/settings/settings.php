@@ -107,8 +107,9 @@
 				</div>
 				<div class="row">
 					<div class="col-md-6 pt-2 d-flex align-items-center">
-						<button class="btn btn-danger fetch-btn" onclick="#">
-							<i class="fas fa-sync pr-1"></i> <?php _e('Hard Re-Sync') ?> </button>
+						<button class="btn btn-danger fetch-btn resync-btn" data-toggle="modal" data-target="#hardReSyncModal" data-type="product">
+							<i class="fas fa-sync pr-1"></i> <?php _e('Hard Re-Sync') ?>
+						</button>
 						<i style="cursor: pointer;" class="fas fa-info-circle pl-2" data-toggle="tooltip" data-placement="top" title="Remove all current products fetched from
                         LazyChat and
                         Re-Sync"></i>
@@ -180,7 +181,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-6 pt-2 d-flex align-items-center">
-						<button class="btn btn-danger fetch-btn" onclick="#">
+						<button class="btn btn-danger fetch-btn resync-btn" data-toggle="modal" data-target="#hardReSyncModal" data-type="order">
 							<i class="fas fa-sync pr-1"></i> <?php _e('Hard Re-Sync') ?> </button>
 						<i style="cursor: pointer;" class="fas fa-info-circle pl-2" data-toggle="tooltip" data-placement="top" title="Remove all current orders fetched from
                         LazyChat and
@@ -253,7 +254,7 @@
 				</div>
 				<div class="row pb-3">
 					<div class="col-md-6 pt-2 d-flex align-items-center">
-						<button class="btn btn-danger fetch-btn" onclick="#">
+						<button class="btn btn-danger fetch-btn resync-btn" data-toggle="modal" data-target="#hardReSyncModal" data-type="contact">
 							<i class="fas fa-sync pr-1"></i> <?php _e('Hard Re-Sync') ?> </button>
 						<i style="cursor: pointer;" class="fas fa-info-circle pl-2" data-toggle="tooltip" data-placement="top" title="Remove all current contacts fetched from
                         LazyChat and
@@ -426,3 +427,32 @@
 	</div>
 </div>
 <!-- sync settings modal ends -->
+
+<!-- Hard Re-sync modal starts -->
+<div class="modal fade" id="hardReSyncModal" tabindex="-1" role="dialog" aria-labelledby="hardReSyncModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="hardReSyncModalLabel">Hard Re-sync</h5>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body text-center">
+				<i class="fas fa-exclamation-triangle" style="color: #ffc107 !important; font-size: 3rem;"></i>
+				<p class="font-weight-500" style="font-size: 1rem;">Are you sure you want to hard re-sync all the data?</p>
+				<p>This will delete all the data in LazyChat and re-sync all the data from WooCommerce.</p>
+			</div>
+			<div class="modal-footer">
+				<form action="admin-post.php" method="POST" id="hard-re-sync-form">
+					<?php wp_nonce_field('lcwp_hard_re_sync_verify') ?>
+					<input type="hidden" name="action" value="lcwp_hard_re_sync">
+					<input type="hidden" name="type">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal"><?php _e('Close') ?></button>
+					<button class="btn btn-danger" type="submit" id="hardReSyncBtn"><?php _e('Re-sync') ?></button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Hard Re-sync modal ends -->

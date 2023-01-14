@@ -104,6 +104,7 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
 				add_action('admin_menu', [new Lswp_settings_page(), 'admin_menu_add_external_link_top_level']);
 				add_action('admin_post_lswp_connect', [new Lswp_connect(), 'lswp_connect_with_lazychat']);
 				add_action('admin_post_lswp_upload_data', [new Lswp_settings(), 'lswp_handle_settings']);
+				add_action('admin_post_lcwp_hard_re_sync', [new Lswp_settings(), 'lcwp_hard_re_sync']);
 				add_action(
 					'wp_ajax_lswp_map_order_phase',
 					[new Lswp_connect(), 'lswp_map_order_phase']

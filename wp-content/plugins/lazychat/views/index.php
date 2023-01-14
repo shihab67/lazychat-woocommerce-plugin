@@ -176,6 +176,11 @@ function lazychat_settings_page()
 				});
 			});
 
+			$(document).on('click', '.resync-btn', function() {
+				let type = $(this).attr('data-type');
+				$('#hard-re-sync-form').find('input[name="type"]').val(type);
+			})
+
 			const isLocalhost = () => {
 				return "<?php print PUSHER_APP_HOST; ?>" === 'localhost' || "<?php print PUSHER_APP_HOST; ?>" === '127.0.0.1';
 			}

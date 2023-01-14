@@ -126,5 +126,68 @@ if (!class_exists('Lswp_settings')) {
 				exit;
 			}
 		}
+
+		public function lcwp_hard_re_sync()
+		{
+			try {
+				check_admin_referer('lcwp_hard_re_sync_verify');
+
+				if (!current_user_can('manage_options')) {
+					flash('You do not have sufficient permissions to perform this operation!', 'danger');
+					wp_redirect(get_admin_url() . 'admin.php?page=lazychat_settings');
+				} else {
+					if (isset($_POST['type'])) {
+						switch ($_POST['type']) {
+							case 'product':
+								$this->lcwp_send_re_sync_request('product');
+								break;
+							case 'contact':
+								$this->lcwp_send_re_sync_request('contact');
+								break;
+							case 'order':
+								$this->lcwp_send_re_sync_request('order');
+								break;
+							default:
+								flash('Something went wrong. Please try again later', 'danger');
+								wp_redirect(get_admin_url() . 'admin.php?page=lazychat_settings');
+								break;
+						}
+					} else {
+						flash('Something went wrong. Please try again later', 'danger');
+						wp_redirect(get_admin_url() . 'admin.php?page=lazychat_settings');
+					}
+				}
+			} catch (\Throwable $th) {
+				flash($th->getMessage(), 'danger');
+				wp_redirect(get_admin_url() . 'admin.php?page=lazychat_settings');
+			}
+		}
+
+		public function lcwp_send_re_sync_request($type)
+		{
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/hard-re-sync');
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($type));
+			$headers = array();
+			$headers[] = 'Content-Type: application/json';
+			$headers[] = 'Authorization: Bearer ' . get_option('lswp_auth_token');
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+			$result = curl_exec($ch);
+			if (curl_errno($ch)) {
+				echo 'Error:' . curl_error($ch);
+			}
+			curl_close($ch);
+
+			if (isset($result)) $result = json_decode($result, true);
+
+			if (isset($result['status']) && $result['status'] === 'success') {
+				flash($result['message'], 'success');
+			} else {
+				flash($result['message'], 'danger');
+			}
+			wp_redirect(get_admin_url() . 'admin.php?page=lazychat_settings');
+		}
 	}
 }
