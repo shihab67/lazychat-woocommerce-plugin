@@ -5,6 +5,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		font-size: 0.85rem;
 	}
 
 	.loader-container {
@@ -13,13 +14,42 @@
 		justify-content: center;
 	}
 
-	.fetch-btn .dots-container {
-		margin-top: 6px;
-		margin-left: 3px;
+	@keyframes ScaleInOut {
+		0% {
+			transform: scale(0.8);
+		}
+
+		100% {
+			transform: scale(1.5);
+		}
 	}
 
-	.fetch-btn .dots-container .pulse-dot {
-		background-color: #fff !important;
+	.dot1 {
+		width: 0.65rem;
+		height: 0.65rem;
+		animation: ScaleInOut 0.6s ease-in-out 0.2s infinite alternate;
+	}
+
+	.dot2 {
+		width: 0.65rem;
+		height: 0.65rem;
+		animation: ScaleInOut 0.6s ease-in-out 0.4s infinite alternate;
+	}
+
+	.dot3 {
+		width: 0.65rem;
+		height: 0.65rem;
+		animation: ScaleInOut 0.6s ease-in-out 0.6s infinite alternate;
+	}
+
+	.dot4 {
+		width: 0.65rem;
+		height: 0.65rem;
+		animation: ScaleInOut 0.6s ease-in-out 0.8s infinite alternate;
+	}
+
+	.bubble-loader {
+		display: none !important;
 	}
 </style>
 
@@ -53,7 +83,10 @@
 							<input type="hidden" name="action" value="lswp_upload_data">
 							<input type="hidden" name="upload_type" value="fetch_product">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
-							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn"><?php _e('Fetch Now') ?></button>
+							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
+								<?php _e('Fetch Now') ?>
+								<?php include(LCWP_PATH . 'views/loader/loader.php'); ?>
+							</button>
 						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
@@ -82,7 +115,10 @@
 							<input type="hidden" name="action" value="lswp_upload_data">
 							<input type="hidden" name="upload_type" value="upload_product">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
-							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn"><?php _e('Upload Now') ?></button>
+							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
+								<?php _e('Upload Now') ?>
+								<?php include(LCWP_PATH . 'views/loader/loader.php'); ?>
+							</button>
 						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
@@ -127,7 +163,10 @@
 							<input type="hidden" name="action" value="lswp_upload_data">
 							<input type="hidden" name="upload_type" value="fetch_order">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
-							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn"><?php _e('Fetch Now') ?></button>
+							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
+								<?php _e('Fetch Now') ?>
+								<?php include(LCWP_PATH . 'views/loader/loader.php'); ?>
+							</button>
 						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
@@ -156,7 +195,10 @@
 							<input type="hidden" name="action" value="lswp_upload_data">
 							<input type="hidden" name="upload_type" value="upload_order">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
-							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn"><?php _e('Upload Now') ?></button>
+							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
+								<?php _e('Upload Now') ?>
+								<?php include(LCWP_PATH . 'views/loader/loader.php'); ?>
+							</button>
 						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
@@ -200,7 +242,10 @@
 							<input type="hidden" name="action" value="lswp_upload_data">
 							<input type="hidden" name="upload_type" value="fetch_contact">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
-							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn"><?php _e('Fetch Now') ?></button>
+							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
+								<?php _e('Fetch Now') ?>
+								<?php include(LCWP_PATH . 'views/loader/loader.php'); ?>
+							</button>
 						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
@@ -229,7 +274,10 @@
 							<input type="hidden" name="action" value="lswp_upload_data">
 							<input type="hidden" name="upload_type" value="upload_contact">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
-							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn"><?php _e('Upload Now') ?></button>
+							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
+								<?php _e('Upload Now') ?>
+								<?php include(LCWP_PATH . 'views/loader/loader.php'); ?>
+							</button>
 						</form>
 					</div>
 					<div class="col-md-6 col-lg-6 col-xs-12 fetch-msg">
