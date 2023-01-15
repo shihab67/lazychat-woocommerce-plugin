@@ -83,8 +83,10 @@
 							<input type="hidden" name="action" value="lswp_upload_data">
 							<input type="hidden" name="upload_type" value="fetch_product">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
-							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
-								<?php _e('Fetch Now') ?>
+							<button type="submit" class="btn btn-primary fetch-btn product-fetch-btn">
+								<span class="title">
+									<?php _e('Fetch Now') ?>
+								</span>
 								<?php include(LCWP_PATH . 'views/loader/loader.php'); ?>
 							</button>
 						</form>
@@ -116,7 +118,9 @@
 							<input type="hidden" name="upload_type" value="upload_product">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
 							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
-								<?php _e('Upload Now') ?>
+								<span class="title">
+									<?php _e('Upload Now') ?>
+								</span>
 								<?php include(LCWP_PATH . 'views/loader/loader.php'); ?>
 							</button>
 						</form>
@@ -163,8 +167,10 @@
 							<input type="hidden" name="action" value="lswp_upload_data">
 							<input type="hidden" name="upload_type" value="fetch_order">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
-							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
-								<?php _e('Fetch Now') ?>
+							<button type="submit" class="btn btn-primary fetch-btn order-fetch-btn">
+								<span class="title">
+									<?php _e('Fetch Now') ?>
+								</span>
 								<?php include(LCWP_PATH . 'views/loader/loader.php'); ?>
 							</button>
 						</form>
@@ -195,8 +201,10 @@
 							<input type="hidden" name="action" value="lswp_upload_data">
 							<input type="hidden" name="upload_type" value="upload_order">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
-							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
-								<?php _e('Upload Now') ?>
+							<button type="submit" class="btn btn-primary fetch-btn order-upload-btn">
+								<span class="title">
+									<?php _e('Upload Now') ?>
+								</span>
 								<?php include(LCWP_PATH . 'views/loader/loader.php'); ?>
 							</button>
 						</form>
@@ -242,8 +250,10 @@
 							<input type="hidden" name="action" value="lswp_upload_data">
 							<input type="hidden" name="upload_type" value="fetch_contact">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
-							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
-								<?php _e('Fetch Now') ?>
+							<button type="submit" class="btn btn-primary fetch-btn contact-fetch-btn">
+								<span class="title">
+									<?php _e('Fetch Now') ?>
+								</span>
 								<?php include(LCWP_PATH . 'views/loader/loader.php'); ?>
 							</button>
 						</form>
@@ -274,8 +284,10 @@
 							<input type="hidden" name="action" value="lswp_upload_data">
 							<input type="hidden" name="upload_type" value="upload_contact">
 							<?php wp_nonce_field('lswp_upload_data_verify') ?>
-							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
-								<?php _e('Upload Now') ?>
+							<button type="submit" class="btn btn-primary fetch-btn contact-upload-btn">
+								<span class="title">
+									<?php _e('Upload Now') ?>
+								</span>
 								<?php include(LCWP_PATH . 'views/loader/loader.php'); ?>
 							</button>
 						</form>
