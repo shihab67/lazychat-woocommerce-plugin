@@ -379,7 +379,7 @@ function lazychat_settings_page()
 						$('.no-sync').css('display', 'none');
 						$('.order-sync-box').show();
 						$('.order-fetch-btn').addClass('disabled');
-						$('.order-fetch-btn').$('.contact-upload-btn').find('.title').html('Fetching');
+						$('.order-fetch-btn').find('.title').html('Fetching');
 						$('.order-fetch-btn').find('.bubble-loader').attr("style", "display:flex !important;");
 						$('.order-fetch-btn').closest('.row').find('.fetch-msg').html(
 							'Fetch in progress...');
