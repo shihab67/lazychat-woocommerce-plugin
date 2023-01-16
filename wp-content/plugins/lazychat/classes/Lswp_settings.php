@@ -189,5 +189,24 @@ if (!class_exists('Lswp_settings')) {
 			}
 			wp_redirect(get_admin_url() . 'admin.php?page=lazychat_settings');
 		}
+
+		public function lcwp_get_queue_progress()
+		{
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/queue-progress');
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			$headers = array();
+			$headers[] = 'Content-Type: application/json';
+			$headers[] = 'Authorization: Bearer ' . get_option('lswp_auth_token');
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+			$result = curl_exec($ch);
+			if (curl_errno($ch)) {
+				echo 'Error:' . curl_error($ch);
+			}
+			curl_close($ch);
+
+			wp_send_json_success($result);
+		}
 	}
 }

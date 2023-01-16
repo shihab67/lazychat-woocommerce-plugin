@@ -908,6 +908,7 @@ class Lswp_api extends WP_REST_Controller
 	public function getVariationData($data)
 	{
 		return [
+			'parent_id' => $data->get_parent_id(),
 			'id' => $data->get_id(),
 			'name' => $data->get_name(),
 			'date_created' => $data->get_date_created(),
@@ -945,18 +946,31 @@ class Lswp_api extends WP_REST_Controller
 				'src' => wp_get_attachment_url($data->get_image_id()),
 				'thumbnail' => wp_get_attachment_thumb_url($data->get_image_id()),
 			] : '',
-			'attributes' => $this->getVariationAttribute($data->get_attributes()),
+			'attributes' => $this->getVariationAttribute($data->get_attributes(), $data->get_parent_id()),
 			'menu_order' => $data->get_menu_order(),
 			'meta_data' => $data->get_meta_data(),
 		];
 	}
 
-	public function getVariationAttribute($data)
+	public function getVariationAttribute($data, $parent_id)
 	{
+		$product = wc_get_product($parent_id);
+		$product = $this->getProductData($product);
 		$attributes = [];
+
+		$product_attributes = [];
+		foreach ($product['attributes'] as $attribute) {
+			$product_attributes[sanitize_title($attribute['name'])] = [
+				'id' => $attribute['id'],
+				'name' => sanitize_title($attribute['name']),
+			];
+		}
+
 		foreach ($data as $key => $item) {
 			$attributes[] = [
-				'id' => wc_attribute_taxonomy_id_by_name($key),
+				'id' => count($product_attributes) > 0 && isset($product_attributes[$key]) &&
+					$product_attributes[$key]['id'] === 0 ?
+					$product_attributes[$key]['id'] : wc_attribute_taxonomy_id_by_name($key),
 				'name' => wc_attribute_label($key),
 				'option' => $item,
 			];
@@ -964,7 +978,7 @@ class Lswp_api extends WP_REST_Controller
 		return $attributes;
 	}
 
-	//Get single category
+	//Get single product
 	public function lcwp_get_product($request)
 	{
 		$id = $request->get_params();

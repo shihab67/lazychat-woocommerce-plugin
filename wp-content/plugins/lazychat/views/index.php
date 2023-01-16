@@ -181,6 +181,19 @@ function lazychat_settings_page()
 				$('#hard-re-sync-form').find('input[name="type"]').val(type);
 			})
 
+			//get the queue progress on page load starts
+			wp.ajax.post("lcwp_get_queue_progress", {})
+				.done(function(res) {
+					res = JSON.parse(res);
+					console.log(res)
+					if (res.status === 'success') {
+						progressBar(res.data);
+					} else {
+						console.log(res.message);
+					}
+				});
+			//get the queue progress on page load ends
+
 			const isLocalhost = () => {
 				return "<?php print PUSHER_APP_HOST; ?>" === 'localhost' || "<?php print PUSHER_APP_HOST; ?>" === '127.0.0.1';
 			}
@@ -201,240 +214,244 @@ function lazychat_settings_page()
 				(data) => {
 					console.log(data);
 					if (data.progress && data.progress.length > 0) {
-						$.each(data.progress, function(index, value) {
-							if (value['type'] == 'lcwp_fetch_product') {
-								$('.no-sync').css('display', 'none');
-								$('.product-sync-box').show();
-								$('.product-fetch-btn').addClass('disabled');
-								$('.product-fetch-btn').find('.title').html('Fetching');
-								$('.product-fetch-btn').find('.bubble-loader').attr("style", "display:flex !important;");;
-								$('.product-fetch-btn').closest('.row').find('.fetch-msg').html(
-									'Fetch in progress...');
-
-								if (!$('.product-bar-div').show()) {
-									$('.product-bar-div').show();
-								}
-
-								if (value['total'] > 0) {
-									var part_to_increase = 100 / value['total'];
-
-									$('.product-bar-div').find('.progress-bar.bg-primary').css('width',
-										part_to_increase * value['done'] + '%');
-									$('.product-bar-div').find('.progress-bar.bg-danger').css('width',
-										part_to_increase * value['failed'] + '%');
-									$('.product-bar-div').find('.percent')
-										.text(
-											(((part_to_increase * value['done'])) + ((
-												part_to_increase * value['failed']))).toFixed(2) + '%');
-
-									if (value['total'] == value['done'] + value['failed']) {
-										$('.product-bar-div').find('.sync-text').html(
-											`<i class="{{ getIcon('check') }} text-success"></i> <b>Product fetch completed.</b>`
-										);
-
-										$('.product-fetch-btn').removeClass('disabled');
-										$('.product-fetch-btn').html('Fetch Now');
-										$('.product-fetch-btn').closest('.row').find('.fetch-msg').html(
-											'<span class="font-weight-bold" style="color: #006c67">Fetch completed successfully...</span>'
-										);
-									}
-								}
-							} else if (value['type'] == "lcwp_upload_product") {
-								$('.no-sync').css('display', 'none');
-								$('.product-sync-box').show();
-								$('.product-upload-btn').addClass('disabled');
-								$('.product-upload-btn').find('.title').html('Uploading');
-								$('.product-upload-btn').find('.bubble-loader').attr("style", "display:flex !important;");
-								$('.product-upload-btn').closest('.row').find('.fetch-msg').html(
-									'Upload in progress...');
-
-								if (!$('.product-bar-div-upload').show()) {
-									$('.product-bar-div-upload').show();
-								}
-
-								if (value['total'] > 0) {
-									var part_to_increase = 100 / value['total'];
-
-									$('.product-bar-div-upload').find('.progress-bar.bg-primary').css(
-										'width',
-										part_to_increase * value['done'] + '%');
-									$('.product-bar-div-upload').find('.progress-bar.bg-danger').css(
-										'width',
-										part_to_increase * value['failed'] + '%');
-									$(
-											'.product-bar-div-upload').find('.percent')
-										.text(
-											(((part_to_increase * value['done'])) + ((
-												part_to_increase * value['failed']))).toFixed(2) + '%');
-
-									if (value['total'] == value['done'] + value['failed']) {
-										$('.product-bar-div-upload').find('.sync-text').html(
-											`<i class="{{ getIcon('check') }} text-success"></i> <b>Product upload completed!</b>`
-										);
-
-										$('.product-upload-btn').removeClass('disabled');
-										$('.product-upload-btn').html('Upload Now');
-										$('.product-upload-btn').closest('.row').find('.fetch-msg')
-											.html(
-												'<span class="font-weight-bold" style="color: #006c67">Upload completed successfully...</span>'
-											);
-									}
-								}
-							} else if (value['type'] == 'lcwp_fetch_contact') {
-								$('.no-sync').css('display', 'none');
-								$('.customer-sync-box').show();
-								$('.contact-fetch-btn').addClass('disabled');
-								$('.contact-fetch-btn').find('.title').html('Fetching');
-								$('.contact-fetch-btn').find('.bubble-loader').attr("style", "display:flex !important;");
-								$('.contact-fetch-btn').closest('.row').find('.fetch-msg').html(
-									'Fetch in progress...');
-
-								if (!$('.customer-bar-div').show()) {
-									$('.customer-bar-div').show();
-								}
-
-								if (value['total'] > 0) {
-									var part_to_increase = 100 / value['total'];
-
-									$('.customer-bar-div').find('.progress-bar.bg-primary').css(
-										'width',
-										part_to_increase * value['done'] + '%');
-									$('.customer-bar-div').find('.progress-bar.bg-danger').css(
-										'width',
-										part_to_increase * value['failed'] + '%');
-									$('.customer-bar-div').find('.percent').text(
-										(((part_to_increase * value['done'])) + ((
-											part_to_increase * value['failed']))).toFixed(2) + '%');
-
-									if (value['total'] == value['done'] + value['failed']) {
-										$('.customer-bar-div').find('.sync-text').html(
-											`<i class="{{ getIcon('check') }} text-success"></i> <b>Customer sync completed.</b>`
-										);
-
-										$('.contact-fetch-btn').removeClass('disabled');
-										$('.contact-fetch-btn').html('Fetch Now');
-										$('.contact-fetch-btn').closest('.row').find('.fetch-msg').html(
-											'<span class="font-weight-bold" style="color: #006c67">Fetch completed successfully...</span>'
-										);
-									}
-								}
-							} else if (value['type'] == 'lcwp_upload_contact') {
-								$('.no-sync').css('display', 'none');
-								$('.customer-sync-box').show();
-								$('.contact-upload-btn').addClass('disabled');
-								$('.contact-upload-btn').find('.title').html('Uploading');
-								$('.contact-upload-btn').find('.bubble-loader').attr("style", "display:flex !important;");
-								$('.contact-upload-btn').closest('.row').find('.fetch-msg').html(
-									'Upload in progress...');
-
-								if (!$('.customer-bar-div-upload').show()) {
-									$('.customer-bar-div-upload').show();
-								}
-
-								if (value['total'] > 0) {
-									var part_to_increase = 100 / value['total'];
-
-									$('.customer-bar-div-upload').find('.progress-bar.bg-primary').css(
-										'width',
-										part_to_increase * value['done'] + '%');
-									$('.customer-bar-div-upload').find('.progress-bar.bg-danger').css(
-										'width',
-										part_to_increase * value['failed'] + '%');
-									$('.customer-bar-div-upload').find('.percent').text(
-										(((part_to_increase * value['done'])) + ((
-											part_to_increase * value['failed']))).toFixed(2) + '%');
-
-									if (value['total'] == value['done'] + value['failed']) {
-										$('.customer-bar-div-upload').find('.sync-text').html(
-											`<i class="{{ getIcon('check') }} text-success"></i> <b>Customer upload completed!</b>`
-										);
-
-										$('.contact-upload-btn').removeClass('disabled');
-										$('.contact-upload-btn').html('Upload Now');
-										$('.contact-upload-btn').closest('.row').find('.fetch-msg')
-											.html(
-												'<span class="font-weight-bold" style="color: #006c67">Upload completed successfully...</span>'
-											);
-									}
-								}
-							} else if (value['type'] == 'lcwp_fetch_order') {
-								$('.no-sync').css('display', 'none');
-								$('.order-sync-box').show();
-								$('.order-fetch-btn').addClass('disabled');
-								$('.order-fetch-btn').$('.contact-upload-btn').find('.title').html('Fetching');
-								$('.order-fetch-btn').find('.bubble-loader').attr("style", "display:flex !important;");
-								$('.order-fetch-btn').closest('.row').find('.fetch-msg').html(
-									'Fetch in progress...');
-
-								if (!$('.order-bar-div').show()) {
-									$('.order-bar-div').show();
-								}
-
-								if (value['total'] > 0) {
-									var part_to_increase = 100 / value['total'];
-
-									$('.order-bar-div').find('.progress-bar.bg-primary').css('width',
-										part_to_increase * value['done'] + '%');
-									$('.order-bar-div').find('.progress-bar.bg-danger').css('width',
-										part_to_increase * value['failed'] + '%');
-									$('.order-bar-div').find('.percent').text(
-										(((part_to_increase * value['done'])) + ((
-											part_to_increase * value['failed']))).toFixed(2) + '%');
-
-									if (value['total'] == value['done'] + value['failed']) {
-										$('.order-bar-div').find('.sync-text').html(
-											`<i class="{{ getIcon('check') }} text-success"></i> <b>Order sync completed.</b>`
-										);
-
-										$('.order-fetch-btn').removeClass('disabled');
-										$('.order-fetch-btn').html('Fetch Now');
-										$('.order-fetch-btn').closest('.row').find('.fetch-msg').html(
-											'<span class="font-weight-bold" style="color: #006c67">Fetch completed successfully...</span>'
-										);
-									}
-								}
-							} else if (value['type'] == 'lcwp_upload_order') {
-								$('.no-sync').css('display', 'none');
-								$('.order-sync-box').show();
-								$('.order-upload-btn').addClass('disabled');
-								$('.order-upload-btn').find('.title').html('Uploading');
-								$('.order-upload-btn').find('.bubble-loader').attr("style", "display:flex !important;");
-								$('.order-upload-btn').closest('.row').find('.fetch-msg').html(
-									'Upload in progress...');
-
-								if (!$('.order-bar-div-upload').show()) {
-									$('.order-bar-div-upload').show();
-								}
-
-								if (value['total'] > 0) {
-									var part_to_increase = 100 / value['total'];
-
-									$('.order-bar-div-upload').find('.progress-bar.bg-primary').css(
-										'width',
-										part_to_increase * value['done'] + '%');
-									$('.order-bar-div-upload').find('.progress-bar.bg-danger').css(
-										'width',
-										part_to_increase * value['failed'] + '%');
-									$('.order-bar-div-upload').find('.percent').text(
-										(((part_to_increase * value['done'])) + ((
-											part_to_increase * value['failed']))).toFixed(2) + '%');
-
-									if (value['total'] == value['done'] + value['failed']) {
-										$('.order-bar-div-upload').find('.sync-text').html(
-											`<i class="{{ getIcon('check') }} text-success"></i> <b>Order upload completed!</b>`
-										);
-
-										$('.order-upload-btn').removeClass('disabled');
-										$('.order-upload-btn').html('Upload Now');
-										$('.order-upload-btn').closest('.row').find('.fetch-msg').html(
-											'<span class="font-weight-bold" style="color: #006c67">Upload completed successfully...</span>'
-										);
-									}
-								}
-							}
-						});
+						progressBar(data.progress)
 					}
 				});
+
+			function progressBar(data) {
+				$.each(data, function(index, value) {
+					if (value['type'] == 'lcwp_fetch_product') {
+						$('.no-sync').css('display', 'none');
+						$('.product-sync-box').show();
+						$('.product-fetch-btn').addClass('disabled');
+						$('.product-fetch-btn').find('.title').html('Fetching');
+						$('.product-fetch-btn').find('.bubble-loader').attr("style", "display:flex !important;");;
+						$('.product-fetch-btn').closest('.row').find('.fetch-msg').html(
+							'Fetch in progress...');
+
+						if (!$('.product-bar-div').show()) {
+							$('.product-bar-div').show();
+						}
+
+						if (value['total'] > 0) {
+							var part_to_increase = 100 / value['total'];
+
+							$('.product-bar-div').find('.progress-bar.bg-primary').css('width',
+								part_to_increase * value['done'] + '%');
+							$('.product-bar-div').find('.progress-bar.bg-danger').css('width',
+								part_to_increase * value['failed'] + '%');
+							$('.product-bar-div').find('.percent')
+								.text(
+									(((part_to_increase * value['done'])) + ((
+										part_to_increase * value['failed']))).toFixed(2) + '%');
+
+							if (value['total'] == value['done'] + value['failed']) {
+								$('.product-bar-div').find('.sync-text').html(
+									`<i class="{{ getIcon('check') }} text-success"></i> <b>Product fetch completed.</b>`
+								);
+
+								$('.product-fetch-btn').removeClass('disabled');
+								$('.product-fetch-btn').html('Fetch Now');
+								$('.product-fetch-btn').closest('.row').find('.fetch-msg').html(
+									'<span class="font-weight-bold" style="color: #006c67">Fetch completed successfully...</span>'
+								);
+							}
+						}
+					} else if (value['type'] == "lcwp_upload_product") {
+						$('.no-sync').css('display', 'none');
+						$('.product-sync-box').show();
+						$('.product-upload-btn').addClass('disabled');
+						$('.product-upload-btn').find('.title').html('Uploading');
+						$('.product-upload-btn').find('.bubble-loader').attr("style", "display:flex !important;");
+						$('.product-upload-btn').closest('.row').find('.fetch-msg').html(
+							'Upload in progress...');
+
+						if (!$('.product-bar-div-upload').show()) {
+							$('.product-bar-div-upload').show();
+						}
+
+						if (value['total'] > 0) {
+							var part_to_increase = 100 / value['total'];
+
+							$('.product-bar-div-upload').find('.progress-bar.bg-primary').css(
+								'width',
+								part_to_increase * value['done'] + '%');
+							$('.product-bar-div-upload').find('.progress-bar.bg-danger').css(
+								'width',
+								part_to_increase * value['failed'] + '%');
+							$(
+									'.product-bar-div-upload').find('.percent')
+								.text(
+									(((part_to_increase * value['done'])) + ((
+										part_to_increase * value['failed']))).toFixed(2) + '%');
+
+							if (value['total'] == value['done'] + value['failed']) {
+								$('.product-bar-div-upload').find('.sync-text').html(
+									`<i class="{{ getIcon('check') }} text-success"></i> <b>Product upload completed!</b>`
+								);
+
+								$('.product-upload-btn').removeClass('disabled');
+								$('.product-upload-btn').html('Upload Now');
+								$('.product-upload-btn').closest('.row').find('.fetch-msg')
+									.html(
+										'<span class="font-weight-bold" style="color: #006c67">Upload completed successfully...</span>'
+									);
+							}
+						}
+					} else if (value['type'] == 'lcwp_fetch_contact') {
+						$('.no-sync').css('display', 'none');
+						$('.customer-sync-box').show();
+						$('.contact-fetch-btn').addClass('disabled');
+						$('.contact-fetch-btn').find('.title').html('Fetching');
+						$('.contact-fetch-btn').find('.bubble-loader').attr("style", "display:flex !important;");
+						$('.contact-fetch-btn').closest('.row').find('.fetch-msg').html(
+							'Fetch in progress...');
+
+						if (!$('.customer-bar-div').show()) {
+							$('.customer-bar-div').show();
+						}
+
+						if (value['total'] > 0) {
+							var part_to_increase = 100 / value['total'];
+
+							$('.customer-bar-div').find('.progress-bar.bg-primary').css(
+								'width',
+								part_to_increase * value['done'] + '%');
+							$('.customer-bar-div').find('.progress-bar.bg-danger').css(
+								'width',
+								part_to_increase * value['failed'] + '%');
+							$('.customer-bar-div').find('.percent').text(
+								(((part_to_increase * value['done'])) + ((
+									part_to_increase * value['failed']))).toFixed(2) + '%');
+
+							if (value['total'] == value['done'] + value['failed']) {
+								$('.customer-bar-div').find('.sync-text').html(
+									`<i class="{{ getIcon('check') }} text-success"></i> <b>Customer sync completed.</b>`
+								);
+
+								$('.contact-fetch-btn').removeClass('disabled');
+								$('.contact-fetch-btn').html('Fetch Now');
+								$('.contact-fetch-btn').closest('.row').find('.fetch-msg').html(
+									'<span class="font-weight-bold" style="color: #006c67">Fetch completed successfully...</span>'
+								);
+							}
+						}
+					} else if (value['type'] == 'lcwp_upload_contact') {
+						$('.no-sync').css('display', 'none');
+						$('.customer-sync-box').show();
+						$('.contact-upload-btn').addClass('disabled');
+						$('.contact-upload-btn').find('.title').html('Uploading');
+						$('.contact-upload-btn').find('.bubble-loader').attr("style", "display:flex !important;");
+						$('.contact-upload-btn').closest('.row').find('.fetch-msg').html(
+							'Upload in progress...');
+
+						if (!$('.customer-bar-div-upload').show()) {
+							$('.customer-bar-div-upload').show();
+						}
+
+						if (value['total'] > 0) {
+							var part_to_increase = 100 / value['total'];
+
+							$('.customer-bar-div-upload').find('.progress-bar.bg-primary').css(
+								'width',
+								part_to_increase * value['done'] + '%');
+							$('.customer-bar-div-upload').find('.progress-bar.bg-danger').css(
+								'width',
+								part_to_increase * value['failed'] + '%');
+							$('.customer-bar-div-upload').find('.percent').text(
+								(((part_to_increase * value['done'])) + ((
+									part_to_increase * value['failed']))).toFixed(2) + '%');
+
+							if (value['total'] == value['done'] + value['failed']) {
+								$('.customer-bar-div-upload').find('.sync-text').html(
+									`<i class="{{ getIcon('check') }} text-success"></i> <b>Customer upload completed!</b>`
+								);
+
+								$('.contact-upload-btn').removeClass('disabled');
+								$('.contact-upload-btn').html('Upload Now');
+								$('.contact-upload-btn').closest('.row').find('.fetch-msg')
+									.html(
+										'<span class="font-weight-bold" style="color: #006c67">Upload completed successfully...</span>'
+									);
+							}
+						}
+					} else if (value['type'] == 'lcwp_fetch_order') {
+						$('.no-sync').css('display', 'none');
+						$('.order-sync-box').show();
+						$('.order-fetch-btn').addClass('disabled');
+						$('.order-fetch-btn').$('.contact-upload-btn').find('.title').html('Fetching');
+						$('.order-fetch-btn').find('.bubble-loader').attr("style", "display:flex !important;");
+						$('.order-fetch-btn').closest('.row').find('.fetch-msg').html(
+							'Fetch in progress...');
+
+						if (!$('.order-bar-div').show()) {
+							$('.order-bar-div').show();
+						}
+
+						if (value['total'] > 0) {
+							var part_to_increase = 100 / value['total'];
+
+							$('.order-bar-div').find('.progress-bar.bg-primary').css('width',
+								part_to_increase * value['done'] + '%');
+							$('.order-bar-div').find('.progress-bar.bg-danger').css('width',
+								part_to_increase * value['failed'] + '%');
+							$('.order-bar-div').find('.percent').text(
+								(((part_to_increase * value['done'])) + ((
+									part_to_increase * value['failed']))).toFixed(2) + '%');
+
+							if (value['total'] == value['done'] + value['failed']) {
+								$('.order-bar-div').find('.sync-text').html(
+									`<i class="{{ getIcon('check') }} text-success"></i> <b>Order sync completed.</b>`
+								);
+
+								$('.order-fetch-btn').removeClass('disabled');
+								$('.order-fetch-btn').html('Fetch Now');
+								$('.order-fetch-btn').closest('.row').find('.fetch-msg').html(
+									'<span class="font-weight-bold" style="color: #006c67">Fetch completed successfully...</span>'
+								);
+							}
+						}
+					} else if (value['type'] == 'lcwp_upload_order') {
+						$('.no-sync').css('display', 'none');
+						$('.order-sync-box').show();
+						$('.order-upload-btn').addClass('disabled');
+						$('.order-upload-btn').find('.title').html('Uploading');
+						$('.order-upload-btn').find('.bubble-loader').attr("style", "display:flex !important;");
+						$('.order-upload-btn').closest('.row').find('.fetch-msg').html(
+							'Upload in progress...');
+
+						if (!$('.order-bar-div-upload').show()) {
+							$('.order-bar-div-upload').show();
+						}
+
+						if (value['total'] > 0) {
+							var part_to_increase = 100 / value['total'];
+
+							$('.order-bar-div-upload').find('.progress-bar.bg-primary').css(
+								'width',
+								part_to_increase * value['done'] + '%');
+							$('.order-bar-div-upload').find('.progress-bar.bg-danger').css(
+								'width',
+								part_to_increase * value['failed'] + '%');
+							$('.order-bar-div-upload').find('.percent').text(
+								(((part_to_increase * value['done'])) + ((
+									part_to_increase * value['failed']))).toFixed(2) + '%');
+
+							if (value['total'] == value['done'] + value['failed']) {
+								$('.order-bar-div-upload').find('.sync-text').html(
+									`<i class="{{ getIcon('check') }} text-success"></i> <b>Order upload completed!</b>`
+								);
+
+								$('.order-upload-btn').removeClass('disabled');
+								$('.order-upload-btn').html('Upload Now');
+								$('.order-upload-btn').closest('.row').find('.fetch-msg').html(
+									'<span class="font-weight-bold" style="color: #006c67">Upload completed successfully...</span>'
+								);
+							}
+						}
+					}
+				});
+			}
 		});
 	</script>
 <?php

@@ -113,6 +113,10 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
 					'wp_ajax_lcwp_sync_options',
 					[new Lswp_settings(), 'lcwp_sync_options']
 				);
+				add_action(
+					'wp_ajax_lcwp_get_queue_progress',
+					[new Lswp_settings(), 'lcwp_get_queue_progress']
+				);
 				add_action('rest_api_init', [new Lswp_api, 'register_routes']);
 
 				//Get LazyChat Order Phases
