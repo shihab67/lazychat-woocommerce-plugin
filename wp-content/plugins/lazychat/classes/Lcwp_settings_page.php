@@ -6,8 +6,8 @@
 
 defined('ABSPATH') || exit;
 
-if (!class_exists('Lswp_settings_page')) {
-	class Lswp_settings_page
+if (!class_exists('Lcwp_settings_page')) {
+	class Lcwp_settings_page
 	{
 		public function admin_menu_add_external_link_top_level()
 		{

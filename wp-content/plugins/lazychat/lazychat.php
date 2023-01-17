@@ -12,7 +12,7 @@
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Update URI: https://example.com/my-plugin/
- * Text Domain: lswp
+ * Text Domain: lcwp
  * Domain Path: /languages
  */
 
@@ -82,17 +82,17 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
 	add_action('admin_notices', 'lazychat_fail_php_version');
 	return;
 } else {
-	if (!class_exists('LSWP_core')) {
-		class LSWP_core
+	if (!class_exists('LCWP_core')) {
+		class LCWP_core
 		{
 			public function __construct()
 			{
 				//Included files
 				require(LCWP_PATH . 'includes/activation.php');
 				require(LCWP_PATH . 'includes/error.php');
-				require(LCWP_PATH . 'classes/Lswp_settings_page.php');
-				require(LCWP_PATH . 'classes/Lswp_connect.php');
-				require(LCWP_PATH . 'classes/Lswp_settings.php');
+				require(LCWP_PATH . 'classes/Lcwp_settings_page.php');
+				require(LCWP_PATH . 'classes/Lcwp_connect.php');
+				require(LCWP_PATH . 'classes/Lcwp_settings.php');
 				require(LCWP_PATH . 'views/index.php');
 				include_once(dirname(__DIR__) . '/woocommerce/woocommerce.php');
 
@@ -100,37 +100,37 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
 				require(LCWP_PATH . 'api/api.php');
 
 				//Hooks
-				register_activation_hook(__FILE__, 'lswp_activation');
-				add_action('admin_menu', [new Lswp_settings_page(), 'admin_menu_add_external_link_top_level']);
-				add_action('admin_post_lswp_connect', [new Lswp_connect(), 'lswp_connect_with_lazychat']);
-				add_action('admin_post_lswp_upload_data', [new Lswp_settings(), 'lswp_handle_settings']);
-				add_action('admin_post_lcwp_hard_re_sync', [new Lswp_settings(), 'lcwp_hard_re_sync']);
+				register_activation_hook(__FILE__, 'lcwp_activation');
+				add_action('admin_menu', [new Lcwp_settings_page(), 'admin_menu_add_external_link_top_level']);
+				add_action('admin_post_lcwp_connect', [new Lcwp_connect(), 'lcwp_connect_with_lazychat']);
+				add_action('admin_post_lcwp_upload_data', [new Lcwp_settings(), 'lcwp_handle_settings']);
+				add_action('admin_post_lcwp_hard_re_sync', [new Lcwp_settings(), 'lcwp_hard_re_sync']);
 				add_action(
-					'wp_ajax_lswp_map_order_phase',
-					[new Lswp_connect(), 'lswp_map_order_phase']
+					'wp_ajax_lcwp_map_order_phase',
+					[new Lcwp_connect(), 'lcwp_map_order_phase']
 				);
 				add_action(
 					'wp_ajax_lcwp_sync_options',
-					[new Lswp_settings(), 'lcwp_sync_options']
+					[new Lcwp_settings(), 'lcwp_sync_options']
 				);
 				add_action(
 					'wp_ajax_lcwp_get_queue_progress',
-					[new Lswp_settings(), 'lcwp_get_queue_progress']
+					[new Lcwp_settings(), 'lcwp_get_queue_progress']
 				);
-				add_action('rest_api_init', [new Lswp_api, 'register_routes']);
+				add_action('rest_api_init', [new Lcwp_api, 'register_routes']);
 
 				//Get LazyChat Order Phases
-				if (get_option('lswp_auth_token') && get_option('lswp_auth_token') !== null) {
-					lswp_get_lazychat_order_phases();
+				if (get_option('lcwp_auth_token') && get_option('lcwp_auth_token') !== null) {
+					lcwp_get_lazychat_order_phases();
 				}
 			}
 		}
-		$LSWP_core = new LSWP_core();
+		$LCWP_core = new LCWP_core();
 	}
 }
 
 
-function lswp_get_lazychat_order_phases()
+function lcwp_get_lazychat_order_phases()
 {
 	$phases = [];
 
@@ -143,7 +143,7 @@ function lswp_get_lazychat_order_phases()
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 		$headers = array();
 		$headers[] = 'Content-Type: application/json';
-		$headers[] = 'Authorization: Bearer ' . get_option('lswp_auth_token');
+		$headers[] = 'Authorization: Bearer ' . get_option('lcwp_auth_token');
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		$result = curl_exec($ch);
 		if (curl_errno($ch)) {

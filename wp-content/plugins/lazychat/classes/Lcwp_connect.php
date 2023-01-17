@@ -6,19 +6,19 @@
 
 defined('ABSPATH') || exit;
 
-if (!class_exists('Lswp_connect')) {
-	class Lswp_connect
+if (!class_exists('Lcwp_connect')) {
+	class Lcwp_connect
 	{
-		public function lswp_connect_with_lazychat()
+		public function lcwp_connect_with_lazychat()
 		{
-			check_admin_referer('lswp_connect_verify');
+			check_admin_referer('lcwp_connect_verify');
 
 			if (!current_user_can('manage_options')) {
 				wp_die(__('You do not have sufficient permissions to perform this operation.'));
 			}
 
 			$data = [
-				'lswp_auth_token' => sanitize_text_field($_POST['lswp_auth_token']),
+				'lcwp_auth_token' => sanitize_text_field($_POST['lcwp_auth_token']),
 			];
 
 			$ch = curl_init();
@@ -44,7 +44,7 @@ if (!class_exists('Lswp_connect')) {
 				flash($result['message'], 'success');
 
 				//save the auth token to DB
-				update_option('lswp_auth_token', $data['lswp_auth_token']);
+				update_option('lcwp_auth_token', $data['lcwp_auth_token']);
 
 				//redirect back to settings page
 				wp_redirect(get_admin_url() . 'admin.php?page=lazychat_settings');
@@ -55,10 +55,10 @@ if (!class_exists('Lswp_connect')) {
 			}
 		}
 
-		public function lswp_map_order_phase()
+		public function lcwp_map_order_phase()
 		{
 			try {
-				check_admin_referer('lswp_map_order_phase_verify');
+				check_admin_referer('lcwp_map_order_phase_verify');
 
 				if (!current_user_can('manage_options')) {
 					return [
@@ -74,7 +74,7 @@ if (!class_exists('Lswp_connect')) {
 				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($_POST));
 				$headers = array();
 				$headers[] = 'Content-Type: application/json';
-				$headers[] = 'Authorization: Bearer ' . get_option('lswp_auth_token');
+				$headers[] = 'Authorization: Bearer ' . get_option('lcwp_auth_token');
 				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 				$result = curl_exec($ch);
 				if (curl_errno($ch)) {
@@ -91,8 +91,8 @@ if (!class_exists('Lswp_connect')) {
 					]);
 					exit;
 				} else {
-					//Update lswp_order_phases data
-					update_option('lswp_order_phases', [
+					//Update lcwp_order_phases data
+					update_option('lcwp_order_phases', [
 						'mapped' => true,
 						'phases' => $result['phases']
 					]);
@@ -100,7 +100,7 @@ if (!class_exists('Lswp_connect')) {
 					//Check if order phases are already mapped
 					if ($_POST['is_mapped'] === 0) {
 						//create woocommerce webhooks
-						$this->lswp_create_webhooks();
+						$this->lcwp_create_webhooks();
 
 						if (get_option('lcwp_shop_id')) {
 							update_option(
@@ -130,11 +130,11 @@ if (!class_exists('Lswp_connect')) {
 			}
 		}
 
-		public function lswp_create_webhooks()
+		public function lcwp_create_webhooks()
 		{
 			try {
 				//Delete previous webhooks
-				$this->lswp_delete_previous_webhooks();
+				$this->lcwp_delete_previous_webhooks();
 
 				//Create woocommerce webhooks
 				$webhooks = [
@@ -142,7 +142,7 @@ if (!class_exists('Lswp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Order created',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-orders/' . get_option('lswp_auth_token'),
+						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-orders/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'order.created',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -153,7 +153,7 @@ if (!class_exists('Lswp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Order updated',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-orders/' . get_option('lswp_auth_token'),
+						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-orders/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'order.updated',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -164,7 +164,7 @@ if (!class_exists('Lswp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Order deleted',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-orders/' . get_option('lswp_auth_token'),
+						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-orders/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'order.deleted',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -175,7 +175,7 @@ if (!class_exists('Lswp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Product created',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-products/' . get_option('lswp_auth_token'),
+						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-products/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'product.created',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -186,7 +186,7 @@ if (!class_exists('Lswp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Product updated',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-products/' . get_option('lswp_auth_token'),
+						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-products/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'product.updated',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -197,7 +197,7 @@ if (!class_exists('Lswp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Product deleted',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-products/' . get_option('lswp_auth_token'),
+						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-products/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'product.deleted',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -208,7 +208,7 @@ if (!class_exists('Lswp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Contact created',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-customers/' . get_option('lswp_auth_token'),
+						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-customers/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'customer.created',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -219,7 +219,7 @@ if (!class_exists('Lswp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Contact updated',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-customers/' . get_option('lswp_auth_token'),
+						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-customers/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'customer.updated',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -230,7 +230,7 @@ if (!class_exists('Lswp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Contact deleted',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-customers/' . get_option('lswp_auth_token'),
+						'delivery_url' => LAZYCHAT_URL . '/webhooks/woocommerce-customers/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'customer.deleted',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -256,7 +256,7 @@ if (!class_exists('Lswp_connect')) {
 			}
 		}
 
-		public function lswp_delete_previous_webhooks()
+		public function lcwp_delete_previous_webhooks()
 		{
 			try {
 				global $wpdb;

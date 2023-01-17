@@ -6,21 +6,21 @@
 
 defined('ABSPATH') || exit;
 
-if (!function_exists('lswp_activation')) {
-	function lswp_activation()
+if (!function_exists('lcwp_activation')) {
+	function lcwp_activation()
 	{
-		if (!get_option('lswp_settings')) {
-			add_option('lswp_settings', [
-				'lswp_label' => 'LazyChat'
+		if (!get_option('lcwp_settings')) {
+			add_option('lcwp_settings', [
+				'lcwp_label' => 'LazyChat'
 			]);
 		}
 
-		if (!get_option('lswp_auth_token')) {
-			add_option('lswp_auth_token', null);
+		if (!get_option('lcwp_auth_token')) {
+			add_option('lcwp_auth_token', null);
 		}
 
-		if (!get_option('lswp_order_phases')) {
-			add_option('lswp_order_phases', [
+		if (!get_option('lcwp_order_phases')) {
+			add_option('lcwp_order_phases', [
 				'mapped' => false,
 				'phases' => []
 			]);

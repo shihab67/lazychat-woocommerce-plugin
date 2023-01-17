@@ -24,22 +24,22 @@ function lazychat_settings_page()
 
 		<?php
 		if (
-			get_option('lswp_auth_token') &&
-			get_option('lswp_auth_token') === null
+			get_option('lcwp_auth_token') &&
+			get_option('lcwp_auth_token') === null
 		) {
 			include(LCWP_PATH . 'views/connect/connect.php');
 		} else if (
-			get_option('lswp_auth_token') &&
-			get_option('lswp_auth_token') !== null &&
-			get_option('lswp_order_phases') &&
-			get_option('lswp_order_phases')['mapped'] === false
+			get_option('lcwp_auth_token') &&
+			get_option('lcwp_auth_token') !== null &&
+			get_option('lcwp_order_phases') &&
+			get_option('lcwp_order_phases')['mapped'] === false
 		) {
 		?>
 			<div class="row">
 				<div class="col-md-12">
-					<h4 class="pt-2"><?php _e('Map LazyChat Order Phases', 'lswp') ?></h4>
+					<h4 class="pt-2"><?php _e('Map LazyChat Order Phases', 'lcwp') ?></h4>
 					<p><?php _e('You have connected your LazyChat account. Now Map 
-						LazyChat Order Phases with WooCommerce Order Phases', 'lswp') ?></p>
+						LazyChat Order Phases with WooCommerce Order Phases', 'lcwp') ?></p>
 				</div>
 			</div>
 		<?php

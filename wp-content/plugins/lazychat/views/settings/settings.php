@@ -80,9 +80,9 @@
 				<div class="row d-flex justify-content-center align-items-center">
 					<div class="col-md-6 col-lg-6 col-xs-12">
 						<form action="admin-post.php" method="POST">
-							<input type="hidden" name="action" value="lswp_upload_data">
+							<input type="hidden" name="action" value="lcwp_upload_data">
 							<input type="hidden" name="upload_type" value="fetch_product">
-							<?php wp_nonce_field('lswp_upload_data_verify') ?>
+							<?php wp_nonce_field('lcwp_upload_data_verify') ?>
 							<button type="submit" class="btn btn-primary fetch-btn product-fetch-btn">
 								<span class="title">
 									<?php _e('Fetch Now') ?>
@@ -114,9 +114,9 @@
 				<div class="row pt-2 d-flex justify-content-center align-items-center">
 					<div class="col-md-6 col-lg-6 col-xs-12">
 						<form action="admin-post.php" method="POST">
-							<input type="hidden" name="action" value="lswp_upload_data">
+							<input type="hidden" name="action" value="lcwp_upload_data">
 							<input type="hidden" name="upload_type" value="upload_product">
-							<?php wp_nonce_field('lswp_upload_data_verify') ?>
+							<?php wp_nonce_field('lcwp_upload_data_verify') ?>
 							<button type="submit" class="btn btn-primary fetch-btn product-upload-btn">
 								<span class="title">
 									<?php _e('Upload Now') ?>
@@ -164,9 +164,9 @@
 				<div class="row d-flex justify-content-center align-items-center">
 					<div class="col-md-6 col-lg-6 col-xs-12">
 						<form action="admin-post.php" method="POST">
-							<input type="hidden" name="action" value="lswp_upload_data">
+							<input type="hidden" name="action" value="lcwp_upload_data">
 							<input type="hidden" name="upload_type" value="fetch_order">
-							<?php wp_nonce_field('lswp_upload_data_verify') ?>
+							<?php wp_nonce_field('lcwp_upload_data_verify') ?>
 							<button type="submit" class="btn btn-primary fetch-btn order-fetch-btn">
 								<span class="title">
 									<?php _e('Fetch Now') ?>
@@ -198,9 +198,9 @@
 				<div class="row pt-2 d-flex justify-content-center align-items-center">
 					<div class="col-md-6 col-lg-6 col-xs-12">
 						<form action="admin-post.php" method="POST">
-							<input type="hidden" name="action" value="lswp_upload_data">
+							<input type="hidden" name="action" value="lcwp_upload_data">
 							<input type="hidden" name="upload_type" value="upload_order">
-							<?php wp_nonce_field('lswp_upload_data_verify') ?>
+							<?php wp_nonce_field('lcwp_upload_data_verify') ?>
 							<button type="submit" class="btn btn-primary fetch-btn order-upload-btn">
 								<span class="title">
 									<?php _e('Upload Now') ?>
@@ -247,9 +247,9 @@
 				<div class="row d-flex justify-content-center align-items-center">
 					<div class="col-md-6 col-lg-6 col-xs-12">
 						<form action="admin-post.php" method="POST">
-							<input type="hidden" name="action" value="lswp_upload_data">
+							<input type="hidden" name="action" value="lcwp_upload_data">
 							<input type="hidden" name="upload_type" value="fetch_contact">
-							<?php wp_nonce_field('lswp_upload_data_verify') ?>
+							<?php wp_nonce_field('lcwp_upload_data_verify') ?>
 							<button type="submit" class="btn btn-primary fetch-btn contact-fetch-btn">
 								<span class="title">
 									<?php _e('Fetch Now') ?>
@@ -281,9 +281,9 @@
 				<div class="row pt-2 d-flex justify-content-center align-items-center">
 					<div class="col-md-6 col-lg-6 col-xs-12">
 						<form action="admin-post.php" method="POST">
-							<input type="hidden" name="action" value="lswp_upload_data">
+							<input type="hidden" name="action" value="lcwp_upload_data">
 							<input type="hidden" name="upload_type" value="upload_contact">
-							<?php wp_nonce_field('lswp_upload_data_verify') ?>
+							<?php wp_nonce_field('lcwp_upload_data_verify') ?>
 							<button type="submit" class="btn btn-primary fetch-btn contact-upload-btn">
 								<span class="title">
 									<?php _e('Upload Now') ?>

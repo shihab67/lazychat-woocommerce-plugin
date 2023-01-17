@@ -6,12 +6,12 @@
 
 defined('ABSPATH') || exit;
 
-if (!class_exists('Lswp_settings')) {
-	class Lswp_settings
+if (!class_exists('Lcwp_settings')) {
+	class Lcwp_settings
 	{
-		public function lswp_handle_settings()
+		public function lcwp_handle_settings()
 		{
-			check_admin_referer('lswp_upload_data_verify');
+			check_admin_referer('lcwp_upload_data_verify');
 
 			if (!current_user_can('manage_options')) {
 				wp_die(__('You do not have sufficient permissions to perform this operation.'));
@@ -20,22 +20,22 @@ if (!class_exists('Lswp_settings')) {
 			if (isset($_POST['upload_type'])) {
 				switch ($_POST['upload_type']) {
 					case 'upload_product':
-						$this->lswp_upload_data('upload_product');
+						$this->lcwp_upload_data('upload_product');
 						break;
 					case 'upload_contact':
-						$this->lswp_upload_data('upload_contact');
+						$this->lcwp_upload_data('upload_contact');
 						break;
 					case 'upload_order':
-						$this->lswp_upload_data('upload_order');
+						$this->lcwp_upload_data('upload_order');
 						break;
 					case 'fetch_product':
-						$this->lswp_upload_data('fetch_product');
+						$this->lcwp_upload_data('fetch_product');
 						break;
 					case 'fetch_contact':
-						$this->lswp_upload_data('fetch_contact');
+						$this->lcwp_upload_data('fetch_contact');
 						break;
 					case 'fetch_order':
-						$this->lswp_upload_data('fetch_order');
+						$this->lcwp_upload_data('fetch_order');
 						break;
 					default:
 						# code...
@@ -44,7 +44,7 @@ if (!class_exists('Lswp_settings')) {
 			}
 		}
 
-		public function lswp_upload_data($type)
+		public function lcwp_upload_data($type)
 		{
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/fetch-upload-data');
@@ -56,7 +56,7 @@ if (!class_exists('Lswp_settings')) {
 			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 			$headers = array();
 			$headers[] = 'Content-Type: application/json';
-			$headers[] = 'Authorization: Bearer ' . get_option('lswp_auth_token');
+			$headers[] = 'Authorization: Bearer ' . get_option('lcwp_auth_token');
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 			$result = curl_exec($ch);
 			if (curl_errno($ch)) {
@@ -102,7 +102,7 @@ if (!class_exists('Lswp_settings')) {
 				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($_POST));
 				$headers = array();
 				$headers[] = 'Content-Type: application/json';
-				$headers[] = 'Authorization: Bearer ' . get_option('lswp_auth_token');
+				$headers[] = 'Authorization: Bearer ' . get_option('lcwp_auth_token');
 				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 				$result = curl_exec($ch);
 				if (curl_errno($ch)) {
@@ -172,7 +172,7 @@ if (!class_exists('Lswp_settings')) {
 			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($type));
 			$headers = array();
 			$headers[] = 'Content-Type: application/json';
-			$headers[] = 'Authorization: Bearer ' . get_option('lswp_auth_token');
+			$headers[] = 'Authorization: Bearer ' . get_option('lcwp_auth_token');
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 			$result = curl_exec($ch);
 			if (curl_errno($ch)) {
@@ -198,7 +198,7 @@ if (!class_exists('Lswp_settings')) {
 			curl_setopt($ch, CURLOPT_POST, 1);
 			$headers = array();
 			$headers[] = 'Content-Type: application/json';
-			$headers[] = 'Authorization: Bearer ' . get_option('lswp_auth_token');
+			$headers[] = 'Authorization: Bearer ' . get_option('lcwp_auth_token');
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 			$result = curl_exec($ch);
 			if (curl_errno($ch)) {

@@ -6,7 +6,7 @@
 
 defined('ABSPATH') || exit;
 
-class Lswp_api extends WP_REST_Controller
+class Lcwp_api extends WP_REST_Controller
 {
 	/**
 	 * Register the routes for the objects of the controller.
@@ -18,57 +18,57 @@ class Lswp_api extends WP_REST_Controller
 
 		register_rest_route($namespace, '/' . 'get-products', array(
 			'methods' => WP_REST_Server::READABLE,
-			'callback' => array($this, 'lswp_get_products'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'callback' => array($this, 'lcwp_get_products'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'get-product/(?P<id>[\d]+)', array(
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array($this, 'lcwp_get_product'),
-				'permission_callback' => array($this, 'lswp_api_permission'),
+				'permission_callback' => array($this, 'lcwp_api_permission'),
 				'args'                => array(),
 			),
 		));
 		register_rest_route($namespace, '/' . 'get-orders', array(
 			'methods' => WP_REST_Server::READABLE,
-			'callback' => array($this, 'lswp_get_orders'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'callback' => array($this, 'lcwp_get_orders'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'get-order/(?P<id>[\d]+)', array(
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array($this, 'lcwp_get_order'),
-				'permission_callback' => array($this, 'lswp_api_permission'),
+				'permission_callback' => array($this, 'lcwp_api_permission'),
 				'args'                => array(),
 			),
 		));
 		register_rest_route($namespace, '/' . 'get-contacts', array(
 			'methods' => WP_REST_Server::READABLE,
-			'callback' => array($this, 'lswp_get_contacts'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'callback' => array($this, 'lcwp_get_contacts'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'get-contact/(?P<id>[\d]+)', array(
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array($this, 'lcwp_get_contact'),
-				'permission_callback' => array($this, 'lswp_api_permission'),
+				'permission_callback' => array($this, 'lcwp_api_permission'),
 				'args'                => array(),
 			),
 		));
 		register_rest_route($namespace, '/' . 'get-categories', array(
 			'methods' => WP_REST_Server::READABLE,
-			'callback' => array($this, 'lswp_get_categories'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'callback' => array($this, 'lcwp_get_categories'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'get-category/(?P<id>[\d]+)', array(
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array($this, 'lcwp_get_category'),
-				'permission_callback' => array($this, 'lswp_api_permission'),
+				'permission_callback' => array($this, 'lcwp_api_permission'),
 				'args'                => array(),
 			),
 		));
@@ -76,7 +76,7 @@ class Lswp_api extends WP_REST_Controller
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array($this, 'lcwp_get_variations'),
-				'permission_callback' => array($this, 'lswp_api_permission'),
+				'permission_callback' => array($this, 'lcwp_api_permission'),
 				'args'                => array(),
 			),
 		));
@@ -84,21 +84,21 @@ class Lswp_api extends WP_REST_Controller
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array($this, 'lcwp_get_variation'),
-				'permission_callback' => array($this, 'lswp_api_permission'),
+				'permission_callback' => array($this, 'lcwp_api_permission'),
 				'args'                => array(),
 			),
 		));
 		register_rest_route($namespace, '/' . 'get-attributes', array(
 			'methods' => WP_REST_Server::READABLE,
 			'callback' => array($this, 'lcwp_get_attributes'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'get-attribute/(?P<id>[\d]+)', array(
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array($this, 'lcwp_get_attribute'),
-				'permission_callback' => array($this, 'lswp_api_permission'),
+				'permission_callback' => array($this, 'lcwp_api_permission'),
 				'args'                => array(),
 			),
 		));
@@ -106,7 +106,7 @@ class Lswp_api extends WP_REST_Controller
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array($this, 'lcwp_get_attribute_terms'),
-				'permission_callback' => array($this, 'lswp_api_permission'),
+				'permission_callback' => array($this, 'lcwp_api_permission'),
 				'args'                => array(),
 			),
 		));
@@ -114,7 +114,7 @@ class Lswp_api extends WP_REST_Controller
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array($this, 'lcwp_get_attribute_term'),
-				'permission_callback' => array($this, 'lswp_api_permission'),
+				'permission_callback' => array($this, 'lcwp_api_permission'),
 				'args'                => array(),
 			),
 		));
@@ -122,21 +122,21 @@ class Lswp_api extends WP_REST_Controller
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array($this, 'lcwp_get_attribute_term_by_name'),
-				'permission_callback' => array($this, 'lswp_api_permission'),
+				'permission_callback' => array($this, 'lcwp_api_permission'),
 				'args'                => array(),
 			),
 		));
 		register_rest_route($namespace, '/' . 'get-tags', array(
 			'methods' => WP_REST_Server::READABLE,
 			'callback' => array($this, 'lcwp_get_tags'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'get-tag/(?P<id>[\d]+)', array(
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array($this, 'lcwp_get_tag'),
-				'permission_callback' => array($this, 'lswp_api_permission'),
+				'permission_callback' => array($this, 'lcwp_api_permission'),
 				'args'                => array(),
 			),
 		));
@@ -144,92 +144,92 @@ class Lswp_api extends WP_REST_Controller
 		//Post routes
 		register_rest_route($namespace, '/' . 'upload-image', array(
 			'methods' => WP_REST_Server::CREATABLE,
-			'callback' => array($this, 'lswp_create_image'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'callback' => array($this, 'lcwp_create_image'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'create-category', array(
 			'methods' => WP_REST_Server::CREATABLE,
-			'callback' => array($this, 'lswp_create_category'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'callback' => array($this, 'lcwp_create_category'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'create-product', array(
 			'methods' => WP_REST_Server::CREATABLE,
 			'callback' => array($this, 'lcwp_create_product'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'update-product', array(
 			'methods' => WP_REST_Server::EDITABLE,
 			'callback' => array($this, 'lcwp_update_product'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'create-tag', array(
 			'methods' => WP_REST_Server::CREATABLE,
 			'callback' => array($this, 'lcwp_create_tag'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'update-tag', array(
 			'methods' => WP_REST_Server::EDITABLE,
 			'callback' => array($this, 'lcwp_update_tag'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'create-attribute', array(
 			'methods' => WP_REST_Server::CREATABLE,
 			'callback' => array($this, 'lcwp_create_attribute'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'create-attribute-term', array(
 			'methods' => WP_REST_Server::CREATABLE,
 			'callback' => array($this, 'lcwp_create_attribute_term'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'create-variation', array(
 			'methods' => WP_REST_Server::CREATABLE,
 			'callback' => array($this, 'lcwp_create_variation'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'update-variation', array(
 			'methods' => WP_REST_Server::EDITABLE,
 			'callback' => array($this, 'lcwp_update_variation'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'create-contact', array(
 			'methods' => WP_REST_Server::CREATABLE,
 			'callback' => array($this, 'lcwp_create_contact'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'update-contact', array(
 			'methods' => WP_REST_Server::EDITABLE,
 			'callback' => array($this, 'lcwp_update_contact'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'create-order', array(
 			'methods' => WP_REST_Server::CREATABLE,
 			'callback' => array($this, 'lcwp_create_order'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'update-order', array(
 			'methods' => WP_REST_Server::EDITABLE,
 			'callback' => array($this, 'lcwp_update_order'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'send-last-fetched-time', array(
 			'methods' => WP_REST_Server::CREATABLE,
 			'callback' => array($this, 'lcwp_store_last_fetched_time'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 
@@ -237,25 +237,25 @@ class Lswp_api extends WP_REST_Controller
 		register_rest_route($namespace, '/' . 'delete-product/(?P<id>[\d]+)', array(
 			'methods' => WP_REST_Server::DELETABLE,
 			'callback' => array($this, 'lcwp_delete_product'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'delete-order/(?P<id>[\d]+)', array(
 			'methods' => WP_REST_Server::DELETABLE,
 			'callback' => array($this, 'lcwp_delete_order'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'delete-contact/(?P<id>[\d]+)', array(
 			'methods' => WP_REST_Server::DELETABLE,
 			'callback' => array($this, 'lcwp_delete_contact'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 		register_rest_route($namespace, '/' . 'delete-image/(?P<id>[\d]+)', array(
 			'methods' => WP_REST_Server::DELETABLE,
 			'callback' => array($this, 'lcwp_delete_image'),
-			'permission_callback' => array($this, 'lswp_api_permission'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
 	}
@@ -268,7 +268,7 @@ class Lswp_api extends WP_REST_Controller
 	 */
 
 	//Validate the request
-	public function lswp_api_permission()
+	public function lcwp_api_permission()
 	{
 		$bearer_token = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
 		$token = null;
@@ -279,7 +279,7 @@ class Lswp_api extends WP_REST_Controller
 			}
 		}
 
-		if ($token && get_option('lswp_auth_token') === $token) {
+		if ($token && get_option('lcwp_auth_token') === $token) {
 			return true;
 		} else {
 			return false;
@@ -287,7 +287,7 @@ class Lswp_api extends WP_REST_Controller
 	}
 
 	//Get all products
-	public function lswp_get_products()
+	public function lcwp_get_products()
 	{
 		if (isset($_GET['page'])) {
 			$page = $_GET['page'];
@@ -474,7 +474,7 @@ class Lswp_api extends WP_REST_Controller
 	}
 
 	//Get all categories
-	public function lswp_get_categories()
+	public function lcwp_get_categories()
 	{
 		if (isset($_GET['page'])) {
 			$page = $_GET['page'];
@@ -524,10 +524,10 @@ class Lswp_api extends WP_REST_Controller
 	{
 		$links = [
 			'self' => [
-				'href' => rest_url('lswp/v1/categories/' . $id),
+				'href' => rest_url('lcwp/v1/categories/' . $id),
 			],
 			'collection' => [
-				'href' => rest_url('lswp/v1/categories'),
+				'href' => rest_url('lcwp/v1/categories'),
 			],
 		];
 		return $links;
@@ -564,7 +564,7 @@ class Lswp_api extends WP_REST_Controller
 	}
 
 	//Get all orders
-	public function lswp_get_orders()
+	public function lcwp_get_orders()
 	{
 		if (isset($_GET['page'])) {
 			$page = $_GET['page'];
@@ -786,7 +786,7 @@ class Lswp_api extends WP_REST_Controller
 	}
 
 	//Get all contacts
-	public function lswp_get_contacts()
+	public function lcwp_get_contacts()
 	{
 		if (isset($_GET['page'])) {
 			$page = $_GET['page'];
@@ -1060,7 +1060,7 @@ class Lswp_api extends WP_REST_Controller
 	}
 
 	//Create an image
-	public function lswp_create_image($request)
+	public function lcwp_create_image($request)
 	{
 		try {
 			$image =  $request->get_params()['image'];
@@ -1125,7 +1125,7 @@ class Lswp_api extends WP_REST_Controller
 	}
 
 	//Create category
-	public function lswp_create_category($request)
+	public function lcwp_create_category($request)
 	{
 		$data = $request->get_params();
 		try {
@@ -1780,7 +1780,7 @@ class Lswp_api extends WP_REST_Controller
 
 function init_rest_api_endpoint()
 {
-	$endpoint = new Lswp_api();
+	$endpoint = new Lcwp_api();
 	$endpoint->register_routes();
 }
 add_action('rest_api_init', 'init_rest_api_endpoint');

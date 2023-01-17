@@ -93,12 +93,12 @@ $statuses = [
 					}
 					?>
 
-					<input type="hidden" name="action" value="lswp_map_order_phase">
-					<?php wp_nonce_field('lswp_map_order_phase_verify') ?>
+					<input type="hidden" name="action" value="lcwp_map_order_phase">
+					<?php wp_nonce_field('lcwp_map_order_phase_verify') ?>
 
 					<!-- Check if order phases are already mapped -->
 					<?php
-					if (get_option('lswp_order_phases') && get_option('lswp_order_phases')['mapped']) {
+					if (get_option('lcwp_order_phases') && get_option('lcwp_order_phases')['mapped']) {
 						echo '<input type="hidden" name="is_mapped" value="1">';
 						echo '<input type="hidden" name="site_url" value="'. get_site_url() .'">';
 					} else {
