@@ -25,7 +25,8 @@ function lazychat_settings_page()
 		<?php
 		if (
 			get_option('lcwp_auth_token') &&
-			get_option('lcwp_auth_token') === null
+			get_option('lcwp_auth_token') === null || 
+			!get_option('lcwp_auth_token')
 		) {
 			include(LCWP_PATH . 'views/connect/connect.php');
 		} else if (

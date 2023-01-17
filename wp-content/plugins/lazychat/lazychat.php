@@ -89,6 +89,7 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
 			{
 				//Included files
 				require(LCWP_PATH . 'includes/activation.php');
+				require(LCWP_PATH . 'includes/deactivation.php');
 				require(LCWP_PATH . 'includes/error.php');
 				require(LCWP_PATH . 'classes/Lcwp_settings_page.php');
 				require(LCWP_PATH . 'classes/Lcwp_connect.php');
@@ -117,12 +118,21 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
 					'wp_ajax_lcwp_get_queue_progress',
 					[new Lcwp_settings(), 'lcwp_get_queue_progress']
 				);
+				add_action(
+					'wp_ajax_lcwp_deactivate_lazychat',
+					[new Lcwp_settings(), 'lcwp_deactivate_lazychat']
+				);
 				add_action('rest_api_init', [new Lcwp_api, 'register_routes']);
 
 				//Get LazyChat Order Phases
 				if (get_option('lcwp_auth_token') && get_option('lcwp_auth_token') !== null) {
 					lcwp_get_lazychat_order_phases();
 				}
+
+				//Load Hooks
+				add_action('plugins_loaded', function () {
+					require(LCWP_PATH . 'includes/lazychat-hooks.php');
+				});
 			}
 		}
 		$LCWP_core = new LCWP_core();
@@ -179,3 +189,16 @@ function lcwp_get_lazychat_order_phases()
 // 	}
 // }
 // add_action('admin_init', 'load_plugin');
+
+//deactivate plugin with modal dialog
+// function deactivate_plugin()
+// {
+// 	//check if the plugin is active
+// 	if (is_plugin_active('activate_lazychat/lazychat.php')) {
+// 		//deactivate the plugin
+// 		deactivate_plugins('activate_lazychat/lazychat.php');
+// 		//redirect to the plugins page
+// 		wp_redirect(admin_url('plugins.php'));
+// 		exit;
+// 	}
+// }

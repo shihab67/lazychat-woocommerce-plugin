@@ -208,5 +208,38 @@ if (!class_exists('Lcwp_settings')) {
 
 			wp_send_json_success($result);
 		}
+
+		public function lcwp_deactivate_lazychat()
+		{
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/deactivate');
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			$headers = array();
+			$headers[] = 'Content-Type: application/json';
+			$headers[] = 'Authorization: Bearer ' . get_option('lcwp_auth_token');
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+			$result = curl_exec($ch);
+			if (curl_errno($ch)) {
+				echo 'Error:' . curl_error($ch);
+			}
+			curl_close($ch);
+
+			if (isset($result)) $result = json_decode($result, true);
+
+			if (isset($result) && isset($result['status']) && $result['status'] === 'success') {
+				delete_option('lcwp_settings');
+				delete_option('lcwp_auth_token');
+				delete_option('lcwp_order_phases');
+				delete_option('lcwp_sync_options');
+				delete_option('lcwp_shop_id');
+				delete_option('lcwp_last_fetched_time');
+
+				//deactivate lazychat plugin
+				deactivate_plugins('lazychat/lazychat.php');
+			}
+
+			wp_send_json_success($result);
+		}
 	}
 }
