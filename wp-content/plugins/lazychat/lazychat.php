@@ -3,12 +3,12 @@
 /**
  * Plugin Name: LazyChat
  * Plugin URI: https://lazychat.io
- * Description: Sync data in your LazyChat App
+ * Description: LazyChat is an omnichannel chatcommerce tool that enables you to sell products on any messaging channel (e.g. Messenger, Instagram, WhatsApp, etc.) and manage your social media business.
  * Version: 1.0
  * Requires at least: 5.2
  * Requires PHP: 7.3
- * Author: Sayedur Rahman
- * Author URI: https://sayedurrahman.com/
+ * Author: LazyChat
+ * Author URI: https://lazychat.io
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Update URI: https://example.com/my-plugin/
