@@ -72,8 +72,7 @@
 						</i> <?php _e('Menu') ?>
 					</button>
 
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="add-customer-dropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; 
-					top: 0px; left: 0px; transform: translate3d(0px, 30px, 0px);">
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="add-customer-dropdown" x-placement="bottom-start">
 						<a class="dropdown-item" href="#" data-toggle="modal" data-target="#mapOrderPhasesModal">
 							<i class="fas fa-code-merge"></i> <?php _e('Map WooCommerce Phases') ?>
 						</a>
