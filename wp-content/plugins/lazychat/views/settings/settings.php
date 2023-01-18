@@ -51,6 +51,14 @@
 	.bubble-loader {
 		display: none !important;
 	}
+
+	.dropdown-menu {
+		position: absolute;
+		will-change: transform;
+		top: 0px;
+		left: 0px;
+		transform: translate3d(-134px, 27px, 0px) !important;
+	}
 </style>
 
 
@@ -58,14 +66,24 @@
 	<div class="card-body p-0">
 		<div class="row">
 			<div class="col-md-12 d-flex justify-content-end">
-				<div>
-					<a class="btn btn-primary btn-sm m-1" href="#" data-toggle="modal" data-target="#mapOrderPhasesModal">
-						<i class="fas fa-code-merge"></i> <?php _e('Map WooCommerce Phases') ?></a>
-				</div>
-				<div>
-					<a href="#" class="m-1 btn btn-info btn-sm" data-toggle="modal" data-target="#syncSettingsModal">
-						<fa class="fas fa-cog"></fa> <?php _e('Settings') ?>
-					</a>
+				<div class="dropdown contact-bulk-action">
+					<button class="btn btn-success text-white dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+						<i class="fas fa-bars"></i>
+						</i> <?php _e('Menu') ?>
+					</button>
+
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="add-customer-dropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; 
+					top: 0px; left: 0px; transform: translate3d(0px, 30px, 0px);">
+						<a class="dropdown-item" href="#" data-toggle="modal" data-target="#mapOrderPhasesModal">
+							<i class="fas fa-code-merge"></i> <?php _e('Map WooCommerce Phases') ?>
+						</a>
+						<a class="dropdown-item text-info" href="#" data-toggle="modal" data-target="#syncSettingsModal">
+							<i class="fas fa-cog"></i> <?php _e('Settings') ?>
+						</a>
+						<!-- <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#syncSettingsModal">
+							<i class="fas fa-exclamation-circle"></i> <?php _e('Deactivate') ?>
+						</a> -->
+					</div>
 				</div>
 			</div>
 		</div>
