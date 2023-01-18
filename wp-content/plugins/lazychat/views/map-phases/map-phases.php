@@ -100,10 +100,10 @@ $statuses = [
 					<?php
 					if (get_option('lcwp_order_phases') && get_option('lcwp_order_phases')['mapped']) {
 						echo '<input type="hidden" name="is_mapped" value="1">';
-						echo '<input type="hidden" name="site_url" value="'. get_site_url() .'">';
+						echo '<input type="hidden" name="site_url" value="">';
 					} else {
 						echo '<input type="hidden" name="is_mapped" value="0">';
-						echo '<input type="hidden" name="site_url" value="">';
+						echo '<input type="hidden" name="site_url" value="' . get_site_url() . '">';
 					}
 					?>
 

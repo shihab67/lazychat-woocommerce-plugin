@@ -44,7 +44,7 @@ if (!class_exists('Lcwp_connect')) {
 				flash($result['message'], 'success');
 
 				//save the auth token to DB
-				update_option('lcwp_auth_token', $data['lcwp_auth_token']);
+				update_option('lcwp_auth_token', $result['auth_token']);
 
 				//redirect back to settings page
 				wp_redirect(get_admin_url() . 'admin.php?page=lazychat_settings');
@@ -98,15 +98,19 @@ if (!class_exists('Lcwp_connect')) {
 					]);
 
 					//Check if order phases are already mapped
-					if ($_POST['is_mapped'] === 0) {
+					if ($_POST['is_mapped'] == 0) {
 						//create woocommerce webhooks
 						$this->lcwp_create_webhooks();
 
-						if (get_option('lcwp_shop_id')) {
+						if (isset($result['shop_id']) && get_option('lcwp_shop_id') == "") {
 							update_option(
 								'lcwp_shop_id',
 								$result['shop_id']
 							);
+						}
+
+						if (isset($result['last_fetched_times']) && get_option('lcwp_last_fetched_time') == "") {
+							update_option('lcwp_last_fetched_time', $result['last_fetched_times']);
 						}
 					}
 
@@ -271,6 +275,8 @@ if (!class_exists('Lcwp_connect')) {
 						$wh->delete();
 					}
 				}
+
+				return true;
 			} catch (\Throwable $th) {
 				throw new \RuntimeException($th->getMessage());
 			}

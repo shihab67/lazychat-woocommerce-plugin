@@ -159,9 +159,8 @@ add_action('admin_footer', function () { ?>
 
 		jQuery(document).ready(function($) {
 			$(".lcwp_deactivate_lazychat").click(function() {
-				console.log(234235);
-				// $(this).attr("disabled", "disabled");
-				// $(this).html("Deactivating...");
+				$(this).attr("disabled", "disabled");
+				$(this).html("Deactivating...");
 
 				wp.ajax.post("lcwp_deactivate_lazychat", {})
 					.done(function(res) {
@@ -171,7 +170,7 @@ add_action('admin_footer', function () { ?>
 								window.location.reload();
 							}, 1000);
 						} else {
-							$(".lcwp_deactivate_lazychat").html("An Error Occured. Please Try Again");
+							$(".lcwp_deactivate_lazychat").html(res.message);
 						}
 					});
 			});

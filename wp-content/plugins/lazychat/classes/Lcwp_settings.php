@@ -228,6 +228,7 @@ if (!class_exists('Lcwp_settings')) {
 			if (isset($result)) $result = json_decode($result, true);
 
 			if (isset($result) && isset($result['status']) && $result['status'] === 'success') {
+				//Delete all the lcwp options from DB
 				delete_option('lcwp_settings');
 				delete_option('lcwp_auth_token');
 				delete_option('lcwp_order_phases');
@@ -235,7 +236,10 @@ if (!class_exists('Lcwp_settings')) {
 				delete_option('lcwp_shop_id');
 				delete_option('lcwp_last_fetched_time');
 
-				//deactivate lazychat plugin
+				//Delete all the webhooks
+				(new Lcwp_connect())->lcwp_delete_previous_webhooks();
+				
+				//Deactivate lazychat plugin
 				deactivate_plugins('lazychat/lazychat.php');
 			}
 
