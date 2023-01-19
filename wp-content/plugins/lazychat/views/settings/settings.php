@@ -78,7 +78,9 @@
 		<div class="row mb-4">
 			<div class="col-md-12 d-flex justify-content-between align-items-center">
 				<div class="shop-name-div d-flex align-items-center justify-content-center">
-					<div class="shop-connected-to mr-2">Connected To:</div>
+					<div class="shop-connected-to">
+						<i class="fas fa-store mr-2 text-primary"></i>
+					</div>
 					<div class="shop-name">
 						<?php get_option('lcwp_shop_name') &&
 							get_option('lcwp_shop_name') !== "" ? print get_option('lcwp_shop_name') : ""; ?>
