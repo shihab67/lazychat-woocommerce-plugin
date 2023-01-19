@@ -169,7 +169,8 @@ add_action('admin_footer', function () { ?>
 		});
 
 		function deactivate() {
-			let element = document.querySelector('.lcwp_deactivate_lazychat');
+			let element = document.getElementsByClassName('deactivate_lazychat_btn');
+
 			wp.ajax.post("lcwp_deactivate_lazychat", {})
 				.done(function(res) {
 					if (res.status === 'success') {

@@ -187,8 +187,8 @@ function lazychat_settings_page()
 			//get the queue progress on page load starts
 			wp.ajax.post("lcwp_get_queue_progress", {})
 				.done(function(res) {
+					console.log(res);
 					res = JSON.parse(res);
-					console.log(res)
 					if (res.status === 'success') {
 						progressBar(res.data);
 					} else {
