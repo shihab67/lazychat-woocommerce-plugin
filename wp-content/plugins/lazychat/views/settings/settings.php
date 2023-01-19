@@ -79,7 +79,7 @@
 			<div class="col-md-12 d-flex justify-content-between align-items-center">
 				<div class="shop-name-div d-flex align-items-center justify-content-center">
 					<div class="shop-connected-to">
-						<i class="fas fa-store mr-2 text-primary"></i>
+						<i class="fas fa-store-alt mr-2 text-primary"></i>
 					</div>
 					<div class="shop-name">
 						<?php get_option('lcwp_shop_name') &&
