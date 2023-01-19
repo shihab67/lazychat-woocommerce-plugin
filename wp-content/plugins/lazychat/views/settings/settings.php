@@ -59,13 +59,31 @@
 		left: 0px;
 		transform: translate3d(-134px, 27px, 0px) !important;
 	}
+
+	.shop-name {
+		font-size: 1.3rem;
+		font-weight: 500;
+		color: #006c67;
+	}
+
+	.shop-connected-to {
+		font-weight: 500;
+		font-size: 1.1rem;
+	}
 </style>
 
 
 <div class="card" style="max-width: 100% !important;">
 	<div class="card-body p-0">
-		<div class="row">
-			<div class="col-md-12 d-flex justify-content-end">
+		<div class="row mb-4">
+			<div class="col-md-12 d-flex justify-content-between align-items-center">
+				<div class="shop-name-div d-flex align-items-center justify-content-center">
+					<div class="shop-connected-to mr-2">Connected To:</div>
+					<div class="shop-name">
+						<?php get_option('lcwp_shop_name') &&
+							get_option('lcwp_shop_name') !== "" ? print get_option('lcwp_shop_name') : ""; ?>
+					</div>
+				</div>
 				<div class="dropdown contact-bulk-action">
 					<button class="btn btn-success text-white dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
 						<i class="fas fa-bars"></i>
