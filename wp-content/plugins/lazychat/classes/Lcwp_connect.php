@@ -109,6 +109,13 @@ if (!class_exists('Lcwp_connect')) {
 							);
 						}
 
+						if (isset($result['shop_name']) && get_option('lcwp_shop_name') == "") {
+							update_option(
+								'lcwp_shop_name',
+								$result['shop_name']
+							);
+						}
+
 						if (isset($result['last_fetched_times']) && get_option('lcwp_last_fetched_time') == "") {
 							update_option('lcwp_last_fetched_time', $result['last_fetched_times']);
 						}

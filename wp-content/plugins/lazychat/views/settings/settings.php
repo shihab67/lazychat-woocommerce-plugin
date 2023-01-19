@@ -79,9 +79,9 @@
 						<a class="dropdown-item text-info" href="#" data-toggle="modal" data-target="#syncSettingsModal">
 							<i class="fas fa-cog"></i> <?php _e('Settings') ?>
 						</a>
-						<!-- <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#syncSettingsModal">
-							<i class="fas fa-exclamation-circle"></i> <?php _e('Deactivate') ?>
-						</a> -->
+						<a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#DeactivateModal">
+							<i class=" fas fa-exclamation-circle"></i> <?php _e('Deactivate') ?>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -533,3 +533,26 @@
 	</div>
 </div>
 <!-- Hard Re-sync modal ends -->
+
+<!-- Deactivate modal starts -->
+<div class="modal fade" id="DeactivateModal" tabindex="-1" role="dialog" aria-labelledby="DeactivateModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="DeactivateModalLabel">Deactivate LazyChat</h5>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body text-center">
+				<i class="fas fa-exclamation-triangle" style="color: #ffc107 !important; font-size: 3rem;"></i>
+				<p class="font-weight-500" style="font-size: 1rem;">Are you sure you want to Deactivate LazyChat?</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal"><?php _e('Close') ?></button>
+				<button class="btn btn-danger deactivate_lazychat_btn"><?php _e('Deactivate') ?></button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Deactivate modal ends -->

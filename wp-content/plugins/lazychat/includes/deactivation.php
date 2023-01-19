@@ -12,7 +12,7 @@ add_action('admin_head', function () { ?>
 			font-size: 18px;
 			font-weight: 400;
 			color: #fff;
-			background-color: #006c67;
+			background-color: #f44336;
 			border-radius: 6px;
 			border: none;
 			padding: 14px 22px;
@@ -20,9 +20,9 @@ add_action('admin_head', function () { ?>
 		}
 
 		.lazychat-deactivation-modal button:hover {
-			background: #006c67;
-			box-shadow: 0 8px 25px -8px #006c67;
-			border-color: #006c67;
+			background: #f44336;
+			box-shadow: 0 8px 25px -8px #f44336;
+			border-color: #f44336;
 		}
 
 		.lazychat-deactivation-modal button.show-modal,
@@ -135,46 +135,57 @@ add_action('admin_footer', function () { ?>
 	</section>
 
 	<script type="text/javascript">
-		const section = document.querySelector('.lazychat-deactivation-modal'),
-			overlay = document.querySelector('.overlay'),
-			showBtn = document.querySelector('#deactivate-lazychat'),
-			closeBtn = document.querySelector('.close-button');
-
-		showBtn.addEventListener('click', () => {
-			overlay.style.zIndex = 'unset';
-			section.classList.add('active');
-
-		});
-
-		closeBtn.addEventListener('click', () => {
-			section.classList.remove('active');
-			overlay.style.zIndex = -1;
-		});
-
-		overlay.addEventListener('click', () => {
-			section.classList.remove('active');
-			overlay.style.zIndex = -1;
-
-		});
-
 		jQuery(document).ready(function($) {
-			$(".lcwp_deactivate_lazychat").click(function() {
-				$(this).attr("disabled", "disabled");
-				$(this).html("Deactivating...");
+			if ($('#deactivate-lazychat').length > 0) {
+				const section = document.querySelector('.lazychat-deactivation-modal'),
+					overlay = document.querySelector('.overlay'),
+					showBtn = document.querySelector('#deactivate-lazychat'),
+					closeBtn = document.querySelector('.close-button');
 
-				wp.ajax.post("lcwp_deactivate_lazychat", {})
-					.done(function(res) {
-						if (res.status === 'success') {
-							$(".lcwp_deactivate_lazychat").html("LazyChat Plugin Deactivated Successfully");
-							setTimeout(function() {
-								window.location.reload();
-							}, 1000);
-						} else {
-							$(".lcwp_deactivate_lazychat").html(res.message);
-						}
-					});
-			});
+				showBtn.addEventListener('click', () => {
+					overlay.style.zIndex = 'unset';
+					section.classList.add('active');
+
+				});
+
+				closeBtn.addEventListener('click', () => {
+					section.classList.remove('active');
+					overlay.style.zIndex = -1;
+				});
+
+				overlay.addEventListener('click', () => {
+					section.classList.remove('active');
+					overlay.style.zIndex = -1;
+
+				});
+
+				$(".lcwp_deactivate_lazychat").click(function() {
+					$(this).attr("disabled", "disabled");
+					$(this).html("Deactivating...");
+
+					deactivate();
+				});
+			}
 		});
+
+		function deactivate() {
+			let element = document.querySelector('.lcwp_deactivate_lazychat');
+			wp.ajax.post("lcwp_deactivate_lazychat", {})
+				.done(function(res) {
+					if (res.status === 'success') {
+						element.innerText = "LazyChat Plugin Deactivated Successfully";
+						setTimeout(function() {
+							if (element.length > 0) {
+								window.location.href = "<?php echo get_dashboard_url(); ?>";
+							} else {
+								window.location.reload();
+							}
+						}, 1000);
+					} else {
+						element.innerText = res.message;
+					}
+				});
+		}
 	</script>
 <?php
 });

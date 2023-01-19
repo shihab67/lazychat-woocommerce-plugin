@@ -38,7 +38,7 @@ session_start();
 // Constants
 define('LCWP_PATH', plugin_dir_path(__FILE__));
 define('LCWP_URI', plugin_dir_url(__FILE__));
-define('LAZYCHAT_URL', 'http://chatbot.test');
+define('LAZYCHAT_URL', 'http://3cbf-103-12-74-42.ngrok.io');
 define('PUSHER_APP_KEY', '68cdc42e480c1f64420d');
 define('PUSHER_APP_HOST', '127.0.0.1');
 
@@ -120,6 +120,10 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
 				);
 				add_action(
 					'wp_ajax_lcwp_deactivate_lazychat',
+					[new Lcwp_settings(), 'lcwp_deactivate_lazychat']
+				);
+				add_action(
+					'wp_ajax_nopriv_lcwp_deactivate_lazychat',
 					[new Lcwp_settings(), 'lcwp_deactivate_lazychat']
 				);
 				add_action('rest_api_init', [new Lcwp_api, 'register_routes']);

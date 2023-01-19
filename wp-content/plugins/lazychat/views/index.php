@@ -174,7 +174,15 @@ function lazychat_settings_page()
 			$(document).on('click', '.resync-btn', function() {
 				let type = $(this).attr('data-type');
 				$('#hard-re-sync-form').find('input[name="type"]').val(type);
-			})
+			});
+
+			//Deactivate plugin
+			$(".deactivate_lazychat_btn").click(function() {
+				$(this).attr("disabled", "disabled");
+				$(this).html("Deactivating...");
+
+				deactivate();
+			});
 
 			//get the queue progress on page load starts
 			wp.ajax.post("lcwp_get_queue_progress", {})

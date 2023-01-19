@@ -9,10 +9,8 @@ defined('ABSPATH') || exit;
 if (!function_exists('lcwp_activation')) {
 	function lcwp_activation()
 	{
-		if (!get_option('lcwp_settings')) {
-			add_option('lcwp_settings', [
-				'lcwp_label' => 'LazyChat'
-			]);
+		if (!get_option('lcwp_shop_name')) {
+			add_option('lcwp_shop_name', null);
 		}
 
 		if (!get_option('lcwp_auth_token')) {
