@@ -564,9 +564,14 @@
 					<span aria-hidden="true">×</span>
 				</button>
 			</div>
-			<div class="modal-body text-center">
+			<div class="modal-body text-center deactivate-body">
 				<i class="fas fa-exclamation-triangle" style="color: #ffc107 !important; font-size: 3rem;"></i>
 				<p class="font-weight-500" style="font-size: 1rem;">Are you sure you want to Deactivate LazyChat?</p>
+				<label class="checkbox checkbox-primary">
+					<input type="checkbox" name="remove_all" id="remove_all" checked><span>
+						Delete all data(products, categories, images, contacts, orders) fetched in LazyChat</span>
+					<span class="checkmark"></span>
+				</label>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-secondary" type="button" data-dismiss="modal"><?php _e('Close') ?></button>

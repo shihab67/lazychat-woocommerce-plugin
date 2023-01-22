@@ -111,6 +111,55 @@ add_action('admin_head', function () { ?>
 			left: 399px;
 			cursor: pointer;
 		}
+
+		.checkbox label {
+			transition: 0.3s;
+		}
+
+		.checkbox:hover .custom-checkbox+label::before {
+			border-color: #006c67;
+		}
+
+		.checkbox:hover label {
+			color: #000;
+		}
+
+		.checkbox .custom-checkbox {
+			position: absolute;
+			z-index: -1;
+			opacity: 0;
+		}
+
+		.checkbox .custom-checkbox+label {
+			display: inline-flex;
+			align-items: center;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		.checkbox .custom-checkbox+label::before {
+			transition: 0.3s;
+			content: "";
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			flex-shrink: 0;
+			flex-grow: 0;
+			border: 1px solid #cccccc;
+			border-radius: 4px;
+			margin-right: 0.5em;
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: 50% 50%;
+		}
+
+		.checkbox .custom-checkbox:checked+label::before {
+			border-color: #006c67;
+			background-color: #006c67;
+			background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2210%22%20viewBox%3D%220%200%2012%2010%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M10%202L4.5%208L2%205.27273%22%20stroke%3D%22white%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22square%22%2F%3E%0A%3C%2Fsvg%3E%0A");
+		}
 	</style>
 <?php });
 
@@ -128,6 +177,11 @@ add_action('admin_footer', function () { ?>
 				</svg>
 			</div>
 			<p>Are you sure you want to Deactivate LazyChat?</p>
+			<div class="checkbox">
+				<input class="custom-checkbox remove_all_1" type="checkbox" id="checkbox" name="checkbox" checked>
+				<label for="checkbox" style="font-size: 0.9rem;">
+					Delete all data(products, categories, images, contacts, orders) fetched in LazyChat</label>
+			</div>
 			<div class="buttons">
 				<button class="lcwp_deactivate_lazychat">Yes, Deactivate LazyChat</button>
 			</div>
@@ -170,8 +224,20 @@ add_action('admin_footer', function () { ?>
 
 		function deactivate() {
 			let element = document.getElementsByClassName('deactivate_lazychat_btn');
+			let remove_all = 0;
+			if (element.length > 0) {
+				var parent = document.querySelector('.deactivate-body #remove_all');
+				if (parent.checked) remove_all = 1;
+				else remove_all = 0;
+			} else {
+				var parent = document.querySelector('.lazychat-deactivation-modal #checkbox');
+				if (parent.checked) remove_all = 1;
+				else remove_all = 0;
+			}
 
-			wp.ajax.post("lcwp_deactivate_lazychat", {})
+			wp.ajax.post("lcwp_deactivate_lazychat", {
+				remove_all: remove_all
+			})
 				.done(function(res) {
 					if (res.status === 'success') {
 						element.innerText = "LazyChat Plugin Deactivated Successfully";
