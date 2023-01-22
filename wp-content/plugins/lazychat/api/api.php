@@ -240,6 +240,12 @@ class Lcwp_api extends WP_REST_Controller
 			'permission_callback' => array($this, 'lcwp_api_permission'),
 			'args' => array(),
 		));
+		register_rest_route($namespace, '/' . 'delete-product-variation/(?P<id>[\d]+)', array(
+			'methods' => WP_REST_Server::DELETABLE,
+			'callback' => array($this, 'lcwp_delete_product_variation'),
+			'permission_callback' => array($this, 'lcwp_api_permission'),
+			'args' => array(),
+		));
 		register_rest_route($namespace, '/' . 'delete-order/(?P<id>[\d]+)', array(
 			'methods' => WP_REST_Server::DELETABLE,
 			'callback' => array($this, 'lcwp_delete_order'),
@@ -1686,6 +1692,25 @@ class Lcwp_api extends WP_REST_Controller
 				], 200);
 			} else {
 				return new WP_Error('no_product', 'Product not found', array('status' => 404));
+			}
+		} catch (Exception $e) {
+			return new WP_Error('no_product', $e->getMessage(), array('status' => 404));
+		}
+	}
+
+	//Delete product variation
+	public function lcwp_delete_product_variation($request)
+	{
+		try {
+			$data = $request->get_params();
+			$product = wc_get_product($data['id']);
+			if ($product && $product->delete(true)) {
+				return new WP_REST_Response([
+					'deleted' => true,
+					'message' => 'Product variation deleted successfully',
+				], 200);
+			} else {
+				return new WP_Error('no_product', 'Product variation not found', array('status' => 404));
 			}
 		} catch (Exception $e) {
 			return new WP_Error('no_product', $e->getMessage(), array('status' => 404));
