@@ -169,7 +169,7 @@ if (!class_exists('Lcwp_settings')) {
 			curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/hard-re-sync');
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($type));
+			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['type' => $type]));
 			$headers = array();
 			$headers[] = 'Content-Type: application/json';
 			$headers[] = 'Authorization: Bearer ' . get_option('lcwp_auth_token');
