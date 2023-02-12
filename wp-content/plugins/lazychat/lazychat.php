@@ -38,9 +38,11 @@ session_start();
 // Constants
 define('LCWP_PATH', plugin_dir_path(__FILE__));
 define('LCWP_URI', plugin_dir_url(__FILE__));
-define('LAZYCHAT_URL', 'http://1872-103-12-74-34.ngrok.io');
+define('LAZYCHAT_URL', 'https://client.lazychat.io');
+// define('LAZYCHAT_URL', 'http://1872-103-12-74-34.ngrok.io');
 define('PUSHER_APP_KEY', '68cdc42e480c1f64420d');
-define('PUSHER_APP_HOST', '127.0.0.1');
+define('PUSHER_APP_HOST', 'https://client.lazychat.io');
+// define('PUSHER_APP_HOST', '127.0.0.1');
 
 // Check if WooCommerce is active
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -174,35 +176,3 @@ function lcwp_get_lazychat_order_phases()
 	}
 }
 
-// function my_plugin_activate()
-// {
-// 	add_option('Activated_Plugin', 'activate_lazychat/lazychat.php');
-// 	/* activation code here */
-// }
-// register_activation_hook(__FILE__, 'my_plugin_activate');
-
-// function load_plugin()
-// {
-
-// 	if (is_admin() && get_option('Activated_Plugin') == 'Plugin-Slug') {
-
-// 		delete_option('Activated_Plugin');
-
-// 		/* do stuff once right after activation */
-// 		// example: add_action( 'init', 'my_init_function' );
-// 	}
-// }
-// add_action('admin_init', 'load_plugin');
-
-//deactivate plugin with modal dialog
-// function deactivate_plugin()
-// {
-// 	//check if the plugin is active
-// 	if (is_plugin_active('activate_lazychat/lazychat.php')) {
-// 		//deactivate the plugin
-// 		deactivate_plugins('activate_lazychat/lazychat.php');
-// 		//redirect to the plugins page
-// 		wp_redirect(admin_url('plugins.php'));
-// 		exit;
-// 	}
-// }
