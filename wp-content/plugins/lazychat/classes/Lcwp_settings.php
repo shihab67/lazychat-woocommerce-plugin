@@ -9,6 +9,8 @@ defined('ABSPATH') || exit;
 if (!class_exists('Lcwp_settings')) {
 	class Lcwp_settings
 	{
+		public $lazychat_url = 'http://chatbot.test';
+
 		public function lcwp_handle_settings()
 		{
 			check_admin_referer('lcwp_upload_data_verify');
@@ -47,7 +49,7 @@ if (!class_exists('Lcwp_settings')) {
 		public function lcwp_upload_data($type)
 		{
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/fetch-upload-data');
+			curl_setopt($ch, CURLOPT_URL, $this->lazychat_url . '/api/v1/woocommerce/fetch-upload-data');
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POST, 1);
 			$data = [
@@ -96,7 +98,7 @@ if (!class_exists('Lcwp_settings')) {
 				exit;
 			} else {
 				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/sync-options');
+				curl_setopt($ch, CURLOPT_URL, $this->lazychat_url . '/api/v1/woocommerce/sync-options');
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($ch, CURLOPT_POST, 1);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($_POST));
@@ -166,7 +168,7 @@ if (!class_exists('Lcwp_settings')) {
 		public function lcwp_send_re_sync_request($type)
 		{
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/hard-re-sync');
+			curl_setopt($ch, CURLOPT_URL, $this->lazychat_url . '/api/v1/woocommerce/hard-re-sync');
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['type' => $type]));
@@ -193,7 +195,7 @@ if (!class_exists('Lcwp_settings')) {
 		public function lcwp_get_queue_progress()
 		{
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/queue-progress');
+			curl_setopt($ch, CURLOPT_URL, $this->lazychat_url . '/api/v1/woocommerce/queue-progress');
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POST, 1);
 			$headers = array();
@@ -220,7 +222,7 @@ if (!class_exists('Lcwp_settings')) {
 					]);
 				} else {
 					$ch = curl_init();
-					curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/deactivate');
+					curl_setopt($ch, CURLOPT_URL, $this->lazychat_url . '/api/v1/woocommerce/deactivate');
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 					curl_setopt($ch, CURLOPT_POST, 1);
 					curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($_POST));

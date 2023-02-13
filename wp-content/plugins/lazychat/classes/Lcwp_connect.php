@@ -9,6 +9,8 @@ defined('ABSPATH') || exit;
 if (!class_exists('Lcwp_connect')) {
 	class Lcwp_connect
 	{
+		public $lazychat_url = 'http://chatbot.test';
+
 		public function lcwp_connect_with_lazychat()
 		{
 			check_admin_referer('lcwp_connect_verify');
@@ -22,7 +24,7 @@ if (!class_exists('Lcwp_connect')) {
 			];
 
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/connect');
+			curl_setopt($ch, CURLOPT_URL, $this->lazychat_url . '/api/v1/woocommerce/connect');
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
@@ -68,7 +70,7 @@ if (!class_exists('Lcwp_connect')) {
 				}
 
 				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, LAZYCHAT_URL . '/api/v1/woocommerce/map-order-phase');
+				curl_setopt($ch, CURLOPT_URL, $this->lazychat_url . '/api/v1/woocommerce/map-order-phase');
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($ch, CURLOPT_POST, 1);
 				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($_POST));
@@ -153,7 +155,7 @@ if (!class_exists('Lcwp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Order created',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/api/v1/woocommerce/webhooks/orders/' . get_option('lcwp_auth_token'),
+						'delivery_url' => $this->lazychat_url . '/api/v1/woocommerce/webhooks/orders/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'order.created',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -164,7 +166,7 @@ if (!class_exists('Lcwp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Order updated',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/api/v1/woocommerce/webhooks/orders/' . get_option('lcwp_auth_token'),
+						'delivery_url' => $this->lazychat_url . '/api/v1/woocommerce/webhooks/orders/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'order.updated',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -175,7 +177,7 @@ if (!class_exists('Lcwp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Order deleted',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/api/v1/woocommerce/webhooks/orders/' . get_option('lcwp_auth_token'),
+						'delivery_url' => $this->lazychat_url . '/api/v1/woocommerce/webhooks/orders/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'order.deleted',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -186,7 +188,7 @@ if (!class_exists('Lcwp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Product created',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/api/v1/woocommerce/webhooks/products/' . get_option('lcwp_auth_token'),
+						'delivery_url' => $this->lazychat_url . '/api/v1/woocommerce/webhooks/products/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'product.created',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -197,7 +199,7 @@ if (!class_exists('Lcwp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Product updated',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/api/v1/woocommerce/webhooks/products/' . get_option('lcwp_auth_token'),
+						'delivery_url' => $this->lazychat_url . '/api/v1/woocommerce/webhooks/products/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'product.updated',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -208,7 +210,7 @@ if (!class_exists('Lcwp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Product deleted',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/api/v1/woocommerce/webhooks/products/' . get_option('lcwp_auth_token'),
+						'delivery_url' => $this->lazychat_url . '/api/v1/woocommerce/webhooks/products/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'product.deleted',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -219,7 +221,7 @@ if (!class_exists('Lcwp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Contact created',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/api/v1/woocommerce/webhooks/customers/' . get_option('lcwp_auth_token'),
+						'delivery_url' => $this->lazychat_url . '/api/v1/woocommerce/webhooks/customers/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'customer.created',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -230,7 +232,7 @@ if (!class_exists('Lcwp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Contact updated',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/api/v1/woocommerce/webhooks/customers/' . get_option('lcwp_auth_token'),
+						'delivery_url' => $this->lazychat_url . '/api/v1/woocommerce/webhooks/customers/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'customer.updated',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -241,7 +243,7 @@ if (!class_exists('Lcwp_connect')) {
 						'status' => 'active',
 						'name' => 'LazyChat - Contact deleted',
 						'user_id' => get_current_user_id(),
-						'delivery_url' => LAZYCHAT_URL . '/api/v1/woocommerce/webhooks/customers/' . get_option('lcwp_auth_token'),
+						'delivery_url' => $this->lazychat_url . '/api/v1/woocommerce/webhooks/customers/' . get_option('lcwp_auth_token'),
 						'secret' => base64_encode(random_bytes(10)),
 						'topic' => 'customer.deleted',
 						'date_created' => date('Y-m-d H:i:s'),
@@ -276,7 +278,7 @@ if (!class_exists('Lcwp_connect')) {
 				$results = $wpdb->get_results("SELECT webhook_id, delivery_url FROM {$wpdb->prefix}wc_webhooks");
 
 				foreach ($results as $result) {
-					if (strpos($result->delivery_url, LAZYCHAT_URL) !== false) {
+					if (strpos($result->delivery_url, $this->lazychat_url) !== false) {
 						$wh = new WC_Webhook();
 						$wh->set_id($result->webhook_id);
 						$wh->delete();

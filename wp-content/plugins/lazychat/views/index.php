@@ -197,15 +197,17 @@ function lazychat_settings_page()
 				});
 			//get the queue progress on page load ends
 
+			const pusher_app_host = '127.0.0.1';
+			// const pusher_app_host = 'client.lazychat.io';
 			const isLocalhost = () => {
-				return "<?php print PUSHER_APP_HOST; ?>" === 'localhost' || "<?php print PUSHER_APP_HOST; ?>" === '127.0.0.1';
+				return pusher_app_host === 'localhost' || pusher_app_host === '127.0.0.1';
 			}
 
 			window.Echo = new Echo({
 				broadcaster: 'pusher',
 				key: "<?php print PUSHER_APP_KEY; ?>",
 				encrypted: true,
-				wsHost: "<?php print PUSHER_APP_HOST; ?>",
+				wsHost: pusher_app_host,
 				wsPort: 6001,
 				wssPort: 6001,
 				disableStats: false,

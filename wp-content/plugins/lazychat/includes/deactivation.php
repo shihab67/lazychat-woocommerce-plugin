@@ -28,7 +28,7 @@ add_action('admin_head', function () { ?>
 		.lazychat-deactivation-modal button.show-modal,
 		.modal-box {
 			position: absolute;
-			top: 30%;
+			top: 15%;
 			left: 50%;
 			transform: translate(-50%, -50%);
 			box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
