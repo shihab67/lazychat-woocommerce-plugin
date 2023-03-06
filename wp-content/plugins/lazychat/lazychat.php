@@ -38,7 +38,8 @@ session_start();
 // Constants
 define('LCWP_PATH', plugin_dir_path(__FILE__));
 define('LCWP_URI', plugin_dir_url(__FILE__));
-define('PUSHER_APP_KEY', '68cdc42e480c1f64420d');
+// define('PUSHER_APP_KEY', '68cdc42e480c1f64420d');
+define('PUSHER_APP_KEY', 'f55c502096321f432f4b');
 
 // Check if WooCommerce is active
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -144,13 +145,14 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
 
 function lcwp_get_lazychat_order_phases()
 {
-	$lazychat_url = 'http://chatbot.test';
+	// $lazychat_url = 'http://chatbot.test';
+	$lazychat_url = 'https://client.lazychat.io';
 
 	$phases = [];
 
-	// if (isset($_SESSION['lazychat_order_phases'])) {
-	// 	$phases = $_SESSION['lazychat_order_phases'];
-	// } else {
+	if (isset($_SESSION['lazychat_order_phases'])) {
+		$phases = $_SESSION['lazychat_order_phases'];
+	} else {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $lazychat_url . '/api/v1/woocommerce/order-phases');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -171,6 +173,6 @@ function lcwp_get_lazychat_order_phases()
 		}
 
 		return true;
-	// }
+	}
 }
 

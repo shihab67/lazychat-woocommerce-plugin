@@ -9,7 +9,8 @@ defined('ABSPATH') || exit;
 if (!class_exists('Lcwp_connect')) {
 	class Lcwp_connect
 	{
-		public $lazychat_url = 'http://chatbot.test';
+		// public $lazychat_url = 'http://chatbot.test';
+		public $lazychat_url = 'https://client.lazychat.io';
 
 		public function lcwp_connect_with_lazychat()
 		{
