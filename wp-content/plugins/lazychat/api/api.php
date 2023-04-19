@@ -1542,15 +1542,20 @@ class Lcwp_api extends WP_REST_Controller
 		if (isset($data['email'])) {
 			$contact->set_email($data['email']);
 		}
-
 		if (isset($data['first_name'])) {
 			$contact->set_first_name($data['first_name']);
 		}
 		if (isset($data['last_name'])) {
 			$contact->set_last_name($data['last_name']);
 		}
+		if (isset($data['first_name']) || isset($data['last_name'])) {
+			$contact->set_display_name($data['first_name'] . ' ' . $data['last_name']);
+		}
 		if (isset($data['billing']) && isset($data['billing']['first_name'])) {
 			$contact->set_billing_first_name($data['billing']['first_name']);
+		}
+		if (isset($data['billing']) && isset($data['billing']['first_name'])) {
+			$contact->set_username($data['billing']['first_name']);
 		}
 		if (isset($data['billing']) && isset($data['billing']['last_name'])) {
 			$contact->set_billing_last_name($data['billing']['last_name']);
