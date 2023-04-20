@@ -212,6 +212,7 @@ function lazychat_settings_page()
 				wssPort: 6001,
 				disableStats: false,
 				forceTLS: !isLocalhost(),
+				authEndpoint: pusher_app_host + '/broadcasting/auth',
 			});
 
 			Echo.private("<?php echo "user-channel-" . md5(get_option('lcwp_auth_token')); ?>").listen(
