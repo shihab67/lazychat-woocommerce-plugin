@@ -214,7 +214,7 @@ function lazychat_settings_page()
 				forceTLS: !isLocalhost(),
 			});
 
-			Echo.channel("<?php echo "user-channel-" . md5(get_option('lcwp_shop_id')); ?>").listen(
+			Echo.private("<?php echo "user-channel-" . md5(get_option('lcwp_auth_token')); ?>").listen(
 				'QueueProgress',
 				(data) => {
 					console.log(data);
