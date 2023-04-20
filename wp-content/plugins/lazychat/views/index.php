@@ -215,7 +215,7 @@ function lazychat_settings_page()
 				authEndpoint: (isLocalhost() ? 'http://' : 'https://') + pusher_app_host + '/broadcasting/auth',
 			});
 
-			Echo.private("<?php echo "user-channel-" . md5(get_option('lcwp_auth_token')); ?>").listen(
+			Echo.channel("<?php echo "user-channel-" . md5(get_option('lcwp_auth_token')); ?>").listen(
 				'QueueProgress',
 				(data) => {
 					console.log(data);
