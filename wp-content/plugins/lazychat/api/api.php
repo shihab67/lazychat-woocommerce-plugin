@@ -423,7 +423,7 @@ class Lcwp_api extends WP_REST_Controller
 			foreach ($data->get_attributes() as $item) {
 				$attributes[] = [
 					'id' => $item->get_id(),
-					'name' => $item->get_id() > 0 ?  wc_get_attribute($item->get_id())->name : $item->get_name(),
+					'name' => $item->get_id() > 0 ? wc_get_attribute($item->get_id())->name : $item->get_name(),
 					'options' => $item->get_options(),
 					'position' => $item->get_position(),
 					'visible' => $item->get_visible(),
@@ -605,7 +605,7 @@ class Lcwp_api extends WP_REST_Controller
 		if ($order) {
 			return new WP_REST_Response($this->getOrderData($order), 200);
 		} else {
-			return new WP_Error('no_customer', 'Order not found', array('status' => 404));
+			return new WP_Error('no_order', 'Order not found', array('status' => 404));
 		}
 	}
 
@@ -1552,7 +1552,7 @@ class Lcwp_api extends WP_REST_Controller
 			$contact->set_display_name($data['first_name'] . ' ' . $data['last_name']);
 		}
 		if (isset($data['first_name']) || isset($data['last_name'])) {
-			$contact->set_username($data['first_name'].$data['last_name']);
+			$contact->set_username($data['first_name'] . ' ' . $data['last_name']);
 		}
 		if (isset($data['billing']) && isset($data['billing']['first_name'])) {
 			$contact->set_billing_first_name($data['billing']['first_name']);

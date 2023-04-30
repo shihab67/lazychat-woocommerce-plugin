@@ -36,10 +36,18 @@ defined('ABSPATH') || exit;
 session_start();
 
 // Constants
-define('LCWP_PATH', plugin_dir_path(__FILE__));
-define('LCWP_URI', plugin_dir_url(__FILE__));
-// define('PUSHER_APP_KEY', '68cdc42e480c1f64420d');
-define('PUSHER_APP_KEY', 'f55c502096321f432f4b');
+if (!defined('LCWP_PATH')) {
+	define('LCWP_PATH', plugin_dir_path(__FILE__));
+}
+
+if (!defined('LCWP_URI')) {
+	define('LCWP_URI', plugin_dir_url(__FILE__));
+}
+
+if (!defined('PUSHER_APP_KEY')) {
+	// define('PUSHER_APP_KEY', '68cdc42e480c1f64420d');
+	define('PUSHER_APP_KEY', 'f55c502096321f432f4b');
+}
 
 // Check if WooCommerce is active
 if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
@@ -55,7 +63,7 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 }
 // Check if Wordpress version is supported
 else if (version_compare(get_bloginfo('version'), '5.2', '<')) {
-	function lazychat_fail_php_version()
+	function lazychat_fail_wp_version()
 	{
 		/* translators: %s+: WP version */
 		$message      = sprintf(esc_html__('LazyChat WooCommerce requires WordPress version %s+. 
@@ -64,7 +72,7 @@ else if (version_compare(get_bloginfo('version'), '5.2', '<')) {
 		$html_message = sprintf('<div class="error">%s</div>', wpautop($message));
 		echo wp_kses_post($html_message);
 	}
-	add_action('admin_notices', 'lazychat_fail_php_version');
+	add_action('admin_notices', 'lazychat_fail_wp_version');
 	return;
 }
 // Check if PHP version is supported
@@ -142,37 +150,42 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
 	}
 }
 
+/**
+ * Get LazyChat Order Phases
+ *
+ * @return void
+ */
+if (!function_exists('lcwp_get_lazychat_order_phases')) {
+	function lcwp_get_lazychat_order_phases()
+	{
+		// $lazychat_url = 'http://chatbot.test';
+		$lazychat_url = 'https://client.lazychat.io';
 
-function lcwp_get_lazychat_order_phases()
-{
-	// $lazychat_url = 'http://chatbot.test';
-	$lazychat_url = 'https://client.lazychat.io';
+		$phases = [];
 
-	$phases = [];
+		if (isset($_SESSION['lazychat_order_phases'])) {
+			$phases = $_SESSION['lazychat_order_phases'];
+		} else {
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $lazychat_url . '/api/v1/woocommerce/order-phases');
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+			$headers = array();
+			$headers[] = 'Content-Type: application/json';
+			$headers[] = 'Authorization: Bearer ' . get_option('lcwp_auth_token');
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+			$result = curl_exec($ch);
+			if (curl_errno($ch)) {
+				echo 'Error:' . curl_error($ch);
+			}
+			curl_close($ch);
 
-	if (isset($_SESSION['lazychat_order_phases'])) {
-		$phases = $_SESSION['lazychat_order_phases'];
-	} else {
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $lazychat_url . '/api/v1/woocommerce/order-phases');
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-		$headers = array();
-		$headers[] = 'Content-Type: application/json';
-		$headers[] = 'Authorization: Bearer ' . get_option('lcwp_auth_token');
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		$result = curl_exec($ch);
-		if (curl_errno($ch)) {
-			echo 'Error:' . curl_error($ch);
+			if (isset($result)) {
+				$phases = json_decode($result, true);
+				$_SESSION['lazychat_order_phases'] = $phases;
+			}
+
+			return true;
 		}
-		curl_close($ch);
-
-		if (isset($result)) {
-			$phases = json_decode($result, true);
-			$_SESSION['lazychat_order_phases'] = $phases;
-		}
-
-		return true;
 	}
 }
-
