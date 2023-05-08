@@ -155,37 +155,35 @@ else if (version_compare(PHP_VERSION, '7.3', '<')) {
  *
  * @return void
  */
-if (!function_exists('lcwp_get_lazychat_order_phases')) {
-	function lcwp_get_lazychat_order_phases()
-	{
-		// $lazychat_url = 'http://chatbot.test';
-		$lazychat_url = 'https://client.lazychat.io';
+function lcwp_get_lazychat_order_phases()
+{
+	// $lazychat_url = 'http://chatbot.test';
+	$lazychat_url = 'https://client.lazychat.io';
 
-		$phases = [];
+	$phases = [];
 
-		if (isset($_SESSION['lazychat_order_phases'])) {
-			$phases = $_SESSION['lazychat_order_phases'];
-		} else {
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $lazychat_url . '/api/v1/woocommerce/order-phases');
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-			$headers = array();
-			$headers[] = 'Content-Type: application/json';
-			$headers[] = 'Authorization: Bearer ' . get_option('lcwp_auth_token');
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-			$result = curl_exec($ch);
-			if (curl_errno($ch)) {
-				echo 'Error:' . curl_error($ch);
-			}
-			curl_close($ch);
-
-			if (isset($result)) {
-				$phases = json_decode($result, true);
-				$_SESSION['lazychat_order_phases'] = $phases;
-			}
-
-			return true;
+	if (isset($_SESSION['lazychat_order_phases'])) {
+		$phases = $_SESSION['lazychat_order_phases'];
+	} else {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $lazychat_url . '/api/v1/woocommerce/order-phases');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+		$headers = array();
+		$headers[] = 'Content-Type: application/json';
+		$headers[] = 'Authorization: Bearer ' . get_option('lcwp_auth_token');
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		$result = curl_exec($ch);
+		if (curl_errno($ch)) {
+			echo 'Error:' . curl_error($ch);
 		}
+		curl_close($ch);
+
+		if (isset($result)) {
+			$phases = json_decode($result, true);
+			$_SESSION['lazychat_order_phases'] = $phases;
+		}
+
+		return true;
 	}
 }

@@ -185,16 +185,18 @@ if (!function_exists('lazychat_settings_page')) {
 				});
 
 				//get the queue progress on page load starts
-				wp.ajax.post("lcwp_get_queue_progress", {})
-					.done(function(res) {
-						console.log(res);
-						res = JSON.parse(res);
-						if (res.status === 'success') {
-							progressBar(res.data);
-						} else {
-							console.log(res.message);
-						}
-					});
+				<?php if (get_option('lcwp_auth_token') && get_option('lcwp_auth_token') !== null) { ?>
+					wp.ajax.post("lcwp_get_queue_progress", {})
+						.done(function(res) {
+							console.log(res);
+							res = JSON.parse(res);
+							if (res.status === 'success') {
+								progressBar(res.data);
+							} else {
+								console.log(res.message);
+							}
+						});
+				<?php } ?>
 				//get the queue progress on page load ends
 
 				// const pusher_app_host = '127.0.0.1';

@@ -9,7 +9,7 @@
 				</div>
 			</div>
 
-			<div class="card message-box d-none mb-2" style="background-color: rgba(0, 108, 103, 0.8)">
+			<div class="card message-box d-none mt-0" style="background-color: rgba(0, 108, 103, 0.8)">
 				<h6 class="font-weight-bold message p-2 m-0 text-white"></h6>
 			</div>
 
