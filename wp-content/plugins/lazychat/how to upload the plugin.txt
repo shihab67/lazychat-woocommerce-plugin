@@ -1,0 +1,2 @@
+1. remove tha Unnecessary files,
+2. remove any hidden files or folders

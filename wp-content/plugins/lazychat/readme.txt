@@ -58,6 +58,10 @@ Easily migrate from Tidio, HubSpot, Tawk, Crisp, Reve Chat, Live Chat, Jivo Chat
 
 **When you succeed, we succeed. Our team of experts will go above and beyond to understand your business and implement a solution that shows immediate impact. [Get a demo](https://www.myalice.ai/demo) or [Sign-up](https://app.myalice.ai/register/) to see it in action.**
 
+== features ==
+
+feature goes here
+
 == Installation ==
 
 Install MyAlice as a regular WordPress plugin. Here are 2 different ways to install MyAlice plugin :
@@ -80,6 +84,11 @@ Install MyAlice as a regular WordPress plugin. Here are 2 different ways to inst
 - Activate the plugin.
 - You will see a MyAlice tab in your left side navigation bar in WordPress. The next steps are described there.
 
+== It's not working
+
+
+- Step 1. Check if you plugin is activated.
+- Step 2. Check if you have a valid API token.
 
 == Frequently Asked Questions ==
 
@@ -112,7 +121,7 @@ Of course, you can! Expand your business offer by adding MyAlice to projects you
 == Screenshots ==
 
 
-1. Widget
+1. Homepage. screenshot-1.png
 2. Multi Channel Inbox
 3. eCommerce
 4. Broadcast Campaign
