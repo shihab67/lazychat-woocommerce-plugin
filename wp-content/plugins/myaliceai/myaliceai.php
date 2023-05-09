@@ -54,20 +54,26 @@ if ( ! defined( 'ALICE_VERSION' ) ) {
 }
 
 $api_data = get_option( 'myaliceai_api_data' );
-$api_data = wp_parse_args( $api_data, [
-	'api_token'   => '',
-	'platform_id' => '',
-	'primary_id'  => '',
-	'project_id'  => ''
-] );
+$api_data = wp_parse_args(
+	$api_data,
+	array(
+		'api_token'   => '',
+		'platform_id' => '',
+		'primary_id'  => '',
+		'project_id'  => '',
+	)
+);
 
-$myalice_settings = get_option( 'myaliceai_settings', [] );
-$myalice_settings = wp_parse_args( $myalice_settings, [
-	'allow_chat_user_only'   => 0,
-	'allow_product_view_api' => 1,
-	'allow_cart_api'         => 1,
-	'hide_chatbox'           => 0
-] );
+$myalice_settings = get_option( 'myaliceai_settings', array() );
+$myalice_settings = wp_parse_args(
+	$myalice_settings,
+	array(
+		'allow_chat_user_only'   => 0,
+		'allow_product_view_api' => 1,
+		'allow_cart_api'         => 1,
+		'hide_chatbox'           => 0,
+	)
+);
 
 if ( ! defined( 'MYALICE_API_TOKEN' ) ) {
 	define( 'MYALICE_API_TOKEN', $api_data['api_token'] );
@@ -97,24 +103,27 @@ if ( ! defined( 'MYALICE_API_OK' ) ) {
 	}
 }
 
-//Include required files
+// Include required files
 require ALICE_INC_PATH . '/myalice-activation-deactivation-register.php';
 
-add_action( 'plugins_loaded', function () {
-	if ( ! defined( 'ALICE_WC_OK' ) ) {
-		if ( class_exists( 'WooCommerce' ) ) {
-			define( 'ALICE_WC_OK', true );
-		} else {
-			define( 'ALICE_WC_OK', false );
+add_action(
+	'plugins_loaded',
+	function () {
+		if ( ! defined( 'ALICE_WC_OK' ) ) {
+			if ( class_exists( 'WooCommerce' ) ) {
+				define( 'ALICE_WC_OK', true );
+			} else {
+				define( 'ALICE_WC_OK', false );
+			}
 		}
-	}
 
-	//Include required files
-	require ALICE_INC_PATH . '/myalice-helper-functions.php';
-	require ALICE_INC_PATH . '/myalice-dashboard-inline-styles.php';
-	require ALICE_INC_PATH . '/myaliceai-dashboard.php';
-	require ALICE_INC_PATH . '/myalice-dashboard-templates-and-scripts.php';
-	require ALICE_INC_PATH . '/myalice-enqueue-scripts.php';
-	require ALICE_INC_PATH . '/myalice-hooks.php';
-	require ALICE_INC_PATH . '/myalice-hooks-callback.php';
-} );
+		// Include required files
+		require ALICE_INC_PATH . '/myalice-helper-functions.php';
+		require ALICE_INC_PATH . '/myalice-dashboard-inline-styles.php';
+		require ALICE_INC_PATH . '/myaliceai-dashboard.php';
+		require ALICE_INC_PATH . '/myalice-dashboard-templates-and-scripts.php';
+		require ALICE_INC_PATH . '/myalice-enqueue-scripts.php';
+		require ALICE_INC_PATH . '/myalice-hooks.php';
+		require ALICE_INC_PATH . '/myalice-hooks-callback.php';
+	}
+);

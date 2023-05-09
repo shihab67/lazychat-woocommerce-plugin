@@ -4,9 +4,11 @@
  * @package LazyChat WooCommerce Plugin
  */
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
-add_action('admin_head', function () { ?>
+add_action(
+	'admin_head',
+	function () { ?>
 	<style>
 		.lazychat-deactivation-modal button {
 			font-size: 18px;
@@ -161,9 +163,14 @@ add_action('admin_head', function () { ?>
 			background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2210%22%20viewBox%3D%220%200%2012%2010%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M10%202L4.5%208L2%205.27273%22%20stroke%3D%22white%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22square%22%2F%3E%0A%3C%2Fsvg%3E%0A");
 		}
 	</style>
-<?php });
+		<?php
+	}
+);
 
-add_action('admin_footer', function () { ?>
+add_action(
+	'admin_footer',
+	function () {
+		?>
 	<section class="lazychat-deactivation-modal">
 		<span class="overlay"></span>
 		<div class="modal-box">
@@ -236,7 +243,8 @@ add_action('admin_footer', function () { ?>
 			}
 
 			wp.ajax.post("lcwp_deactivate_lazychat", {
-				remove_all: remove_all
+				remove_all: remove_all,
+				nonce: "<?php echo esc_html__( 'lcwp_deactivate_lazychat' ); ?>",
 			})
 				.done(function(res) {
 					if (res.status === 'success') {
@@ -254,5 +262,6 @@ add_action('admin_footer', function () { ?>
 				});
 		}
 	</script>
-<?php
-});
+		<?php
+	}
+);
