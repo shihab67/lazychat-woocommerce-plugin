@@ -13,8 +13,8 @@ if ( ! class_exists( 'Lcwp_Connect' ) ) {
 	 */
 	class Lcwp_Connect {
 
-		// public $lazychat_url = 'http://chatbot.test';
-		public $lazychat_url = 'https://client.lazychat.io';
+		public $lazychat_url = 'http://chatbot.test';
+		// public $lazychat_url = 'https://client.lazychat.io';
 
 		/**
 		 * This function is used to connect the plugin with LazyChat.
@@ -91,7 +91,8 @@ if ( ! class_exists( 'Lcwp_Connect' ) ) {
 					array(
 						'method'  => 'POST',
 						'headers' => array(
-							'Content-Type' => 'application/json',
+							'Content-Type'  => 'application/json',
+							'Authorization' => 'Bearer ' . get_option( 'lcwp_auth_token' ),
 						),
 						'body'    => wp_json_encode( $_POST ),
 					)

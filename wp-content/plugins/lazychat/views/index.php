@@ -1,57 +1,63 @@
 <?php
 
 /**
+ * This file contains HTML codes to show the index page of the plugin.
+ *
  * @package LazyChat WooCommerce Plugin
  */
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
-if (!function_exists('lazychat_settings_page')) {
-	function lazychat_settings_page()
-	{
-?>
+if ( ! function_exists( 'lazychat_settings_page' ) ) {
+	/**
+	 * This function contains HTML codes to show the index page of the plugin.
+	 *
+	 * @return void
+	 */
+	function lazychat_settings_page() {
+		?>
 		<!-- css files -->
-		<link rel="stylesheet" href="<?php echo plugins_url('lazychat/assets/css/lite-purple.min.css'); ?>">
+		<link rel="stylesheet" href="<?php echo plugins_url( 'lazychat/assets/css/lite-purple.min.css' ); ?>">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-		<link rel="stylesheet" href="<?php echo plugins_url('lazychat/assets/css/toastr.min.css'); ?>">
-		<link rel="stylesheet" href="<?php echo plugins_url('lazychat/assets/css/smart_wizard_theme_arrows.min.css'); ?>">
-		<link rel="stylesheet" href="<?php echo plugins_url('lazychat/assets/css/custom.css'); ?>">
-		<link rel="stylesheet" href="<?php echo plugins_url('lazychat/assets/css/loader.css'); ?>">
+		<link rel="stylesheet" href="<?php echo plugins_url( 'lazychat/assets/css/toastr.min.css' ); ?>">
+		<link rel="stylesheet" href="<?php echo plugins_url( 'lazychat/assets/css/smart_wizard_theme_arrows.min.css' ); ?>">
+		<link rel="stylesheet" href="<?php echo plugins_url( 'lazychat/assets/css/custom.css' ); ?>">
+		<link rel="stylesheet" href="<?php echo plugins_url( 'lazychat/assets/css/loader.css' ); ?>">
 
 		<div class="container-fluid lazychat-body">
-			<img class="mb-2" src="<?php echo plugins_url('lazychat/assets/images/Lazychat Logo-03.png'); ?>" alt="lazychat logo" height="30">
+			<img class="mb-2" src="<?php echo plugins_url( 'lazychat/assets/images/Lazychat Logo-03.png' ); ?>" alt="lazychat logo" height="30">
 
-			<?php include(LCWP_PATH . 'views/alert/alert.php'); ?>
+			<?php include LCWP_PATH . 'views/alert/alert.php'; ?>
 
 			<?php
 			if (
-				get_option('lcwp_auth_token') &&
-				get_option('lcwp_auth_token') === null ||
-				!get_option('lcwp_auth_token')
+				get_option( 'lcwp_auth_token' ) &&
+				get_option( 'lcwp_auth_token' ) === null ||
+				! get_option( 'lcwp_auth_token' )
 			) {
-				include(LCWP_PATH . 'views/connect/connect.php');
-			} else if (
-				get_option('lcwp_auth_token') &&
-				get_option('lcwp_auth_token') !== null &&
-				get_option('lcwp_order_phases') &&
-				get_option('lcwp_order_phases')['mapped'] === false
+				include LCWP_PATH . 'views/connect/connect.php';
+			} elseif (
+				get_option( 'lcwp_auth_token' ) &&
+				get_option( 'lcwp_auth_token' ) !== null &&
+				get_option( 'lcwp_order_phases' ) &&
+				false === get_option( 'lcwp_order_phases' )['mapped']
 			) {
-				include(LCWP_PATH . 'views/connect/map-phases.php');
+				include LCWP_PATH . 'views/connect/map-phases.php';
 			} else {
-				include(LCWP_PATH . 'views/settings/settings.php');
+				include LCWP_PATH . 'views/settings/settings.php';
 			}
 			?>
 		</div>
 
 		<!-- js files -->
-		<script src="<?php echo plugins_url('lazychat/assets/js/jquery-3.3.1.min.js'); ?>"></script>
-		<script src="<?php echo plugins_url('lazychat/assets/js/bootstrap.bundle.min.js'); ?>"></script>
-		<script src="<?php echo plugins_url('lazychat/assets/js/toastr.min.js'); ?>"></script>
+		<script src="<?php echo plugins_url( 'lazychat/assets/js/jquery-3.3.1.min.js' ); ?>"></script>
+		<script src="<?php echo plugins_url( 'lazychat/assets/js/bootstrap.bundle.min.js' ); ?>"></script>
+		<script src="<?php echo plugins_url( 'lazychat/assets/js/toastr.min.js' ); ?>"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://js.pusher.com/7.2.0/pusher.min.js"></script>
-		<script src="<?php echo plugins_url('lazychat/assets/js/echo.js'); ?>"></script>
-		<script src="<?php echo plugins_url('lazychat/assets/js/scripts.js'); ?>"></script>
+		<script src="<?php echo plugins_url( 'lazychat/assets/js/echo.js' ); ?>"></script>
+		<script src="<?php echo plugins_url( 'lazychat/assets/js/scripts.js' ); ?>"></script>
 
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
@@ -109,7 +115,7 @@ if (!function_exists('lazychat_settings_page')) {
 						$('#map-phase-form').find('.submit').html("Please Wait...");
 
 						$.ajax({
-							url: '<?php echo admin_url('admin-ajax.php'); ?>',
+							url: '<?php echo admin_url( 'admin-ajax.php' ); ?>',
 							method: "POST",
 							data: new FormData(this),
 							contentType: false,
@@ -148,7 +154,7 @@ if (!function_exists('lazychat_settings_page')) {
 					var value = $(this).val();
 
 					$.ajax({
-						url: '<?php echo admin_url('admin-ajax.php'); ?>',
+						url: '<?php echo admin_url( 'admin-ajax.php' ); ?>',
 						method: "POST",
 						data: new FormData($('#sync-options-form')[0]),
 						contentType: false,
@@ -185,7 +191,7 @@ if (!function_exists('lazychat_settings_page')) {
 				});
 
 				//get the queue progress on page load starts
-				<?php if (get_option('lcwp_auth_token') && get_option('lcwp_auth_token') !== null) { ?>
+				<?php if ( get_option( 'lcwp_auth_token' ) && get_option( 'lcwp_auth_token' ) !== null ) { ?>
 					wp.ajax.post("lcwp_get_queue_progress", {})
 						.done(function(res) {
 							console.log(res);
@@ -218,7 +224,7 @@ if (!function_exists('lazychat_settings_page')) {
 				});
 
 				Echo.private(
-					"<?php echo "user-channel-" . get_option('lcwp_shop_id') . '-' . md5(get_option('lcwp_auth_token')); ?>"
+					"<?php echo 'user-channel-' . get_option( 'lcwp_shop_id' ) . '-' . md5( get_option( 'lcwp_auth_token' ) ); ?>"
 				).listen(
 					'QueueProgress',
 					(data) => {
@@ -473,6 +479,6 @@ if (!function_exists('lazychat_settings_page')) {
 				}
 			});
 		</script>
-<?php
+		<?php
 	}
 }
