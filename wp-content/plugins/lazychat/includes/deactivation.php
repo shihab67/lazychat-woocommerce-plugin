@@ -1,6 +1,7 @@
 <?php
-
 /**
+ * This file contains the deactivation function for the plugin.
+ *
  * @package LazyChat WooCommerce Plugin
  */
 

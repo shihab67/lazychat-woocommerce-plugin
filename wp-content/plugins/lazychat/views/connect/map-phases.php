@@ -1,10 +1,11 @@
 <?php
-
 /**
+ * This file contains HTML codes to map order phases.
+ *
  * @package LazyChat WooCommerce Plugin
  */
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 ?>
 
@@ -25,13 +26,20 @@ defined('ABSPATH') || exit;
 		<div id="step-2" class="tab-pane step-content" style="display: block !important;">
 			<div class="row">
 				<div class="col-md-12">
-					<h4 class="pt-2"><?php _e('Map LazyChat Order Phases', 'lcwp') ?></h4>
-					<p><?php _e('You have connected your LazyChat account. Now Map 
-						LazyChat Order Phases with WooCommerce Order Phases', 'lcwp') ?></p>
+					<h4 class="pt-2"><?php _e( 'Map LazyChat Order Phases', 'lcwp' ); ?></h4>
+					<p>
+					<?php
+					_e(
+						'You have connected your LazyChat account. Now Map 
+						LazyChat Order Phases with WooCommerce Order Phases',
+						'lcwp'
+					)
+					?>
+					</p>
 				</div>
 			</div>
 
-			<?php include(LCWP_PATH . 'views/map-phases/map-phases.php'); ?>
+			<?php require LCWP_PATH . 'views/map-phases/map-phases.php'; ?>
 		</div>
 	</div>
 </div>

@@ -1,3 +1,13 @@
+<?php
+/**
+ * This file contains HTML codes to show the settings page.
+ *
+ * @package LazyChat WooCommerce Plugin
+ */
+
+defined( 'ABSPATH' ) || exit;
+?>
+
 <style>
 	.fetch-btn {
 		padding: 5px;
@@ -82,8 +92,10 @@
 						<i class="fas fa-store-alt mr-2 text-primary"></i>
 					</div>
 					<div class="shop-name">
-						<?php get_option( 'lcwp_shop_name' ) &&
-							get_option( 'lcwp_shop_name' ) !== '' ? print get_option( 'lcwp_shop_name' ) : ''; ?>
+						<?php
+						get_option( 'lcwp_shop_name' ) &&
+							get_option( 'lcwp_shop_name' ) !== '' ? print _e( get_option( 'lcwp_shop_name' ) ) : '';
+						?>
 					</div>
 				</div>
 				<div class="dropdown contact-bulk-action">
@@ -139,7 +151,7 @@
 							<span class="pt-2" style="color: #979696">
 								Last Fetch Completed:
 							</span><span style="font-size: 14px; font-weight: bold;">
-								<?php print get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsInWoocommerce']; ?>
+								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsInWoocommerce'] ); ?>
 							</span>
 						<?php } else { ?>
 							<span class="pt-2" style="color: #979696">
@@ -173,7 +185,7 @@
 							<span class="pt-2" style="color: #979696">
 								Last Upload Completed:
 							</span><span style="font-size: 14px; font-weight: bold;">
-								<?php print get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsFromWoocommerce']; ?>
+								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsFromWoocommerce'] ); ?>
 							</span>
 						<?php } else { ?>
 							<span class="pt-2" style="color: #979696">
@@ -223,7 +235,7 @@
 							<span class="pt-2" style="color: #979696">
 								Last Fetch Completed:
 							</span><span style="font-size: 14px; font-weight: bold;">
-								<?php print get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersInWoocommerce']; ?>
+								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersInWoocommerce'] ); ?>
 							</span>
 						<?php } else { ?>
 							<span class="pt-2" style="color: #979696">
@@ -257,7 +269,7 @@
 							<span class="pt-2" style="color: #979696">
 								Last Upload Completed:
 							</span><span style="font-size: 14px; font-weight: bold;">
-								<?php print get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersFromWoocommerce']; ?>
+								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersFromWoocommerce'] ); ?>
 							</span>
 						<?php } else { ?>
 							<span class="pt-2" style="color: #979696">
@@ -306,7 +318,7 @@
 							<span class="pt-2" style="color: #979696">
 								Last Fetch Completed:
 							</span><span style="font-size: 14px; font-weight: bold;">
-								<?php print get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsInWoocommerce']; ?>
+								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsInWoocommerce'] ); ?>
 							</span>
 						<?php } else { ?>
 							<span class="pt-2" style="color: #979696">
@@ -340,7 +352,7 @@
 							<span class="pt-2" style="color: #979696">
 								Last Upload Completed:
 							</span><span style="font-size: 14px; font-weight: bold;">
-								<?php print get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsFromWoocommerce']; ?>
+								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsFromWoocommerce'] ); ?>
 							</span>
 						<?php } else { ?>
 							<span class="pt-2" style="color: #979696">
@@ -367,7 +379,7 @@
 </div>
 
 <!-- Map order phases modal starts -->
-<div class="modal fade" id="mapOrderPhasesModal" tabindex="-1" role="dialog" aria-labelledby="syncSettingsModal" aria-hidden="true">
+<div class="modal fade" id="mapOrderPhasesModal" role="dialog" aria-labelledby="syncSettingsModal" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -412,30 +424,30 @@
 										<input type="checkbox" class="sync" name="options[]" value="lcwp_product_created" 
 										<?php
 										is_array( get_option( 'lcwp_sync_options' ) ) &&
-																																get_option( 'lcwp_sync_options' )['lcwp_product_created'] === 1 ? print 'checked' : ''
+											1 === get_option( 'lcwp_sync_options' )['lcwp_product_created'] ? print _e( 'checked' ) : ''
 										?>
-																															 /><span>
-											When a product is created in LazyChat, Create in WooCommerce too</span>
+										/>
+										<span>When a product is created in LazyChat, Create in WooCommerce too</span>
 										<span class="checkmark"></span>
 									</label>
 									<label class="checkbox checkbox-primary">
 										<input type="checkbox" class="sync" name="options[]" value="lcwp_product_updated" 
 										<?php
 										is_array( get_option( 'lcwp_sync_options' ) ) &&
-																																get_option( 'lcwp_sync_options' )['lcwp_product_updated'] === 1 ? print 'checked' : ''
+										1 === get_option( 'lcwp_sync_options' )['lcwp_product_updated'] ? print _e( 'checked' ) : ''
 										?>
-																															 /><span>
-											When a product is updated in LazyChat, Update in WooCommerce too</span>
+										/>
+										<span>When a product is updated in LazyChat, Update in WooCommerce too</span>
 										<span class="checkmark"></span>
 									</label>
 									<label class="checkbox checkbox-primary">
 										<input type="checkbox" class="sync" name="options[]" value="lcwp_product_removed" 
 										<?php
 										is_array( get_option( 'lcwp_sync_options' ) ) &&
-																																get_option( 'lcwp_sync_options' )['lcwp_product_removed'] === 1 ? print 'checked' : ''
+										1 === get_option( 'lcwp_sync_options' )['lcwp_product_removed'] ? print _e( 'checked' ) : ''
 										?>
-																															 /><span>
-											When a product is removed in LazyChat, Remove in WooCommerce too</span>
+										/>
+										<span>When a product is removed in LazyChat, Remove in WooCommerce too</span>
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -455,30 +467,30 @@
 										<input type="checkbox" class="sync" name="options[]" value="lcwp_customer_created" 
 										<?php
 										is_array( get_option( 'lcwp_sync_options' ) ) &&
-																																get_option( 'lcwp_sync_options' )['lcwp_customer_created'] === 1 ? print 'checked' : ''
+										1 === get_option( 'lcwp_sync_options' )['lcwp_customer_created'] ? print _e( 'checked' ) : ''
 										?>
-																															 /><span>
-											When a contact is created in LazyChat, Create in WooCommerce too</span>
+										/>
+										<span>When a contact is created in LazyChat, Create in WooCommerce too</span>
 										<span class="checkmark"></span>
 									</label>
 									<label class="checkbox checkbox-primary">
 										<input type="checkbox" class="sync" name="options[]" value="lcwp_customer_updated" 
 										<?php
 										is_array( get_option( 'lcwp_sync_options' ) ) &&
-																																get_option( 'lcwp_sync_options' )['lcwp_customer_updated'] === 1 ? print 'checked' : ''
+										1 === get_option( 'lcwp_sync_options' )['lcwp_customer_updated'] ? print _e( 'checked' ) : ''
 										?>
-																															 /><span>
-											When a contact is updated in LazyChat, Update in WooCommerce too</span>
+										/>
+										<span>When a contact is updated in LazyChat, Update in WooCommerce too</span>
 										<span class="checkmark"></span>
 									</label>
 									<label class="checkbox checkbox-primary">
 										<input type="checkbox" class="sync" name="options[]" value="lcwp_customer_removed" 
 										<?php
 										is_array( get_option( 'lcwp_sync_options' ) ) &&
-																																get_option( 'lcwp_sync_options' )['lcwp_customer_removed'] === 1 ? print 'checked' : ''
+										1 === get_option( 'lcwp_sync_options' )['lcwp_customer_removed'] ? print _e( 'checked' ) : ''
 										?>
-																															 /><span>
-											When a contact is removed in LazyChat, Remove in WooCommerce too</span>
+										/>
+										<span>When a contact is removed in LazyChat, Remove in WooCommerce too</span>
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -498,30 +510,30 @@
 										<input type="checkbox" class="sync" name="options[]" value="lcwp_order_created" 
 										<?php
 										is_array( get_option( 'lcwp_sync_options' ) ) &&
-																															get_option( 'lcwp_sync_options' )['lcwp_order_created'] === 1 ? print 'checked' : ''
+										1 === get_option( 'lcwp_sync_options' )['lcwp_order_created'] ? print _e( 'checked' ) : ''
 										?>
-																														 /><span>
-											When an order is created in LazyChat, Create in WooCommerce too</span>
+										/>
+										<span>When an order is created in LazyChat, Create in WooCommerce too</span>
 										<span class="checkmark"></span>
 									</label>
 									<label class="checkbox checkbox-primary">
 										<input type="checkbox" class="sync" name="options[]" value="lcwp_order_updated" 
 										<?php
 										is_array( get_option( 'lcwp_sync_options' ) ) &&
-																															get_option( 'lcwp_sync_options' )['lcwp_order_updated'] === 1 ? print 'checked' : ''
+										1 === get_option( 'lcwp_sync_options' )['lcwp_order_updated'] ? print _e( 'checked' ) : ''
 										?>
-																														 /><span>
-											When an order is updated in LazyChat, Update in WooCommerce too</span>
+										/>
+										<span>When an order is updated in LazyChat, Update in WooCommerce too</span>
 										<span class="checkmark"></span>
 									</label>
 									<label class="checkbox checkbox-primary">
 										<input type="checkbox" class="sync" name="options[]" value="lcwp_order_removed" 
 										<?php
 										is_array( get_option( 'lcwp_sync_options' ) ) &&
-																															get_option( 'lcwp_sync_options' )['lcwp_order_removed'] === 1 ? print 'checked' : ''
+										1 === get_option( 'lcwp_sync_options' )['lcwp_order_removed'] ? print _e( 'checked' ) : ''
 										?>
-																														 /><span>
-											When an order is removed in LazyChat, Remove in WooCommerce too</span>
+										/>
+										<span>When an order is removed in LazyChat, Remove in WooCommerce too</span>
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -540,7 +552,7 @@
 						'lcwp_order_updated',
 						'lcwp_order_removed',
 					);
-					echo "<input type='hidden' name='all_options' value='" . base64_encode( json_encode( $all_options ) ) . "'/>";
+					echo "<input type='hidden' name='all_options' value='" . base64_encode( wp_json_encode( $all_options ) ) . "'/>";
 					?>
 				</form>
 			</div>

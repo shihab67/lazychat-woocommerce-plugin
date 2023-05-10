@@ -1,3 +1,12 @@
+<?php
+/**
+ * This file contains HTML codes to show the progressbar.
+ *
+ * @package LazyChat WooCommerce Plugin
+ */
+
+defined( 'ABSPATH' ) || exit;
+?>
 <div class="col-md-4 col-lg-4 col-sm-12">
 	<div class="card">
 		<div class="card-body">

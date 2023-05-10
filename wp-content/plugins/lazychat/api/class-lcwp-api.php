@@ -431,7 +431,7 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 		 * This function validates the api request.
 		 */
 		public function lcwp_api_permission() {
-			$bearer_token = isset( $_SERVER['HTTP_AUTHORIZATION'] ) ? wp_unslash( $_SERVER['HTTP_AUTHORIZATION'] ) : null;
+			$bearer_token = isset( $_SERVER['HTTP_AUTHORIZATION'] ) ? $_SERVER['HTTP_AUTHORIZATION'] : null;
 			$token        = null;
 			if ( $bearer_token ) {
 				$parts = explode( ' ', $bearer_token );
@@ -1117,7 +1117,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			);
 		}
 
-		// Get single customer data
+		/**
+		 * This function is used to get single customer data.
+		 *
+		 * @param object $request of a request.
+		 * @return object of a customer.
+		 */
 		public function lcwp_get_contact( $request ) {
 			$id       = $request->get_params();
 			$customer = new WC_Customer( $id['id'] );
@@ -1129,7 +1134,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Get All variaons of a product
+		/**
+		 * This function is used to get all variaons of a product.
+		 *
+		 * @param object $request of a request.
+		 * @return array of variations.
+		 */
 		public function lcwp_get_variations( $request ) {
 			$all_variations = array();
 			$product_id     = $request->get_params()['product_id'];
@@ -1143,12 +1153,17 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			return new WP_REST_Response( $all_variations, 200 );
 		}
 
-		// Get Product variation
+		/**
+		 * This function is used to get a single product variation.
+		 *
+		 * @param object $request of a request.
+		 * @return object of a product variation.
+		 */
 		public function lcwp_get_variation( $request ) {
 			$id   = $request->get_params();
 			$data = new WC_Product_Variation( $id['id'] );
 
-			if ( get_post_type( $data->get_id() ) == 'product_variation' ) {
+			if ( get_post_type( $data->get_id() ) === 'product_variation' ) {
 				$variation = $this->getVariationData( $data );
 				return new WP_REST_Response( $variation, 200 );
 			} else {
@@ -1156,53 +1171,65 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Get Product variation data
+		/**
+		 * This function is used to a get product variation data.
+		 *
+		 * @param object $data object of a product variation.
+		 * @return array of a product variation.
+		 */
 		public function getVariationData( $data ) {
-			 return array(
-				 'parent_id'          => $data->get_parent_id(),
-				 'id'                 => $data->get_id(),
-				 'name'               => $data->get_name(),
-				 'date_created'       => $data->get_date_created(),
-				 'date_modified'      => $data->get_date_modified(),
-				 'description'        => $data->get_description(),
-				 'pemalink'           => $data->get_permalink(),
-				 'sku'                => $data->get_sku(),
-				 'price'              => $data->get_price(),
-				 'regular_price'      => $data->get_regular_price(),
-				 'sale_price'         => $data->get_sale_price(),
-				 'date_on_sale_from'  => $data->get_date_on_sale_from(),
-				 'date_on_sale_to'    => $data->get_date_on_sale_to(),
-				 'on_sale'            => $data->is_on_sale(),
-				 'status'             => $data->get_status(),
-				 'purchasable'        => $data->is_purchasable(),
-				 'virtual'            => $data->is_virtual(),
-				 'downloadable'       => $data->is_downloadable(),
-				 'downloads'          => $data->get_downloads(),
-				 'download_limit'     => $data->get_download_limit(),
-				 'download_expiry'    => $data->get_download_expiry(),
-				 'tax_status'         => $data->get_tax_status(),
-				 'tax_class'          => $data->get_tax_class(),
-				 'manage_stock'       => $data->get_manage_stock(),
-				 'stock_quantity'     => $data->get_stock_quantity(),
-				 'stock_status'       => $data->get_stock_status(),
-				 'backorders'         => $data->get_backorders(),
-				 'backorders_allowed' => $data->backorders_allowed(),
-				 'backordered'        => $data->is_on_backorder(),
-				 'weight'             => $data->get_weight(),
-				 'dimentions'         => $data->get_dimensions(),
-				 'shipping_class'     => $data->get_shipping_class(),
-				 'shipping_class_id'  => $data->get_shipping_class_id(),
-				 'image'              => $data->get_image() !== '' ? array(
-					 'id'        => $data->get_image_id(),
-					 'src'       => wp_get_attachment_url( $data->get_image_id() ),
-					 'thumbnail' => wp_get_attachment_thumb_url( $data->get_image_id() ),
-				 ) : '',
-				 'attributes'         => $this->getVariationAttribute( $data->get_attributes(), $data->get_parent_id() ),
-				 'menu_order'         => $data->get_menu_order(),
-				 'meta_data'          => $data->get_meta_data(),
-			 );
+			return array(
+				'parent_id'          => $data->get_parent_id(),
+				'id'                 => $data->get_id(),
+				'name'               => $data->get_name(),
+				'date_created'       => $data->get_date_created(),
+				'date_modified'      => $data->get_date_modified(),
+				'description'        => $data->get_description(),
+				'pemalink'           => $data->get_permalink(),
+				'sku'                => $data->get_sku(),
+				'price'              => $data->get_price(),
+				'regular_price'      => $data->get_regular_price(),
+				'sale_price'         => $data->get_sale_price(),
+				'date_on_sale_from'  => $data->get_date_on_sale_from(),
+				'date_on_sale_to'    => $data->get_date_on_sale_to(),
+				'on_sale'            => $data->is_on_sale(),
+				'status'             => $data->get_status(),
+				'purchasable'        => $data->is_purchasable(),
+				'virtual'            => $data->is_virtual(),
+				'downloadable'       => $data->is_downloadable(),
+				'downloads'          => $data->get_downloads(),
+				'download_limit'     => $data->get_download_limit(),
+				'download_expiry'    => $data->get_download_expiry(),
+				'tax_status'         => $data->get_tax_status(),
+				'tax_class'          => $data->get_tax_class(),
+				'manage_stock'       => $data->get_manage_stock(),
+				'stock_quantity'     => $data->get_stock_quantity(),
+				'stock_status'       => $data->get_stock_status(),
+				'backorders'         => $data->get_backorders(),
+				'backorders_allowed' => $data->backorders_allowed(),
+				'backordered'        => $data->is_on_backorder(),
+				'weight'             => $data->get_weight(),
+				'dimentions'         => $data->get_dimensions(),
+				'shipping_class'     => $data->get_shipping_class(),
+				'shipping_class_id'  => $data->get_shipping_class_id(),
+				'image'              => $data->get_image() !== '' ? array(
+					'id'        => $data->get_image_id(),
+					'src'       => wp_get_attachment_url( $data->get_image_id() ),
+					'thumbnail' => wp_get_attachment_thumb_url( $data->get_image_id() ),
+				) : '',
+				'attributes'         => $this->getVariationAttribute( $data->get_attributes(), $data->get_parent_id() ),
+				'menu_order'         => $data->get_menu_order(),
+				'meta_data'          => $data->get_meta_data(),
+			);
 		}
 
+		/**
+		 * This function is used to get variation attributes.
+		 *
+		 * @param object $data object of a variation attribute.
+		 * @param int $parent_id id of the variation parent.
+		 * @return array of product variation attributes.
+		 */
 		public function getVariationAttribute( $data, $parent_id ) {
 			$product    = wc_get_product( $parent_id );
 			$product    = $this->getProductData( $product );
@@ -1219,7 +1246,7 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			foreach ( $data as $key => $item ) {
 				$attributes[] = array(
 					'id'     => count( $product_attributes ) > 0 && isset( $product_attributes[ $key ] ) &&
-						$product_attributes[ $key ]['id'] === 0 ?
+						0 === $product_attributes[ $key ]['id'] ?
 						$product_attributes[ $key ]['id'] : wc_attribute_taxonomy_id_by_name( $key ),
 					'name'   => wc_attribute_label( $key ),
 					'option' => $item,
@@ -1228,7 +1255,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			return $attributes;
 		}
 
-		// Get single product
+		/**
+		 * This function is used to get a single product.
+		 *
+		 * @param object $request object of a request.
+		 * @return object of a product.
+		 */
 		public function lcwp_get_product( $request ) {
 			$id      = $request->get_params();
 			$product = wc_get_product( $id['id'] );
@@ -1240,7 +1272,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Get a single attribute
+		/**
+		 * This function is used to get get a single attribute.
+		 *
+		 * @param object $request object of a request.
+		 * @return object of an attribute or an array of attributes.
+		 */
 		public function lcwp_get_attribute( $request ) {
 			$id        = $request->get_params();
 			$attribute = wc_get_attribute( $id['id'] );
@@ -1266,9 +1303,13 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			return new WP_REST_Response( $all_attributes, 200 );
 		}
 
-		// Get all attributes
+		/**
+		 * This function is used to get all attributes.
+		 *
+		 * @return array of attributes.
+		 */
 		public function lcwp_get_attributes() {
-			 $attributes    = wc_get_attribute_taxonomies();
+			$attributes     = wc_get_attribute_taxonomies();
 			$all_attributes = array();
 			foreach ( $attributes as $attribute ) {
 				$all_attributes[] = wc_get_attribute( $attribute->attribute_id );
@@ -1276,7 +1317,11 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			return new WP_REST_Response( $all_attributes, 200 );
 		}
 
-		// Get all tags
+		/**
+		 * This function is used to get all tags.
+		 *
+		 * @return array of tags.
+		 */
 		public function lcwp_get_tags() {
 			$terms      = get_terms( 'product_tag' );
 			$term_array = array();
@@ -1293,6 +1338,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			return new WP_REST_Response( $term_array, 200 );
 		}
 
+		/**
+		 * This function is used to get a single tag.
+		 *
+		 * @param object $request object of a request.
+		 * @return object of a tag.
+		 */
 		public function lcwp_get_tag( $request ) {
 			$id   = $request->get_params();
 			$term = get_term( $id['id'], 'product_tag' );
@@ -1304,7 +1355,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Create an image
+		/**
+		 * This function is used to create an image.
+		 *
+		 * @param object $request object of a request.
+		 * @return array of an image.
+		 */
 		public function lcwp_create_image( $request ) {
 			try {
 				$image      = $request->get_params()['image'];
@@ -1333,7 +1389,9 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 				$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
 				wp_update_attachment_metadata( $attach_id, $attach_data );
 
-				// get the image by id
+				/**
+				 * Get the image by id.
+				 */
 				$image = wp_get_attachment_image_src( $attach_id, 'full' );
 				return new WP_REST_Response(
 					array(
@@ -1347,9 +1405,14 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Delete an image
+		/**
+		 * This function is used to delete an image.
+		 *
+		 * @param object $request object of a request.
+		 * @return array of a message. Message contains either success or error.
+		 */
 		public function lcwp_delete_image( $request ) {
-			 $id        = $request->get_params();
+			$id         = $request->get_params();
 			$attachment = get_post( $id['id'] );
 			if ( $attachment ) {
 				wp_delete_attachment( $id['id'], true );
@@ -1365,6 +1428,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
+		/**
+		 * This function is used to generate a random string. Whihc is unique.
+		 *
+		 * @param integer $length given length of the random string.
+		 * @return string of a random string.
+		 */
 		public function generateRandomString( $length = 10 ) {
 			return substr(
 				str_shuffle(
@@ -1378,7 +1447,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			);
 		}
 
-		// Create category
+		/**
+		 * This function is used to create a category.
+		 *
+		 * @param object $request object of a request.
+		 * @return object of the created category.
+		 */
 		public function lcwp_create_category( $request ) {
 			$data = $request->get_params();
 			try {
@@ -1390,10 +1464,10 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 					)
 				);
 
-				$data = json_decode( json_encode( $data ), false );
+				$data = json_decode( wp_json_encode( $data ), false );
 
 				if ( isset( $data ) && isset( $data->term_id ) ) {
-					if ( isset( $data ) && isset( $data->image ) && $data->image !== null ) {
+					if ( isset( $data ) && isset( $data->image ) && null === $data->image ) {
 						add_term_meta( $data->term_id, 'thumbnail_id', (int) $data->image );
 					}
 					$category = get_term_by( 'id', $data->term_id, 'product_cat' );
@@ -1412,13 +1486,18 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Create tag
+		/**
+		 * This function is used to create a tag.
+		 *
+		 * @param object $request object of a request.
+		 * @return object of the created tag.
+		 */
 		public function lcwp_create_tag( $request ) {
 			$data = $request->get_params();
 			try {
 				$data = wp_insert_term( $data['name'], 'product_tag' );
 
-				$data = json_decode( json_encode( $data ), false );
+				$data = json_decode( wp_json_encode( $data ), false );
 
 				if ( isset( $data ) && isset( $data->term_id ) ) {
 					$tag = get_term_by( 'id', $data->term_id, 'product_tag' );
@@ -1437,7 +1516,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Update tag
+		/**
+		 * This function is used to update a tag.
+		 *
+		 * @param object $request object of a request.
+		 * @return object of the updated tag.
+		 */
 		public function lcwp_update_tag( $request ) {
 			$data = $request->get_params();
 			$tag  = wp_update_term(
@@ -1451,9 +1535,14 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			return new WP_REST_Response( $tag, 200 );
 		}
 
-		// Create Attribute
+		/**
+		 * This function is used to create an attribute.
+		 *
+		 * @param object $request object of a request.
+		 * @return object of the created attribute.
+		 */
 		public function lcwp_create_attribute( $request ) {
-			 $data = $request->get_params();
+			$data 	  = $request->get_params();
 			try {
 				$data = wc_create_attribute(
 					array(
@@ -1465,9 +1554,9 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 					)
 				);
 
-				$data = json_decode( json_encode( $data ), false );
+				$data = json_decode( wp_json_encode( $data ), false );
 
-				if ( isset( $data ) && gettype( $data ) === 'integer' ) {
+				if ( isset( $data ) && 'integer' === gettype( $data ) ) {
 					$attribute = wc_get_attribute( $data );
 					return new WP_REST_Response( $attribute, 200 );
 				} elseif (
@@ -1488,11 +1577,16 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Create product
+		/**
+		 * This function is used to create a product.
+		 *
+		 * @param object $request of a request.
+		 * @return object of the created product.
+		 */
 		public function lcwp_create_product( $request ) {
 			$data = $request->get_params();
 			try {
-				if ( $data['type'] === 'simple' ) {
+				if ( 'simple' === $data['type'] ) {
 					$product = new WC_Product_Simple();
 				} else {
 					$product = new WC_Product_Variable();
@@ -1507,18 +1601,23 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Update product
+		/**
+		 * This function is used to update a product.
+		 *
+		 * @param object $request of a request.
+		 * @return object of the updated product.
+		 */
 		public function lcwp_update_product( $request ) {
 			try {
 				$data = $request->get_params();
 
-				if ( $data['type'] === 'simple' ) {
+				if ( 'simple' === $data['type'] ) {
 					$product = new WC_Product_Simple( $data['id'] );
 				} else {
 					$product = new WC_Product_Variable( $data['id'] );
 				}
 
-				if ( $product === false ) {
+				if ( false === $product ) {
 					return new WP_Error( 'no_product', 'Product not found', array( 'status' => 404 ) );
 				} else {
 					$product = $this->setProductData( $product, $data );
@@ -1531,7 +1630,13 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Set product data
+		/**
+		 * This function is used to set the product data.
+		 *
+		 * @param object $product object of the product.
+		 * @param array  $data array of the data to be set.
+		 * @return object of the product.
+		 */
 		public function setProductData( $product, $data ) {
 			if ( isset( $data['name'] ) ) {
 				$product->set_name( $data['name'] );
@@ -1598,9 +1703,10 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 			$product->save();
 
-			// Create attributes
+			/**
+			 * Create attributes.
+			 */
 			$product_level_attributes = array();
-			// $taxonomy_based_attributes = [];
 
 			if ( isset( $data['attributes'] ) && is_array( $data['attributes'] ) && count( $data['attributes'] ) > 0 ) {
 				foreach ( $data['attributes'] as $key => $attribute ) {
@@ -1615,31 +1721,30 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 						$product_level_attributes[] = $create_attribute;
 					} else {
 						if ( isset( $attribute['name'] ) && isset( $attribute['options'] ) ) {
-							// Clean attribute name to get the taxonomy
+							/**
+							 * Clean attribute name to get the taxonomy.
+							 */
 							$taxonomy = $attribute['slug'];
 
-							$option_term_ids = array(); // Initializing
+							$option_term_ids = array();
 
-							// Loop through defined attribute data options (terms values)
+							/**
+							 * Loop through defined attribute data options (terms values).
+							 */
 							foreach ( $attribute['options'] as $option ) {
 								if ( term_exists( $option, $taxonomy ) ) {
-									// Save the possible option value for the attribute which will be used for variation later
+									/**
+									 * Save the possible option value for the attribute which will be used for variation later.
+									 */
 									wp_set_object_terms( $product->id, $option, $taxonomy, true );
-									// Get the term ID
+									/**
+									 * Get the term ID.
+									 */
 									$option_term_ids[] = get_term_by( 'name', $option, $taxonomy )->term_id;
 								}
 							}
 						}
-						// Loop through defined attribute data
 
-						// $taxonomy_based_attributes[$taxonomy] = array(
-						// 'name'          => $taxonomy,
-						// 'value'         => $option_term_ids, // Need to be term IDs
-						// 'position'      => $key + 1,
-						// 'is_visible'    => $attribute['visible'],
-						// 'is_variation'  => $attribute['variation'],
-						// 'is_taxonomy'   => '1'
-						// );
 						$create_attribute = new WC_Product_Attribute();
 						$create_attribute->set_id( $attribute['id'] );
 						$create_attribute->set_name( $taxonomy );
@@ -1652,11 +1757,6 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 				}
 			}
 
-			// if (count($taxonomy_based_attributes) > 0) {
-			// Save the meta entry for product attributes
-			// update_post_meta($product->id, '_product_attributes', $taxonomy_based_attributes);
-			// }
-
 			if ( count( $product_level_attributes ) > 0 ) {
 				$product->set_attributes( $product_level_attributes );
 				$product->save();
@@ -1665,9 +1765,14 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			return $product;
 		}
 
-		// Create variation
+		/**
+		 * This function is used to create a variation.
+		 *
+		 * @param object $request object of the request.
+		 * @return object of the created variation.
+		 */
 		public function lcwp_create_variation( $request ) {
-			 $data = $request->get_params();
+			$data = $request->get_params();
 			try {
 				$variation = new WC_Product_Variation();
 				$variation = $this->setVariationData( $variation, $data );
@@ -1681,7 +1786,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Update variation
+		/**
+		 * This function is used to update a variation.
+		 *
+		 * @param object $request object of the request.
+		 * @return object of the updated variation.
+		 */
 		public function lcwp_update_variation( $request ) {
 			try {
 				$data      = $request->get_params();
@@ -1698,7 +1808,13 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Set variation data
+		/**
+		 * This function is used to set the variation data.
+		 *
+		 * @param object $variation object of the variation.
+		 * @param array  $data array of the data to be set.
+		 * @return object of the variation.
+		 */
 		public function setVariationData( $variation, $data ) {
 			if ( isset( $data['parent_id'] ) ) {
 				$variation->set_parent_id( $data['parent_id'] );
@@ -1721,7 +1837,7 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			if ( isset( $data['date_on_sale_to'] ) ) {
 				$variation->set_date_on_sale_to( $data['date_on_sale_to'] );
 			}
-			if ( isset( $data['image'] ) && $data['image'] !== null ) {
+			if ( isset( $data['image'] ) && null !== $data['image'] ) {
 				$variation->set_image_id( $data['image'] );
 			}
 			if ( isset( $data['manage_stock'] ) ) {
@@ -1749,6 +1865,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			return $variation;
 		}
 
+		/**
+		 * This function is used to create a customer.
+		 *
+		 * @param object $request object of the request.
+		 * @return object of the created contact.
+		 */
 		public function lcwp_create_contact( $request ) {
 			try {
 				$data    = $request->get_params();
@@ -1766,6 +1888,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
+		/**
+		 * This function is used to update a customer.
+		 *
+		 * @param object $request object of the request.
+		 * @return object of the updated contact.
+		 */
 		public function lcwp_update_contact( $request ) {
 			try {
 				$data    = $request->get_params();
@@ -1782,7 +1910,13 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Set contact data
+		/**
+		 * This function is used to set the contact data.
+		 *
+		 * @param object $contact object of the contact.
+		 * @param array  $data array of the data to be set.
+		 * @return object of the contact.
+		 */
 		public function setContactData( $contact, $data ) {
 			if ( isset( $data['email'] ) ) {
 				$contact->set_email( $data['email'] );
@@ -1819,6 +1953,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			return $contact;
 		}
 
+		/**
+		 * This function is used to create a order.
+		 *
+		 * @param object $request object of the request.
+		 * @return object of the created order.
+		 */
 		public function lcwp_create_order( $request ) {
 			try {
 				$data  = $request->get_params();
@@ -1836,6 +1976,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
+		/**
+		 * This function is used to update a order.
+		 *
+		 * @param object $request object of the request.
+		 * @return object of the updated order.
+		 */
 		public function lcwp_update_order( $request ) {
 			try {
 				$data  = $request->get_params();
@@ -1852,6 +1998,13 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
+		/**
+		 * This function is used to set the order data.
+		 *
+		 * @param object $order object of the order.
+		 * @param array  $data array of the data to be set.
+		 * @return object of the order.
+		 */
 		public function setOrderData( $order, $data ) {
 			if ( isset( $data['status'] ) ) {
 				$order->set_status( $data['status'] );
@@ -1866,13 +2019,14 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 				$order->set_discount_total( $data['discount_total'] );
 			}
 			if ( isset( $data['shipping_total'] ) ) {
-				// Remove previous delivery charge starts
+				/**
+				 * Remove previous delivery charge starts.
+				 */
 				foreach ( $order->get_items( 'fee' ) as $item_id => $item ) {
-					if ( $item->get_name() === 'Delivery Charge' ) {
+					if ( 'Delivery Charge' === $item->get_name() ) {
 						$order->remove_item( $item_id );
 					}
 				}
-				// Remove previous delivery charge ends
 
 				$fee = new WC_Order_Item_Fee();
 				$fee->set_name( 'Delivery Charge' );
@@ -1885,13 +2039,14 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 				$order->set_total( $data['net_total'] );
 			}
 			if ( isset( $data['total_tax'] ) ) {
-				// Remove previous vat/tax starts
+				/**
+				 * Remove previous vat/tax starts.
+				 */
 				foreach ( $order->get_items( 'fee' ) as $item_id => $item ) {
-					if ( $item->get_name() === 'Vat/Tax' ) {
+					if ( 'Vat/Tax' === $item->get_name() ) {
 						$order->remove_item( $item_id );
 					}
 				}
-				// Remove previous vat/tax ends
 
 				$fee = new WC_Order_Item_Fee();
 				$fee->set_name( 'Vat/Tax' );
@@ -1910,11 +2065,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 				$order->set_address( $data['shipping_address'], 'shipping' );
 			}
 			if ( isset( $data['line_items'] ) && count( $data['line_items'] ) > 0 ) {
-				// Delete previous line items starts
+				/**
+				 * Delete previous line items starts.
+				 */
 				foreach ( $order->get_items() as $item ) {
 					wc_delete_order_item( $item->get_id() );
 				}
-				// Delete previous line items ends
 
 				foreach ( $data['line_items'] as $line_item ) {
 					$product = wc_get_product(
@@ -1928,7 +2084,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			return $order;
 		}
 
-		// Delete product
+		/**
+		 * This function is used to delete a product.
+		 *
+		 * @param object $request object of the request.
+		 * @return array of message.
+		 */
 		public function lcwp_delete_product( $request ) {
 			try {
 				$data    = $request->get_params();
@@ -1949,7 +2110,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Delete product variation
+		/**
+		 * This function is used to delete a product variation.
+		 *
+		 * @param object $request object of the request.
+		 * @return array of message.
+		 */
 		public function lcwp_delete_product_variation( $request ) {
 			try {
 				$data    = $request->get_params();
@@ -1970,7 +2136,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Delete order
+		/**
+		 * This function is used to delete a order.
+		 *
+		 * @param object $request object of the request.
+		 * @return array of message.
+		 */
 		public function lcwp_delete_order( $request ) {
 			try {
 				$data  = $request->get_params();
@@ -1991,14 +2162,19 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
-		// Delete customer
+		/**
+		 * This function is used to delete a customer.
+		 *
+		 * @param object $request object of the request.
+		 * @return array of message.
+		 */
 		public function lcwp_delete_contact( $request ) {
 			try {
 				require_once ABSPATH . 'wp-admin/includes/user.php';
 
 				$data     = $request->get_params();
 				$customer = get_userdata( $data['id'] );
-				if ( $customer && in_array( 'customer', $customer->roles ) && wp_delete_user( $customer->ID ) ) {
+				if ( $customer && in_array( 'customer', $customer->roles, true ) && wp_delete_user( $customer->ID ) ) {
 					return new WP_REST_Response(
 						array(
 							'deleted' => true,
@@ -2014,6 +2190,12 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
+		/**
+		 * This function is used to create a attribute term.
+		 *
+		 * @param object $request object of the request.
+		 * @return object of the created attribute term.
+		 */
 		public function lcwp_create_attribute_term( $request ) {
 			try {
 				$data     = $request->get_params();
@@ -2038,36 +2220,45 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			}
 		}
 
+		/**
+		 * This function is used to get a attribute term by name.
+		 *
+		 * @param object $request object of the request.
+		 * @return object of the attribute term.
+		 */
 		public function lcwp_get_attribute_term_by_name( $request ) {
 			$data = $request->get_params();
 			return get_term_by( 'name', $data['term_name'], $data['attribute_slug'] );
 		}
 
+		/**
+		 * This function is used to store the last fetched time.
+		 *
+		 * @param object $request object of the request.
+		 * @return array of message.
+		 */
 		public function lcwp_store_last_fetched_time( $request ) {
 			$data = $request->get_params();
 			if ( get_option( 'lcwp_last_fetched_time' ) ) {
 				update_option( 'lcwp_last_fetched_time', $data );
-				return new WP_REST_Response(
-					array(
-						'success' => true,
-						'message' => 'Last fetched time stored successfully',
-					),
-					200
-				);
 			} else {
 				add_option( 'lcwp_last_fetched_time', $data );
-				return new WP_REST_Response(
-					array(
-						'success' => false,
-						'message' => 'Last fetched time not stored',
-					),
-					404
-				);
 			}
+
+			return new WP_REST_Response(
+				array(
+					'success' => true,
+					'message' => 'Last fetched time stored successfully',
+				),
+				200
+			);
 		}
 	}
 }
 
+/**
+ * This function is used to initialize the rest api endpoint.
+ */
 function init_rest_api_endpoint() {
 	$endpoint = new Lcwp_api();
 	$endpoint->register_routes();

@@ -113,8 +113,8 @@ if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins',
 				require LCWP_PATH . 'includes/activation.php';
 				require LCWP_PATH . 'includes/deactivation.php';
 				require LCWP_PATH . 'includes/error.php';
-				require LCWP_PATH . 'classes/Lcwp_settings_page.php';
-				require LCWP_PATH . 'classes/Lcwp_connect.php';
+				require LCWP_PATH . 'classes/class-lcwp-settings-page.php';
+				require LCWP_PATH . 'classes/class-lcwp-connect.php';
 				require LCWP_PATH . 'classes/class-lcwp-settings.php';
 				require LCWP_PATH . 'views/index.php';
 				include_once dirname( __DIR__ ) . '/woocommerce/woocommerce.php';
@@ -122,13 +122,13 @@ if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins',
 				require LCWP_PATH . 'api/class-lcwp-api.php';
 
 				register_activation_hook( __FILE__, 'lcwp_activation' );
-				add_action( 'admin_menu', array( new Lcwp_settings_page(), 'admin_menu_add_external_link_top_level' ) );
-				add_action( 'admin_post_lcwp_connect', array( new Lcwp_connect(), 'lcwp_connect_with_lazychat' ) );
+				add_action( 'admin_menu', array( new Lcwp_Settings_Page(), 'admin_menu_add_external_link_top_level' ) );
+				add_action( 'admin_post_lcwp_connect', array( new Lcwp_Connect(), 'lcwp_connect_with_lazychat' ) );
 				add_action( 'admin_post_lcwp_upload_data', array( new Lcwp_Settings(), 'lcwp_handle_settings' ) );
 				add_action( 'admin_post_lcwp_hard_re_sync', array( new Lcwp_Settings(), 'lcwp_hard_re_sync' ) );
 				add_action(
 					'wp_ajax_lcwp_map_order_phase',
-					array( new Lcwp_connect(), 'lcwp_map_order_phase' )
+					array( new Lcwp_Connect(), 'lcwp_map_order_phase' )
 				);
 				add_action(
 					'wp_ajax_lcwp_sync_options',
