@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file contains HTML codes to show the index page of the plugin.
  *
@@ -15,15 +14,19 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 	 * @return void
 	 */
 	function lazychat_settings_page() {
+		/**
+		 * CSS files.
+		 */
+		wp_enqueue_style( 'lite-purple', plugins_url( 'lazychat/assets/css/lite-purple.min.css' ), array(), '1.0', 'all' );
+		wp_register_style( 'select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css', array(), '1.0', 'all' );
+		wp_enqueue_style( 'select2' );
+		wp_register_style( 'font_awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css', array(), '1.0', 'all' );
+		wp_enqueue_style( 'font_awesome' );
+		wp_enqueue_style( 'toastr', plugins_url( 'lazychat/assets/css/toastr.min.css' ), array(), '1.0', 'all' );
+		wp_enqueue_style( 'smart_wizard_theme_arrows', plugins_url( 'lazychat/assets/css/smart_wizard_theme_arrows.min.css' ), array(), '1.0', 'all' );
+		wp_enqueue_style( 'custom_css', plugins_url( 'lazychat/assets/css/custom.css' ), array(), '1.0', 'all' );
+		wp_enqueue_style( 'loader_css', plugins_url( 'lazychat/assets/css/loader.css' ), array(), '1.0', 'all' );
 		?>
-		<!-- css files -->
-		<link rel="stylesheet" href="<?php echo plugins_url( 'lazychat/assets/css/lite-purple.min.css' ); ?>">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-		<link rel="stylesheet" href="<?php echo plugins_url( 'lazychat/assets/css/toastr.min.css' ); ?>">
-		<link rel="stylesheet" href="<?php echo plugins_url( 'lazychat/assets/css/smart_wizard_theme_arrows.min.css' ); ?>">
-		<link rel="stylesheet" href="<?php echo plugins_url( 'lazychat/assets/css/custom.css' ); ?>">
-		<link rel="stylesheet" href="<?php echo plugins_url( 'lazychat/assets/css/loader.css' ); ?>">
 
 		<div class="container-fluid lazychat-body">
 			<img class="mb-2" src="<?php echo plugins_url( 'lazychat/assets/images/Lazychat Logo-03.png' ); ?>" alt="lazychat logo" height="30">
@@ -51,13 +54,22 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 		</div>
 
 		<!-- js files -->
-		<script src="<?php echo plugins_url( 'lazychat/assets/js/jquery-3.3.1.min.js' ); ?>"></script>
-		<script src="<?php echo plugins_url( 'lazychat/assets/js/bootstrap.bundle.min.js' ); ?>"></script>
-		<script src="<?php echo plugins_url( 'lazychat/assets/js/toastr.min.js' ); ?>"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script src="https://js.pusher.com/7.2.0/pusher.min.js"></script>
-		<script src="<?php echo plugins_url( 'lazychat/assets/js/echo.js' ); ?>"></script>
-		<script src="<?php echo plugins_url( 'lazychat/assets/js/scripts.js' ); ?>"></script>
+		<?php
+		wp_register_script( 'jQuery', plugins_url( 'lazychat/assets/js/jquery-3.3.1.min.js' ), array(), '1.0', true );
+		wp_enqueue_script( 'jQuery' );
+		wp_register_script( 'Bootstrap', plugins_url( 'lazychat/assets/js/bootstrap.bundle.min.js' ), array(), '1.0', true );
+		wp_enqueue_script( 'Bootstrap' );
+		wp_register_script( 'Toastr', plugins_url( 'lazychat/assets/js/toastr.min.js' ), array(), '1.0', true );
+		wp_enqueue_script( 'Toastr' );
+		wp_register_script( 'Select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js', array(), '1.0', true );
+		wp_enqueue_script( 'Select2' );
+		wp_register_script( 'Pusher', 'https://js.pusher.com/7.2.0/pusher.min.js', array(), '1.0', true );
+		wp_enqueue_script( 'Pusher' );
+		wp_register_script( 'Echo', plugins_url( 'lazychat/assets/js/echo.js' ), array(), '1.0', true );
+		wp_enqueue_script( 'Echo' );
+		wp_register_script( 'Scripts', plugins_url( 'lazychat/assets/js/scripts.js' ), array(), '1.0', true );
+		wp_enqueue_script( 'Scripts' );
+		?>
 
 		<script type="text/javascript">
 			jQuery(document).ready(function() {

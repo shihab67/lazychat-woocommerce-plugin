@@ -1,3 +1,13 @@
+<?php
+/**
+ * This file contains HTML codes to show the connect page.
+ *
+ * @package LazyChat WooCommerce Plugin
+ */
+
+defined( 'ABSPATH' ) || exit;
+?>
+
 <div id="smartwizard" class="sw-main sw-theme-arrows">
 	<ul class="nav nav-tabs step-anchor">
 		<li class="nav-item text-center active" style="pointer-events: none;">

@@ -316,6 +316,6 @@ if ( ! class_exists( 'Lcwp_Settings' ) ) {
 					)
 				);
 			}
-		}
+		}	
 	}
 }

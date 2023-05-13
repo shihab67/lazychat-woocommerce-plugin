@@ -44,7 +44,7 @@ if ( ! defined( 'LCWP_URI' ) ) {
 }
 
 if ( ! defined( 'PUSHER_APP_KEY' ) ) {
-	define('PUSHER_APP_KEY', '68cdc42e480c1f64420d');
+	define( 'PUSHER_APP_KEY', '68cdc42e480c1f64420d' );
 	// define( 'PUSHER_APP_KEY', 'f55c502096321f432f4b' );
 }
 

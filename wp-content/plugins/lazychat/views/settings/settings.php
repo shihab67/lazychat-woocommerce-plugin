@@ -6,82 +6,9 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+wp_enqueue_style( 'settings', plugins_url( 'lazychat/assets/css/settings.css' ), array(), '1.0', 'all' );
 ?>
-
-<style>
-	.fetch-btn {
-		padding: 5px;
-		width: calc(50% - 10px);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		font-size: 0.85rem;
-	}
-
-	.loader-container {
-		display: flex;
-		align-content: center;
-		justify-content: center;
-	}
-
-	@keyframes ScaleInOut {
-		0% {
-			transform: scale(0.8);
-		}
-
-		100% {
-			transform: scale(1.5);
-		}
-	}
-
-	.dot1 {
-		width: 0.65rem;
-		height: 0.65rem;
-		animation: ScaleInOut 0.6s ease-in-out 0.2s infinite alternate;
-	}
-
-	.dot2 {
-		width: 0.65rem;
-		height: 0.65rem;
-		animation: ScaleInOut 0.6s ease-in-out 0.4s infinite alternate;
-	}
-
-	.dot3 {
-		width: 0.65rem;
-		height: 0.65rem;
-		animation: ScaleInOut 0.6s ease-in-out 0.6s infinite alternate;
-	}
-
-	.dot4 {
-		width: 0.65rem;
-		height: 0.65rem;
-		animation: ScaleInOut 0.6s ease-in-out 0.8s infinite alternate;
-	}
-
-	.bubble-loader {
-		display: none !important;
-	}
-
-	.dropdown-menu {
-		position: absolute;
-		will-change: transform;
-		top: 0px;
-		left: 0px;
-		transform: translate3d(-134px, 27px, 0px) !important;
-	}
-
-	.shop-name {
-		font-size: 1.3rem;
-		font-weight: 500;
-		color: #006c67;
-	}
-
-	.shop-connected-to {
-		font-weight: 500;
-		font-size: 1.1rem;
-	}
-</style>
-
 
 <div class="card" style="max-width: 100% !important;">
 	<div class="card-body p-0">
