@@ -126,9 +126,9 @@ wp_enqueue_style( 'settings', plugins_url( 'lazychat/assets/css/settings.css' ),
 						<button class="btn btn-danger fetch-btn resync-btn" data-toggle="modal" data-target="#hardReSyncModal" data-type="product">
 							<i class="fas fa-sync pr-1"></i> <?php _e( 'Hard Re-Sync' ); ?>
 						</button>
-						<i style="cursor: pointer;" class="fas fa-info-circle pl-2" data-toggle="tooltip" data-placement="top" title="Remove all current products fetched from
-						LazyChat and
-						Re-Sync"></i>
+						<i style="cursor: pointer;" class="fas fa-info-circle pl-2" data-toggle="tooltip" 
+							data-placement="top" title="Remove all current products fetched from LazyChat and Re-Sync">
+						</i>
 					</div>
 				</div>
 
@@ -209,9 +209,10 @@ wp_enqueue_style( 'settings', plugins_url( 'lazychat/assets/css/settings.css' ),
 					<div class="col-md-6 pt-2 d-flex align-items-center">
 						<button class="btn btn-danger fetch-btn resync-btn" data-toggle="modal" data-target="#hardReSyncModal" data-type="order">
 							<i class="fas fa-sync pr-1"></i> <?php _e( 'Hard Re-Sync' ); ?> </button>
-						<i style="cursor: pointer;" class="fas fa-info-circle pl-2" data-toggle="tooltip" data-placement="top" title="Remove all current orders fetched from
-						LazyChat and
-						Re-Sync"></i>
+						<i style="cursor: pointer;" class="fas fa-info-circle pl-2" 
+							data-toggle="tooltip" data-placement="top" 
+							title="Remove all current orders fetched from LazyChat and Re-Sync">
+						</i>
 					</div>
 				</div>
 
@@ -292,9 +293,10 @@ wp_enqueue_style( 'settings', plugins_url( 'lazychat/assets/css/settings.css' ),
 					<div class="col-md-6 pt-2 d-flex align-items-center">
 						<button class="btn btn-danger fetch-btn resync-btn" data-toggle="modal" data-target="#hardReSyncModal" data-type="contact">
 							<i class="fas fa-sync pr-1"></i> <?php _e( 'Hard Re-Sync' ); ?> </button>
-						<i style="cursor: pointer;" class="fas fa-info-circle pl-2" data-toggle="tooltip" data-placement="top" title="Remove all current contacts fetched from
-						LazyChat and
-						Re-Sync"></i>
+						<i style="cursor: pointer;" class="fas fa-info-circle pl-2" 
+							data-toggle="tooltip" data-placement="top" 
+							title="Remove all current contacts fetched from LazyChat and Re-Sync">
+						</i>
 					</div>
 				</div>
 			</div>
