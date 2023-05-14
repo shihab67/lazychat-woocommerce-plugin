@@ -202,6 +202,39 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 					deactivate();
 				});
 
+				//Show sync/upload history
+				$(document).on('click', '.view-details', function () {
+					$('#history-table').find('tbody').html('');
+					var type = $(this).data('type');
+					var history = <?php echo wp_json_encode( get_option( 'lcwp_last_fetched_time' ) ); ?>;
+					var html = '';
+					if (!jQuery.isEmptyObject(history)) {
+						$.each(history, function (index, value) {
+							if (index === type) {
+								if (value.message.length > 0) {
+									$.each(value.message, function (indexInArray, valueOfElement) { 
+										if (valueOfElement.status !== null) {
+											html += '<tr>' +
+													'<td scope="row" style="font-weight: 400;">' + valueOfElement.message + '</td>';
+											if (valueOfElement.status === 'success') {
+												html += '<td class="badge badge-success text-white"><i class="fas fa-check-circle"></i> Success</td>';
+											} else {
+												html += '<td class="badge badge-danger text-white"><i class="fas fa-times-circle"></i> Failed</td>';
+											}
+												'</tr>';
+										}
+									});
+								} else {
+									html += '<tr><td colspan="2" class="text-center">No log found.</td></tr>';
+								}
+							}
+						});						
+					} else {
+						html += '<tr><td colspan="2" class="text-center">No log found.</td></tr>';
+					}
+					$('#history-table').find('tbody').html(html);
+				})
+
 				//get the queue progress on page load starts
 				<?php if ( get_option( 'lcwp_auth_token' ) && get_option( 'lcwp_auth_token' ) !== null ) { ?>
 					wp.ajax.post("lcwp_get_queue_progress", {})
@@ -248,9 +281,11 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 
 				function progressBar(data) {
 					$.each(data, function(index, value) {
-						if (value['message'] !== null) {
+						if (value['message'] !== null && value['message'].length > 0) {
+							var message = JSON.parse(value['message']);
+							message = message[message.length - 1];
 							$('.message-box').removeClass('d-none');
-							$('.message').html(value['message']);
+							$('.message').html(message.message);
 						}
 
 						if (value['type'] == 'lcwp_fetch_product') {

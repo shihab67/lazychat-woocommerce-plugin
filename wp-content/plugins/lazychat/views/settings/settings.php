@@ -72,13 +72,17 @@ wp_enqueue_style( 'settings', plugins_url( 'lazychat/assets/css/settings.css' ),
 						if (
 							get_option( 'lcwp_last_fetched_time' ) &&
 							get_option( 'lcwp_last_fetched_time' ) !== null &&
-							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsInWoocommerce'] )
+							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsInWoocommerce'] ) &&
+							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsInWoocommerce']['time'] )
 						) {
 							?>
 							<span class="pt-2" style="color: #979696">
 								Last Fetch Completed:
 							</span><span style="font-size: 14px; font-weight: bold;">
-								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsInWoocommerce'] ); ?>
+								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsInWoocommerce']['time'] ); ?>
+								<span href="#" data-toggle="modal" data-target="#viewDetailsModal" class="view-details badge badge-info" data-type="lcwpSyncProductsInWoocommerce">
+									View Log
+								</span>
 							</span>
 						<?php } else { ?>
 							<span class="pt-2" style="color: #979696">
@@ -106,13 +110,17 @@ wp_enqueue_style( 'settings', plugins_url( 'lazychat/assets/css/settings.css' ),
 						if (
 							get_option( 'lcwp_last_fetched_time' ) &&
 							get_option( 'lcwp_last_fetched_time' ) !== null &&
-							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsFromWoocommerce'] )
+							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsFromWoocommerce'] ) &&
+							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsFromWoocommerce']['time'] )
 						) {
 							?>
 							<span class="pt-2" style="color: #979696">
 								Last Upload Completed:
 							</span><span style="font-size: 14px; font-weight: bold;">
-								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsFromWoocommerce'] ); ?>
+								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncProductsFromWoocommerce']['time'] ); ?>
+								<span href="#" data-toggle="modal" data-target="#viewDetailsModal" class="view-details badge badge-info" data-type="lcwpSyncProductsFromWoocommerce">
+									View Log
+								</span>
 							</span>
 						<?php } else { ?>
 							<span class="pt-2" style="color: #979696">
@@ -156,13 +164,17 @@ wp_enqueue_style( 'settings', plugins_url( 'lazychat/assets/css/settings.css' ),
 						if (
 							get_option( 'lcwp_last_fetched_time' ) &&
 							get_option( 'lcwp_last_fetched_time' ) !== null &&
-							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersInWoocommerce'] )
+							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersInWoocommerce'] ) &&
+							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersInWoocommerce']['time'] )
 						) {
 							?>
 							<span class="pt-2" style="color: #979696">
 								Last Fetch Completed:
 							</span><span style="font-size: 14px; font-weight: bold;">
-								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersInWoocommerce'] ); ?>
+								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersInWoocommerce']['time'] ); ?>
+								<span href="#" data-toggle="modal" data-target="#viewDetailsModal" class="view-details badge badge-info" data-type="lcwpSyncOrdersInWoocommerce">
+									View Log
+								</span>
 							</span>
 						<?php } else { ?>
 							<span class="pt-2" style="color: #979696">
@@ -190,13 +202,17 @@ wp_enqueue_style( 'settings', plugins_url( 'lazychat/assets/css/settings.css' ),
 						if (
 							get_option( 'lcwp_last_fetched_time' ) &&
 							get_option( 'lcwp_last_fetched_time' ) !== null &&
-							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersFromWoocommerce'] )
+							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersFromWoocommerce'] ) &&
+							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersFromWoocommerce']['time'] )
 						) {
 							?>
 							<span class="pt-2" style="color: #979696">
 								Last Upload Completed:
 							</span><span style="font-size: 14px; font-weight: bold;">
-								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersFromWoocommerce'] ); ?>
+								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncOrdersFromWoocommerce']['time'] ); ?>
+								<span href="#" data-toggle="modal" data-target="#viewDetailsModal" class="view-details badge badge-info" data-type="lcwpSyncOrdersFromWoocommerce">
+									View Log
+								</span>
 							</span>
 						<?php } else { ?>
 							<span class="pt-2" style="color: #979696">
@@ -240,13 +256,17 @@ wp_enqueue_style( 'settings', plugins_url( 'lazychat/assets/css/settings.css' ),
 						if (
 							get_option( 'lcwp_last_fetched_time' ) &&
 							get_option( 'lcwp_last_fetched_time' ) !== null &&
-							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsInWoocommerce'] )
+							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsInWoocommerce'] ) &&
+							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsInWoocommerce']['time'] )
 						) {
 							?>
 							<span class="pt-2" style="color: #979696">
 								Last Fetch Completed:
 							</span><span style="font-size: 14px; font-weight: bold;">
-								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsInWoocommerce'] ); ?>
+								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsInWoocommerce']['time'] ); ?>
+								<span href="#" data-toggle="modal" data-target="#viewDetailsModal" class="view-details badge badge-info" data-type="lcwpSyncContactsInWoocommerce">
+									View Log
+								</span>
 							</span>
 						<?php } else { ?>
 							<span class="pt-2" style="color: #979696">
@@ -274,13 +294,17 @@ wp_enqueue_style( 'settings', plugins_url( 'lazychat/assets/css/settings.css' ),
 						if (
 							get_option( 'lcwp_last_fetched_time' ) &&
 							get_option( 'lcwp_last_fetched_time' ) !== null &&
-							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsFromWoocommerce'] )
+							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsFromWoocommerce'] ) &&
+							isset( get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsFromWoocommerce']['time'] )
 						) {
 							?>
 							<span class="pt-2" style="color: #979696">
 								Last Upload Completed:
 							</span><span style="font-size: 14px; font-weight: bold;">
-								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsFromWoocommerce'] ); ?>
+								<?php print _e( get_option( 'lcwp_last_fetched_time' )['lcwpSyncContactsFromWoocommerce']['time'] ); ?>
+								<span href="#" data-toggle="modal" data-target="#viewDetailsModal" class="view-details badge badge-info" data-type="lcwpSyncContactsFromWoocommerce">
+									View Log
+								</span>
 							</span>
 						<?php } else { ?>
 							<span class="pt-2" style="color: #979696">
@@ -549,3 +573,31 @@ wp_enqueue_style( 'settings', plugins_url( 'lazychat/assets/css/settings.css' ),
 	</div>
 </div>
 <!-- Deactivate modal ends -->
+
+<!-- View details modal starts -->
+<div class="modal fade" id="viewDetailsModal" role="dialog" aria-labelledby="syncSettingsModal" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title font-weight-bold"><?php _e( 'Log' ); ?> </h5>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			</div>
+			<div class="modal-body">
+				<table class="table table-borderless" id="history-table">
+					<thead>
+					<tr>
+						<th class="px-0" scope="col">Message</th>
+						<th class="px-0" scope="col">Status</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal"><?php _e( 'Close' ); ?> </button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- View details modal ends -->
