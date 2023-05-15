@@ -18,8 +18,8 @@ if ( ! class_exists( 'Lcwp_Settings' ) ) {
 		 *
 		 * @var string
 		 */
-		public $lazychat_url = 'http://chatbot.test';
-		// public $lazychat_url = 'https://client.lazychat.io';
+		// public $lazychat_url = 'http://chatbot.test';
+		public $lazychat_url = 'https://client.lazychat.io';
 
 		/**
 		 * This function receives the post request to fetch or upload data from lazychat.

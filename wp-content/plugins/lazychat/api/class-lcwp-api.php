@@ -1227,7 +1227,7 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 		 * This function is used to get variation attributes.
 		 *
 		 * @param object $data object of a variation attribute.
-		 * @param int $parent_id id of the variation parent.
+		 * @param int    $parent_id id of the variation parent.
 		 * @return array of product variation attributes.
 		 */
 		public function getVariationAttribute( $data, $parent_id ) {
@@ -1542,7 +1542,7 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 		 * @return object of the created attribute.
 		 */
 		public function lcwp_create_attribute( $request ) {
-			$data 	  = $request->get_params();
+			$data = $request->get_params();
 			try {
 				$data = wc_create_attribute(
 					array(
@@ -1930,8 +1930,18 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 			if ( isset( $data['first_name'] ) || isset( $data['last_name'] ) ) {
 				$contact->set_display_name( $data['first_name'] . ' ' . $data['last_name'] );
 			}
-			if ( isset( $data['first_name'] ) || isset( $data['last_name'] ) ) {
-				$contact->set_username( $data['first_name'] . ' ' . $data['last_name'] );
+			if ( isset( $data['first_name'] ) || isset( $data['last_name'] ) || isset( $data['display_name'] ) ) {
+				if ( null === $data['first_name'] && null === $data['last_name'] && null !== $data['display_name'] ) {
+					$contact->set_username( $data['display_name'] );
+				} elseif ( null !== $data['first_name'] && null === $data['last_name'] ) {
+					$contact->set_username( $data['first_name'] );
+				} elseif ( null === $data['first_name'] && null !== $data['last_name'] ) {
+					$contact->set_username( $data['last_name'] );
+				} elseif ( null !== $data['first_name'] && null !== $data['last_name'] ) {
+					$username = $data['first_name'] . ' ' . $data['last_name'];
+					$username = str_replace( ' ', '_', $username );
+					$contact->set_username( $username );
+				}
 			}
 			if ( isset( $data['billing'] ) && isset( $data['billing']['first_name'] ) ) {
 				$contact->set_billing_first_name( $data['billing']['first_name'] );

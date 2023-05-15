@@ -44,8 +44,8 @@ if ( ! defined( 'LCWP_URI' ) ) {
 }
 
 if ( ! defined( 'PUSHER_APP_KEY' ) ) {
-	define( 'PUSHER_APP_KEY', '68cdc42e480c1f64420d' );
-	// define( 'PUSHER_APP_KEY', 'f55c502096321f432f4b' );
+	// define( 'PUSHER_APP_KEY', '68cdc42e480c1f64420d' );
+	define( 'PUSHER_APP_KEY', 'f55c502096321f432f4b' );
 }
 
 if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
@@ -176,8 +176,8 @@ if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins',
  * @return array $phases
  */
 function lcwp_get_lazychat_order_phases() {
-	$lazychat_url = 'http://chatbot.test';
-	// $lazychat_url = 'https://client.lazychat.io';
+	// $lazychat_url = 'http://chatbot.test';
+	$lazychat_url = 'https://client.lazychat.io';
 
 	$phases = array();
 
