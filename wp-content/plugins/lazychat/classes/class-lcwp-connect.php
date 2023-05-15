@@ -12,8 +12,12 @@ if ( ! class_exists( 'Lcwp_Connect' ) ) {
 	 * This class is used to connect with LazyChat.
 	 */
 	class Lcwp_Connect {
-		// public $lazychat_url = 'http://chatbot.test';
-		public $lazychat_url = 'https://client.lazychat.io';
+		/**
+		 * This variable holds the url of lazychat.
+		 *
+		 * @var string type of this variable.
+		 */
+		public $lazychat_url = LAZYCHAT_URL;
 
 		/**
 		 * This function is used to connect the plugin with LazyChat.

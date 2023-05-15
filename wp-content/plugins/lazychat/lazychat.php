@@ -43,11 +43,6 @@ if ( ! defined( 'LCWP_URI' ) ) {
 	define( 'LCWP_URI', plugin_dir_url( __FILE__ ) );
 }
 
-if ( ! defined( 'PUSHER_APP_KEY' ) ) {
-	// define( 'PUSHER_APP_KEY', '68cdc42e480c1f64420d' );
-	define( 'PUSHER_APP_KEY', 'f55c502096321f432f4b' );
-}
-
 if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
 	/**
 	 * This function checks if the WooCommerce plugin is active.
@@ -113,6 +108,7 @@ if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins',
 				require LCWP_PATH . 'includes/activation.php';
 				require LCWP_PATH . 'includes/deactivation.php';
 				require LCWP_PATH . 'includes/error.php';
+				require LCWP_PATH . 'includes/constants.php';
 				require LCWP_PATH . 'classes/class-lcwp-settings-page.php';
 				require LCWP_PATH . 'classes/class-lcwp-connect.php';
 				require LCWP_PATH . 'classes/class-lcwp-settings.php';
@@ -176,16 +172,13 @@ if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins',
  * @return array $phases
  */
 function lcwp_get_lazychat_order_phases() {
-	// $lazychat_url = 'http://chatbot.test';
-	$lazychat_url = 'https://client.lazychat.io';
-
 	$phases = array();
 
 	if ( isset( $_SESSION['lazychat_order_phases'] ) ) {
 		$phases = $_SESSION['lazychat_order_phases'];
 	} else {
 		$result = wp_remote_get(
-			$lazychat_url . '/api/v1/woocommerce/order-phases',
+			LAZYCHAT_URL . '/api/v1/woocommerce/order-phases',
 			array(
 				'headers' => array(
 					'Content-Type'  => 'application/json',
