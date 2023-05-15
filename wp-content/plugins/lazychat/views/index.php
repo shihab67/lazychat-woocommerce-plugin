@@ -250,8 +250,8 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 				<?php } ?>
 				//get the queue progress on page load ends
 
-				const pusher_app_host = '127.0.0.1';
-				// const pusher_app_host = 'client.lazychat.io';
+				// const pusher_app_host = '127.0.0.1';
+				const pusher_app_host = 'client.lazychat.io';
 				const isLocalhost = () => {
 					return pusher_app_host === 'localhost' || pusher_app_host === '127.0.0.1';
 				}
