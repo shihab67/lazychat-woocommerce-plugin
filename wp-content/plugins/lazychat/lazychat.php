@@ -30,9 +30,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with LazyChat WooCommerce. If not, see https://lazychat.io.
 */
-
 defined( 'ABSPATH' ) || exit;
-
 session_start();
 
 if ( ! defined( 'LCWP_PATH' ) ) {

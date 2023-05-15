@@ -551,7 +551,7 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 					$categories[] = array(
 						'id'        => $item,
 						'name'      => $name->name,
-						'slug'      => get_category( $item )->slug,
+						'slug'      => null !== get_category( $item ) ? get_category( $item )->slug : null,
 						'permalink' => get_category_link( $item ),
 					);
 				}
@@ -2218,7 +2218,9 @@ if ( ! class_exists( 'Lcwp_Api' ) ) {
 							'slug' => $data['slug'],
 						)
 					);
-					$term = get_term_by( 'id', $term['term_id'], $taxonomy );
+					if ( is_array( $term ) ) {
+						$term = get_term_by( 'id', $term['term_id'], $taxonomy );
+					}
 					if ( $term ) {
 						update_term_meta( $term->term_id, 'order', 0 );
 					}
