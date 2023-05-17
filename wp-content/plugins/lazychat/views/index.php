@@ -233,7 +233,7 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 						html += '<tr><td colspan="2" class="text-center">No log found.</td></tr>';
 					}
 					$('#history-table').find('tbody').html(html);
-				})
+				});
 
 				//get the queue progress on page load starts
 				<?php if ( get_option( 'lcwp_auth_token' ) && get_option( 'lcwp_auth_token' ) !== null ) { ?>
@@ -290,11 +290,6 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 						if (value['type'] == 'lcwp_fetch_product') {
 							$('.no-sync').css('display', 'none');
 							$('.product-sync-box').show();
-							if (value.queue && value.queue.status === 1) {
-								$('.product-fetch-btn').removeClass('disabled');
-							} else {
-								$('.product-fetch-btn').addClass('disabled');
-							}
 							$('.product-fetch-btn').find('.title').html('Fetching');
 							$('.product-fetch-btn').find('.bubble-loader').attr("style",
 								"display:flex !important;");
@@ -329,14 +324,16 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									);
 								}
 							}
+
+							if (value.queue && value.queue.status === 1) {
+								updateMessage(value.queue.function, $('.product-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
+								$('.product-fetch-btn').removeClass('disabled');
+							} else {
+								$('.product-fetch-btn').addClass('disabled');
+							}
 						} else if (value['type'] == "lcwp_upload_product") {
 							$('.no-sync').css('display', 'none');
 							$('.product-sync-box').show();
-							if (value.queue && value.queue.status === 1) {
-								$('.product-upload-btn').removeClass('disabled');
-							} else {
-								$('.product-upload-btn').addClass('disabled');
-							}
 							$('.product-upload-btn').find('.title').html('Uploading');
 							$('.product-upload-btn').find('.bubble-loader').attr("style",
 								"display:flex !important;");
@@ -375,14 +372,16 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 										);
 								}
 							}
+							
+							if (value.queue && value.queue.status === 1) {
+								updateMessage(value.queue.function, $('.product-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
+								$('.product-upload-btn').removeClass('disabled');
+							} else {
+								$('.product-upload-btn').addClass('disabled');
+							}
 						} else if (value['type'] == 'lcwp_fetch_contact') {
 							$('.no-sync').css('display', 'none');
 							$('.customer-sync-box').show();
-							if (value.queue && value.queue.status === 1) {
-								$('.contact-fetch-btn').removeClass('disabled');
-							} else {
-								$('.contact-fetch-btn').addClass('disabled');
-							}
 							$('.contact-fetch-btn').find('.title').html('Fetching');
 							$('.contact-fetch-btn').find('.bubble-loader').attr("style",
 								"display:flex !important;");
@@ -418,14 +417,16 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									);
 								}
 							}
+
+							if (value.queue && value.queue.status === 1) {
+								updateMessage(value.queue.function, $('.contact-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
+								$('.contact-fetch-btn').removeClass('disabled');
+							} else {
+								$('.contact-fetch-btn').addClass('disabled');
+							}
 						} else if (value['type'] == 'lcwp_upload_contact') {
 							$('.no-sync').css('display', 'none');
 							$('.customer-sync-box').show();
-							if (value.queue && value.queue.status === 1) {
-								$('.contact-upload-btn').removeClass('disabled');
-							} else {
-								$('.contact-upload-btn').addClass('disabled');
-							}
 							$('.contact-upload-btn').find('.title').html('Uploading');
 							$('.contact-upload-btn').find('.bubble-loader').attr("style",
 								"display:flex !important;");
@@ -462,14 +463,16 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 										);
 								}
 							}
+
+							if (value.queue && value.queue.status === 1) {
+								updateMessage(value.queue.function, $('.contact-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
+								$('.contact-upload-btn').removeClass('disabled');
+							} else {
+								$('.contact-upload-btn').addClass('disabled');
+							}
 						} else if (value['type'] == 'lcwp_fetch_order') {
 							$('.no-sync').css('display', 'none');
 							$('.order-sync-box').show();
-							if (value.queue && value.queue.status === 1) {
-								$('.order-fetch-btn').removeClass('disabled');
-							} else {
-								$('.order-fetch-btn').addClass('disabled');
-							}
 							$('.order-fetch-btn').find('.title').html('Fetching');
 							$('.order-fetch-btn').find('.bubble-loader').attr("style", "display:flex !important;");
 							$('.order-fetch-btn').closest('.row').find('.fetch-msg').html(
@@ -502,14 +505,16 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									);
 								}
 							}
+
+							if (value.queue && value.queue.status === 1) {
+								updateMessage(value.queue.function, $('.order-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
+								$('.order-fetch-btn').removeClass('disabled');
+							} else {
+								$('.order-fetch-btn').addClass('disabled');
+							}
 						} else if (value['type'] == 'lcwp_upload_order') {
 							$('.no-sync').css('display', 'none');
 							$('.order-sync-box').show();
-							if (value.queue && value.queue.status === 1) {
-								$('.order-upload-btn').removeClass('disabled');
-							} else {
-								$('.order-upload-btn').addClass('disabled');
-							}
 							$('.order-upload-btn').find('.title').html('Uploading');
 							$('.order-upload-btn').find('.bubble-loader').attr("style", "display:flex !important;");
 							$('.order-upload-btn').closest('.row').find('.fetch-msg').html(
@@ -544,8 +549,38 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									);
 								}
 							}
+
+							if (value.queue && value.queue.status === 1) {
+								updateMessage(value.queue.function, $('.order-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
+								$('.order-upload-btn').removeClass('disabled');
+							} else {
+								$('.order-upload-btn').addClass('disabled');
+							}
 						}
 					});
+				}
+
+				function updateMessage(fn, tag, type) {
+					var history = <?php echo wp_json_encode( get_option( 'lcwp_last_fetched_time' ) ); ?>;
+					var html = '';
+					if (!jQuery.isEmptyObject(history)) {
+						$.each(history, function (index, value) {
+							if (index === fn) {
+								html += '<span class="pt-2" style="color: #979696">';
+								html +=	'Last ' + type.charAt(0).toUpperCase() + type.slice(1) + ' Completed:';
+								html += '</span>';
+								html += '<span style="font-size: 14px; font-weight: bold;">';
+								html += value.time;
+								html +=	'<span href="#" data-toggle="modal" data-target="#viewDetailsModal"'; 
+								html +=	'class="view-details badge badge-info ml-1" data-type="' + index + '">';
+								html +=	'View Log';
+								html +=	'</span>';
+								html += '</span>';
+
+								$(tag).html(html);
+							}
+						});						
+					}
 				}
 			});
 		</script>
