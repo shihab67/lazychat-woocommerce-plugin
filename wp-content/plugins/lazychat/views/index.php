@@ -280,19 +280,21 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 				function progressBar(data) {
 					console.log(data);
 					$.each(data, function(index, value) {
-						if (value.progress && value.progress.length > 0 && 
-							value.progress.message && 
-							value.progress.message !== null) {
-								var message = JSON.parse(value.message);
-								message = message[message.length - 1];
-								$('.message-box').removeClass('d-none');
-								$('.message').html(message.message);
+						if (value['message'] !== null && value['message'].length > 0) {
+							var message = JSON.parse(value['message']);
+							message = message[message.length - 1];
+							$('.message-box').removeClass('d-none');
+							$('.message').html(message.message);
 						}
 
-						if (value.function === 'lcwpSyncProductsInWoocommerce') {
+						if (value['type'] == 'lcwp_fetch_product') {
 							$('.no-sync').css('display', 'none');
 							$('.product-sync-box').show();
-							$('.product-fetch-btn').addClass('disabled');
+							if (value.queue && value.queue.status === 1) {
+								$('.product-fetch-btn').removeClass('disabled');
+							} else {
+								$('.product-fetch-btn').addClass('disabled');
+							}
 							$('.product-fetch-btn').find('.title').html('Fetching');
 							$('.product-fetch-btn').find('.bubble-loader').attr("style",
 								"display:flex !important;");
@@ -303,19 +305,19 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 								$('.product-bar-div').show();
 							}
 
-							if (value.progress && value.progress.total > 0) {
-								var part_to_increase = 100 / value.progress.total;
+							if (value['total'] > 0) {
+								var part_to_increase = 100 / value['total'];
 
 								$('.product-bar-div').find('.progress-bar.bg-primary').css('width',
-									part_to_increase * value.progress.done + '%');
+									part_to_increase * value['done'] + '%');
 								$('.product-bar-div').find('.progress-bar.bg-danger').css('width',
-									part_to_increase * value.progress.failed + '%');
+									part_to_increase * value['failed'] + '%');
 								$('.product-bar-div').find('.percent')
 									.text(
-										(((part_to_increase * value.progress.done)) + ((
-											part_to_increase * value.progress.failed))).toFixed(2) + '%');
+										(((part_to_increase * value['done'])) + ((
+											part_to_increase * value['failed']))).toFixed(2) + '%');
 
-								if (value.progress.total == value.progress.done + value.progress.failed) {
+								if (value['total'] == value['done'] + value['failed']) {
 									$('.product-bar-div').find('.sync-text').html(
 										`<i class="{{ getIcon('check') }} text-success"></i> <b>Product fetch completed.</b>`
 									);
@@ -327,10 +329,14 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									);
 								}
 							}
-						} else if (value.function == "lcwpSyncProductsFromWoocommerce") {
+						} else if (value['type'] == "lcwp_upload_product") {
 							$('.no-sync').css('display', 'none');
 							$('.product-sync-box').show();
-							$('.product-upload-btn').addClass('disabled');
+							if (value.queue && value.queue.status === 1) {
+								$('.product-upload-btn').removeClass('disabled');
+							} else {
+								$('.product-upload-btn').addClass('disabled');
+							}
 							$('.product-upload-btn').find('.title').html('Uploading');
 							$('.product-upload-btn').find('.bubble-loader').attr("style",
 								"display:flex !important;");
@@ -341,22 +347,22 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 								$('.product-bar-div-upload').show();
 							}
 
-							if (value.progress.total > 0) {
-								var part_to_increase = 100 / value.progress.total;
+							if (value['total'] > 0) {
+								var part_to_increase = 100 / value['total'];
 
 								$('.product-bar-div-upload').find('.progress-bar.bg-primary').css(
 									'width',
-									part_to_increase * value.progress.done + '%');
+									part_to_increase * value['done'] + '%');
 								$('.product-bar-div-upload').find('.progress-bar.bg-danger').css(
 									'width',
-									part_to_increase * value.progress.failed + '%');
+									part_to_increase * value['failed'] + '%');
 								$(
 										'.product-bar-div-upload').find('.percent')
 									.text(
-										(((part_to_increase * value.progress.done)) + ((
-											part_to_increase * value.progress.failed))).toFixed(2) + '%');
+										(((part_to_increase * value['done'])) + ((
+											part_to_increase * value['failed']))).toFixed(2) + '%');
 
-								if (value.progress.total == value.progress.done + value.progress.failed) {
+								if (value['total'] == value['done'] + value['failed']) {
 									$('.product-bar-div-upload').find('.sync-text').html(
 										`<i class="{{ getIcon('check') }} text-success"></i> <b>Product upload completed!</b>`
 									);
@@ -369,10 +375,14 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 										);
 								}
 							}
-						} else if (value.function == 'lcwpSyncContactsInWoocommerce') {
+						} else if (value['type'] == 'lcwp_fetch_contact') {
 							$('.no-sync').css('display', 'none');
 							$('.customer-sync-box').show();
-							$('.contact-fetch-btn').addClass('disabled');
+							if (value.queue && value.queue.status === 1) {
+								$('.contact-fetch-btn').removeClass('disabled');
+							} else {
+								$('.contact-fetch-btn').addClass('disabled');
+							}
 							$('.contact-fetch-btn').find('.title').html('Fetching');
 							$('.contact-fetch-btn').find('.bubble-loader').attr("style",
 								"display:flex !important;");
@@ -383,20 +393,20 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 								$('.customer-bar-div').show();
 							}
 
-							if (value.progress.total > 0) {
-								var part_to_increase = 100 / value.progress.total;
+							if (value['total'] > 0) {
+								var part_to_increase = 100 / value['total'];
 
 								$('.customer-bar-div').find('.progress-bar.bg-primary').css(
 									'width',
-									part_to_increase * value.progress.done + '%');
+									part_to_increase * value['done'] + '%');
 								$('.customer-bar-div').find('.progress-bar.bg-danger').css(
 									'width',
-									part_to_increase * value.progress.failed + '%');
+									part_to_increase * value['failed'] + '%');
 								$('.customer-bar-div').find('.percent').text(
-									(((part_to_increase * value.progress.done)) + ((
-										part_to_increase * value.progress.failed))).toFixed(2) + '%');
+									(((part_to_increase * value['done'])) + ((
+										part_to_increase * value['failed']))).toFixed(2) + '%');
 
-								if (value.progress.total == value.progress.done + value.progress.failed) {
+								if (value['total'] == value['done'] + value['failed']) {
 									$('.customer-bar-div').find('.sync-text').html(
 										`<i class="{{ getIcon('check') }} text-success"></i> <b>Customer sync completed.</b>`
 									);
@@ -408,10 +418,14 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									);
 								}
 							}
-						} else if (value.function == 'lcwpSyncContactsFromWoocommerce') {
+						} else if (value['type'] == 'lcwp_upload_contact') {
 							$('.no-sync').css('display', 'none');
 							$('.customer-sync-box').show();
-							$('.contact-upload-btn').addClass('disabled');
+							if (value.queue && value.queue.status === 1) {
+								$('.contact-upload-btn').removeClass('disabled');
+							} else {
+								$('.contact-upload-btn').addClass('disabled');
+							}
 							$('.contact-upload-btn').find('.title').html('Uploading');
 							$('.contact-upload-btn').find('.bubble-loader').attr("style",
 								"display:flex !important;");
@@ -422,20 +436,20 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 								$('.customer-bar-div-upload').show();
 							}
 
-							if (value.progress.total > 0) {
-								var part_to_increase = 100 / value.progress.total;
+							if (value['total'] > 0) {
+								var part_to_increase = 100 / value['total'];
 
 								$('.customer-bar-div-upload').find('.progress-bar.bg-primary').css(
 									'width',
-									part_to_increase * value.progress.done + '%');
+									part_to_increase * value['done'] + '%');
 								$('.customer-bar-div-upload').find('.progress-bar.bg-danger').css(
 									'width',
-									part_to_increase * value.progress.failed + '%');
+									part_to_increase * value['failed'] + '%');
 								$('.customer-bar-div-upload').find('.percent').text(
-									(((part_to_increase * value.progress.done)) + ((
-										part_to_increase * value.progress.failed))).toFixed(2) + '%');
+									(((part_to_increase * value['done'])) + ((
+										part_to_increase * value['failed']))).toFixed(2) + '%');
 
-								if (value.progress.total == value.progress.done + value.progress.failed) {
+								if (value['total'] == value['done'] + value['failed']) {
 									$('.customer-bar-div-upload').find('.sync-text').html(
 										`<i class="{{ getIcon('check') }} text-success"></i> <b>Customer upload completed!</b>`
 									);
@@ -448,10 +462,14 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 										);
 								}
 							}
-						} else if (value.function == 'lcwpSyncOrdersInWoocommerce') {
+						} else if (value['type'] == 'lcwp_fetch_order') {
 							$('.no-sync').css('display', 'none');
 							$('.order-sync-box').show();
-							$('.order-fetch-btn').addClass('disabled');
+							if (value.queue && value.queue.status === 1) {
+								$('.order-fetch-btn').removeClass('disabled');
+							} else {
+								$('.order-fetch-btn').addClass('disabled');
+							}
 							$('.order-fetch-btn').find('.title').html('Fetching');
 							$('.order-fetch-btn').find('.bubble-loader').attr("style", "display:flex !important;");
 							$('.order-fetch-btn').closest('.row').find('.fetch-msg').html(
@@ -461,18 +479,18 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 								$('.order-bar-div').show();
 							}
 
-							if (value.progress.total > 0) {
-								var part_to_increase = 100 / value.progress.total;
+							if (value['total'] > 0) {
+								var part_to_increase = 100 / value['total'];
 
 								$('.order-bar-div').find('.progress-bar.bg-primary').css('width',
-									part_to_increase * value.progress.done + '%');
+									part_to_increase * value['done'] + '%');
 								$('.order-bar-div').find('.progress-bar.bg-danger').css('width',
-									part_to_increase * value.progress.failed + '%');
+									part_to_increase * value['failed'] + '%');
 								$('.order-bar-div').find('.percent').text(
-									(((part_to_increase * value.progress.done)) + ((
-										part_to_increase * value.progress.failed))).toFixed(2) + '%');
+									(((part_to_increase * value['done'])) + ((
+										part_to_increase * value['failed']))).toFixed(2) + '%');
 
-								if (value.progress.total == value.progress.done + value.progress.failed) {
+								if (value['total'] == value['done'] + value['failed']) {
 									$('.order-bar-div').find('.sync-text').html(
 										`<i class="{{ getIcon('check') }} text-success"></i> <b>Order sync completed.</b>`
 									);
@@ -484,10 +502,14 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									);
 								}
 							}
-						} else if (value.function == 'lcwpSyncOrdersFromWoocommerce') {
+						} else if (value['type'] == 'lcwp_upload_order') {
 							$('.no-sync').css('display', 'none');
 							$('.order-sync-box').show();
-							$('.order-upload-btn').addClass('disabled');
+							if (value.queue && value.queue.status === 1) {
+								$('.order-upload-btn').removeClass('disabled');
+							} else {
+								$('.order-upload-btn').addClass('disabled');
+							}
 							$('.order-upload-btn').find('.title').html('Uploading');
 							$('.order-upload-btn').find('.bubble-loader').attr("style", "display:flex !important;");
 							$('.order-upload-btn').closest('.row').find('.fetch-msg').html(
@@ -497,20 +519,20 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 								$('.order-bar-div-upload').show();
 							}
 
-							if (value.progress.total > 0) {
-								var part_to_increase = 100 / value.progress.total;
+							if (value['total'] > 0) {
+								var part_to_increase = 100 / value['total'];
 
 								$('.order-bar-div-upload').find('.progress-bar.bg-primary').css(
 									'width',
-									part_to_increase * value.progress.done + '%');
+									part_to_increase * value['done'] + '%');
 								$('.order-bar-div-upload').find('.progress-bar.bg-danger').css(
 									'width',
-									part_to_increase * value.progress.failed + '%');
+									part_to_increase * value['failed'] + '%');
 								$('.order-bar-div-upload').find('.percent').text(
-									(((part_to_increase * value.progress.done)) + ((
-										part_to_increase * value.progress.failed))).toFixed(2) + '%');
+									(((part_to_increase * value['done'])) + ((
+										part_to_increase * value['failed']))).toFixed(2) + '%');
 
-								if (value.progress.total == value.progress.done + value.progress.failed) {
+								if (value['total'] == value['done'] + value['failed']) {
 									$('.order-bar-div-upload').find('.sync-text').html(
 										`<i class="{{ getIcon('check') }} text-success"></i> <b>Order upload completed!</b>`
 									);
