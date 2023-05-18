@@ -280,14 +280,16 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 				function progressBar(data) {
 					console.log(data);
 					$.each(data, function(index, value) {
-						if (value['message'] !== null && value['message'].length > 0) {
-							var message = JSON.parse(value['message']);
+						if (value.progress && 
+							value.progress.message && 
+							value.progress.message !== null) {
+							var message = JSON.parse(value.progress.message);
 							message = message[message.length - 1];
 							$('.message-box').removeClass('d-none');
 							$('.message').html(message.message);
 						}
 
-						if (value['type'] == 'lcwp_fetch_product') {
+						if (value.function == 'lcwpSyncProductsInWoocommerce') {
 							$('.no-sync').css('display', 'none');
 							$('.product-sync-box').show();
 							$('.product-fetch-btn').find('.title').html('Fetching');
@@ -300,19 +302,19 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 								$('.product-bar-div').show();
 							}
 
-							if (value['total'] > 0) {
-								var part_to_increase = 100 / value['total'];
+							if (value.progress && value.progress.total > 0) {
+								var part_to_increase = 100 / value.progress.total;
 
 								$('.product-bar-div').find('.progress-bar.bg-primary').css('width',
-									part_to_increase * value['done'] + '%');
+									part_to_increase * value.progress.done + '%');
 								$('.product-bar-div').find('.progress-bar.bg-danger').css('width',
-									part_to_increase * value['failed'] + '%');
+									part_to_increase * value.progress.failed + '%');
 								$('.product-bar-div').find('.percent')
 									.text(
-										(((part_to_increase * value['done'])) + ((
-											part_to_increase * value['failed']))).toFixed(2) + '%');
+										(((part_to_increase * value.progress.done)) + ((
+											part_to_increase * value.progress.failed))).toFixed(2) + '%');
 
-								if (value['total'] == value['done'] + value['failed']) {
+								if (value.progress.total == value.progress.done + value.progress.failed) {
 									$('.product-bar-div').find('.sync-text').html(
 										`<i class="{{ getIcon('check') }} text-success"></i> <b>Product fetch completed.</b>`
 									);
@@ -322,16 +324,10 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									$('.product-fetch-btn').closest('.row').find('.fetch-msg').html(
 										'<span class="font-weight-bold" style="color: #006c67">Fetch completed successfully...</span>'
 									);
+									updateMessage(value.queue.function, $('.product-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
 								}
 							}
-
-							if (value.queue && value.queue.status === 1) {
-								updateMessage(value.queue.function, $('.product-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
-								$('.product-fetch-btn').removeClass('disabled');
-							} else {
-								$('.product-fetch-btn').addClass('disabled');
-							}
-						} else if (value['type'] == "lcwp_upload_product") {
+						} else if (value.function == "lcwpSyncProductsFromWoocommerce") {
 							$('.no-sync').css('display', 'none');
 							$('.product-sync-box').show();
 							$('.product-upload-btn').find('.title').html('Uploading');
@@ -344,22 +340,22 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 								$('.product-bar-div-upload').show();
 							}
 
-							if (value['total'] > 0) {
-								var part_to_increase = 100 / value['total'];
+							if (value.progress && value.progress.total > 0) {
+								var part_to_increase = 100 / value.progress.total;
 
 								$('.product-bar-div-upload').find('.progress-bar.bg-primary').css(
 									'width',
-									part_to_increase * value['done'] + '%');
+									part_to_increase * value.progress.done + '%');
 								$('.product-bar-div-upload').find('.progress-bar.bg-danger').css(
 									'width',
-									part_to_increase * value['failed'] + '%');
+									part_to_increase * value.progress.failed + '%');
 								$(
 										'.product-bar-div-upload').find('.percent')
 									.text(
-										(((part_to_increase * value['done'])) + ((
-											part_to_increase * value['failed']))).toFixed(2) + '%');
+										(((part_to_increase * value.progress.done)) + ((
+											part_to_increase * value.progress.failed))).toFixed(2) + '%');
 
-								if (value['total'] == value['done'] + value['failed']) {
+								if (value.progress.total == value.progress.done + value.progress.failed) {
 									$('.product-bar-div-upload').find('.sync-text').html(
 										`<i class="{{ getIcon('check') }} text-success"></i> <b>Product upload completed!</b>`
 									);
@@ -370,16 +366,10 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 										.html(
 											'<span class="font-weight-bold" style="color: #006c67">Upload completed successfully...</span>'
 										);
+										updateMessage(value.queue.function, $('.product-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
 								}
 							}
-							
-							if (value.queue && value.queue.status === 1) {
-								updateMessage(value.queue.function, $('.product-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
-								$('.product-upload-btn').removeClass('disabled');
-							} else {
-								$('.product-upload-btn').addClass('disabled');
-							}
-						} else if (value['type'] == 'lcwp_fetch_contact') {
+						} else if (value.function == 'lcwpSyncContactsInWoocommerce') {
 							$('.no-sync').css('display', 'none');
 							$('.customer-sync-box').show();
 							$('.contact-fetch-btn').find('.title').html('Fetching');
@@ -392,20 +382,20 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 								$('.customer-bar-div').show();
 							}
 
-							if (value['total'] > 0) {
-								var part_to_increase = 100 / value['total'];
+							if (value.progress && value.progress.total > 0) {
+								var part_to_increase = 100 / value.progress.total;
 
 								$('.customer-bar-div').find('.progress-bar.bg-primary').css(
 									'width',
-									part_to_increase * value['done'] + '%');
+									part_to_increase * value.progress.done + '%');
 								$('.customer-bar-div').find('.progress-bar.bg-danger').css(
 									'width',
-									part_to_increase * value['failed'] + '%');
+									part_to_increase * value.progress.failed + '%');
 								$('.customer-bar-div').find('.percent').text(
-									(((part_to_increase * value['done'])) + ((
-										part_to_increase * value['failed']))).toFixed(2) + '%');
+									(((part_to_increase * value.progress.done)) + ((
+										part_to_increase * value.progress.failed))).toFixed(2) + '%');
 
-								if (value['total'] == value['done'] + value['failed']) {
+								if (value.progress.total == value.progress.done + value.progress.failed) {
 									$('.customer-bar-div').find('.sync-text').html(
 										`<i class="{{ getIcon('check') }} text-success"></i> <b>Customer sync completed.</b>`
 									);
@@ -415,16 +405,10 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									$('.contact-fetch-btn').closest('.row').find('.fetch-msg').html(
 										'<span class="font-weight-bold" style="color: #006c67">Fetch completed successfully...</span>'
 									);
+									updateMessage(value.queue.function, $('.contact-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
 								}
 							}
-
-							if (value.queue && value.queue.status === 1) {
-								updateMessage(value.queue.function, $('.contact-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
-								$('.contact-fetch-btn').removeClass('disabled');
-							} else {
-								$('.contact-fetch-btn').addClass('disabled');
-							}
-						} else if (value['type'] == 'lcwp_upload_contact') {
+						} else if (value.function == 'lcwpSyncContactsFromWoocommerce') {
 							$('.no-sync').css('display', 'none');
 							$('.customer-sync-box').show();
 							$('.contact-upload-btn').find('.title').html('Uploading');
@@ -437,20 +421,20 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 								$('.customer-bar-div-upload').show();
 							}
 
-							if (value['total'] > 0) {
-								var part_to_increase = 100 / value['total'];
+							if (value.progress && value.progress.total > 0) {
+								var part_to_increase = 100 / value.progress.total;
 
 								$('.customer-bar-div-upload').find('.progress-bar.bg-primary').css(
 									'width',
-									part_to_increase * value['done'] + '%');
+									part_to_increase * value.progress.done + '%');
 								$('.customer-bar-div-upload').find('.progress-bar.bg-danger').css(
 									'width',
-									part_to_increase * value['failed'] + '%');
+									part_to_increase * value.progress.failed + '%');
 								$('.customer-bar-div-upload').find('.percent').text(
-									(((part_to_increase * value['done'])) + ((
-										part_to_increase * value['failed']))).toFixed(2) + '%');
+									(((part_to_increase * value.progress.done)) + ((
+										part_to_increase * value.progress.failed))).toFixed(2) + '%');
 
-								if (value['total'] == value['done'] + value['failed']) {
+								if (value.progress.total == value.progress.done + value.progress.failed) {
 									$('.customer-bar-div-upload').find('.sync-text').html(
 										`<i class="{{ getIcon('check') }} text-success"></i> <b>Customer upload completed!</b>`
 									);
@@ -461,16 +445,10 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 										.html(
 											'<span class="font-weight-bold" style="color: #006c67">Upload completed successfully...</span>'
 										);
+									updateMessage(value.queue.function, $('.contact-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
 								}
 							}
-
-							if (value.queue && value.queue.status === 1) {
-								updateMessage(value.queue.function, $('.contact-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
-								$('.contact-upload-btn').removeClass('disabled');
-							} else {
-								$('.contact-upload-btn').addClass('disabled');
-							}
-						} else if (value['type'] == 'lcwp_fetch_order') {
+						} else if (value.function == 'lcwpSyncOrdersInWoocommerce') {
 							$('.no-sync').css('display', 'none');
 							$('.order-sync-box').show();
 							$('.order-fetch-btn').find('.title').html('Fetching');
@@ -482,18 +460,18 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 								$('.order-bar-div').show();
 							}
 
-							if (value['total'] > 0) {
-								var part_to_increase = 100 / value['total'];
+							if (value.progress && value.progress.total > 0) {
+								var part_to_increase = 100 / value.progress.total;
 
 								$('.order-bar-div').find('.progress-bar.bg-primary').css('width',
-									part_to_increase * value['done'] + '%');
+									part_to_increase * value.progress.done + '%');
 								$('.order-bar-div').find('.progress-bar.bg-danger').css('width',
-									part_to_increase * value['failed'] + '%');
+									part_to_increase * value.progress.failed + '%');
 								$('.order-bar-div').find('.percent').text(
-									(((part_to_increase * value['done'])) + ((
-										part_to_increase * value['failed']))).toFixed(2) + '%');
+									(((part_to_increase * value.progress.done)) + ((
+										part_to_increase * value.progress.failed))).toFixed(2) + '%');
 
-								if (value['total'] == value['done'] + value['failed']) {
+								if (value.progress.total == value.progress.done + value.progress.failed) {
 									$('.order-bar-div').find('.sync-text').html(
 										`<i class="{{ getIcon('check') }} text-success"></i> <b>Order sync completed.</b>`
 									);
@@ -503,16 +481,10 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									$('.order-fetch-btn').closest('.row').find('.fetch-msg').html(
 										'<span class="font-weight-bold" style="color: #006c67">Fetch completed successfully...</span>'
 									);
+									updateMessage(value.queue.function, $('.order-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
 								}
 							}
-
-							if (value.queue && value.queue.status === 1) {
-								updateMessage(value.queue.function, $('.order-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
-								$('.order-fetch-btn').removeClass('disabled');
-							} else {
-								$('.order-fetch-btn').addClass('disabled');
-							}
-						} else if (value['type'] == 'lcwp_upload_order') {
+						} else if (value.function == 'lcwpSyncOrdersFromWoocommerce') {
 							$('.no-sync').css('display', 'none');
 							$('.order-sync-box').show();
 							$('.order-upload-btn').find('.title').html('Uploading');
@@ -524,20 +496,20 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 								$('.order-bar-div-upload').show();
 							}
 
-							if (value['total'] > 0) {
-								var part_to_increase = 100 / value['total'];
+							if (value.progress && value.progress.total > 0) {
+								var part_to_increase = 100 / value.progress.total;
 
 								$('.order-bar-div-upload').find('.progress-bar.bg-primary').css(
 									'width',
-									part_to_increase * value['done'] + '%');
+									part_to_increase * value.progress.done + '%');
 								$('.order-bar-div-upload').find('.progress-bar.bg-danger').css(
 									'width',
-									part_to_increase * value['failed'] + '%');
+									part_to_increase * value.progress.failed + '%');
 								$('.order-bar-div-upload').find('.percent').text(
-									(((part_to_increase * value['done'])) + ((
-										part_to_increase * value['failed']))).toFixed(2) + '%');
+									(((part_to_increase * value.progress.done)) + ((
+										part_to_increase * value.progress.failed))).toFixed(2) + '%');
 
-								if (value['total'] == value['done'] + value['failed']) {
+								if (value.progress.total == value.progress.done + value.progress.failed) {
 									$('.order-bar-div-upload').find('.sync-text').html(
 										`<i class="{{ getIcon('check') }} text-success"></i> <b>Order upload completed!</b>`
 									);
@@ -547,14 +519,8 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									$('.order-upload-btn').closest('.row').find('.fetch-msg').html(
 										'<span class="font-weight-bold" style="color: #006c67">Upload completed successfully...</span>'
 									);
+									updateMessage(value.queue.function, $('.order-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
 								}
-							}
-
-							if (value.queue && value.queue.status === 1) {
-								updateMessage(value.queue.function, $('.order-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
-								$('.order-upload-btn').removeClass('disabled');
-							} else {
-								$('.order-upload-btn').addClass('disabled');
 							}
 						}
 					});

@@ -315,6 +315,22 @@ if ( ! class_exists( 'Lcwp_Settings' ) ) {
 					)
 				);
 			}
-		}	
+		}
+
+		/**
+		 * This function is used to check if a webhook should be delivered or not.
+		 *
+		 * @return bool $should_deliver Whether the webhook should be delivered or not.
+		 */
+		public function custom_should_deliver_webhook( $should_deliver, $webhook ) {
+			/**
+			 * Get the webhook's topic.
+			 */
+			// $topic = $webhook->get_topic();
+
+			if ( defined( 'REST_REQUEST' ) && REST_REQUEST && isset( $_REQUEST['deliver_webhook'] ) ) {
+				return $_REQUEST['deliver_webhook'];
+			}
+		}
 	}
 }

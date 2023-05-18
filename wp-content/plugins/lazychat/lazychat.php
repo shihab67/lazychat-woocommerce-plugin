@@ -158,6 +158,11 @@ if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins',
 						require LCWP_PATH . 'includes/lazychat-hooks.php';
 					}
 				);
+
+				/**
+				 * Check if webhook should be delivered.
+				 */
+				add_filter( 'woocommerce_webhook_should_deliver', array( new Lcwp_Settings(), 'custom_should_deliver_webhook' ), 10, 2 );
 			}
 		}
 		$l_c_w_p_c_o_r_e = new LCWP_Core();
