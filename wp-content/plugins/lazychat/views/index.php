@@ -271,7 +271,6 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 				).listen(
 					'QueueProgress',
 					(data) => {
-						console.log(data);
 						if (data.progress && data.progress.length > 0) {
 							progressBar(data.progress)
 						}
@@ -324,7 +323,7 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									$('.product-fetch-btn').closest('.row').find('.fetch-msg').html(
 										'<span class="font-weight-bold" style="color: #006c67">Fetch completed successfully...</span>'
 									);
-									updateMessage(value.queue.function, $('.product-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
+									updateMessage(value.function, $('.product-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
 								}
 							}
 						} else if (value.function == "lcwpSyncProductsFromWoocommerce") {
@@ -366,7 +365,7 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 										.html(
 											'<span class="font-weight-bold" style="color: #006c67">Upload completed successfully...</span>'
 										);
-										updateMessage(value.queue.function, $('.product-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
+										updateMessage(value.function, $('.product-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
 								}
 							}
 						} else if (value.function == 'lcwpSyncContactsInWoocommerce') {
@@ -405,7 +404,7 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									$('.contact-fetch-btn').closest('.row').find('.fetch-msg').html(
 										'<span class="font-weight-bold" style="color: #006c67">Fetch completed successfully...</span>'
 									);
-									updateMessage(value.queue.function, $('.contact-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
+									updateMessage(value.function, $('.contact-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
 								}
 							}
 						} else if (value.function == 'lcwpSyncContactsFromWoocommerce') {
@@ -445,7 +444,7 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 										.html(
 											'<span class="font-weight-bold" style="color: #006c67">Upload completed successfully...</span>'
 										);
-									updateMessage(value.queue.function, $('.contact-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
+									updateMessage(value.function, $('.contact-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
 								}
 							}
 						} else if (value.function == 'lcwpSyncOrdersInWoocommerce') {
@@ -481,7 +480,7 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									$('.order-fetch-btn').closest('.row').find('.fetch-msg').html(
 										'<span class="font-weight-bold" style="color: #006c67">Fetch completed successfully...</span>'
 									);
-									updateMessage(value.queue.function, $('.order-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
+									updateMessage(value.function, $('.order-fetch-btn').closest('.row').find('.fetch-msg'), 'fetch');
 								}
 							}
 						} else if (value.function == 'lcwpSyncOrdersFromWoocommerce') {
@@ -519,7 +518,7 @@ if ( ! function_exists( 'lazychat_settings_page' ) ) {
 									$('.order-upload-btn').closest('.row').find('.fetch-msg').html(
 										'<span class="font-weight-bold" style="color: #006c67">Upload completed successfully...</span>'
 									);
-									updateMessage(value.queue.function, $('.order-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
+									updateMessage(value.function, $('.order-upload-btn').closest('.row').find('.fetch-msg'), 'upload');
 								}
 							}
 						}
